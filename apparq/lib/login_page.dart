@@ -67,23 +67,22 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Align(
-                alignment: Alignment.center, // Centra el siguiente widget
+                alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navegar a la página de "Selecciona tu región"
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => RegionSelectionPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(0, 76, 112, 1), // Cambia el color a azul
+                    backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
                     padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
                   ),
                   child: const Text(
                     'E N T R A R',
                     style: TextStyle(
-                      color: Colors.white, // Cambia el color del texto a blanco
+                      color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
