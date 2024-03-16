@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'obra/obra.dart';
-
+import 'proyecto/proyecto.dart';
 class AspectosPage extends StatelessWidget {
   const AspectosPage({super.key});
   @override
@@ -15,7 +15,10 @@ class AspectosPage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                // Acción cuando se presiona el botón de Proyecto
+                Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (context) => ProyectoPage()),
+                 );
               },
               child: const Text('Proyecto'),
             ),
