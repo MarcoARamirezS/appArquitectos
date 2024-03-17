@@ -17,7 +17,7 @@ class AspectosPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                    context,
-                   MaterialPageRoute(builder: (context) => ProyectoPage()),
+                   MaterialPageRoute(builder: (context) => const ProyectoPage()),
                  );
               },
               child: const Text('Proyecto'),

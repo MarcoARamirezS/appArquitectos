@@ -65,25 +65,25 @@ class _ProyectoPageState extends State<ProyectoPage> {
             ),
             const SizedBox(height: 16.0),
             Align(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: () {
-
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                  ),
-                  child: const Text(
-                    'Accion',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                onPressed: () {
+                  _showConfirmationDialog(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                ),
+                child: const Text(
+                  'Accion',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
+            ),
             const SizedBox(height: 16.0),
           ],
         ),
@@ -125,5 +125,70 @@ class _ProyectoPageState extends State<ProyectoPage> {
         },
       ),
     );
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmación'),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('Usted ha seleccionado:'),
+                const SizedBox(height: 8),
+                Container(
+                  constraints: const BoxConstraints(maxHeight: 400),
+                  child: SingleChildScrollView(
+                    child: RichText(
+                      text: TextSpan(
+                        children: _generateSummaryText(),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text('¿Desea continuar con estas opciones?'),
+              ],
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Lógica para continuar con las opciones
+              },
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Continuar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  List<TextSpan> _generateSummaryText() {
+    List<TextSpan> summaryText = [];
+    selectedOptions.forEach((key, value) {
+      if (value.isNotEmpty) {
+        summaryText.add(TextSpan(text: "$key:\n", style: const TextStyle(fontWeight: FontWeight.bold)));
+        for (var option in value) {
+          summaryText.add(TextSpan(text: '- $option\n'));
+        }
+      }
+    });
+    return summaryText;
   }
 }

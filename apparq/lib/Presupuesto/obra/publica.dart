@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'opciones.dart';
+import 'categorias.dart';
 
 class PublicaPage extends StatelessWidget {
   const PublicaPage({super.key});
@@ -26,82 +27,44 @@ class PublicaPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OpcionesPage(categoriaSeleccionada: 'A'),
-                          ),
-                        );
-                      },
-                      child: const Text('A'),
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OpcionesPage(categoriaSeleccionada: 'B'),
-                          ),
-                        );
-                      },
-                      child: const Text('B'),
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OpcionesPage(categoriaSeleccionada: 'C'),
-                          ),
-                        );
-                      },
-                      child: const Text('C'),
-                    ),
-                  ],
+                  children: categorias.sublist(0, 3).map((categoria) {
+                    return Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OpcionesPage(categoriaSeleccionada: categoria.titulo),
+                              ),
+                            );
+                          },
+                          child: Text(categoria.titulo),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  }).toList(),
                 ),
                 Column(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OpcionesPage(categoriaSeleccionada: 'D'),
-                          ),
-                        );
-                      },
-                      child: const Text('D'),
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OpcionesPage(categoriaSeleccionada: 'E'),
-                          ),
-                        );
-                      },
-                      child: const Text('E'),
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OpcionesPage(categoriaSeleccionada: 'F'),
-                          ),
-                        );
-                      },
-                      child: const Text('F'),
-                    ),
-                  ],
+                  children: categorias.sublist(3, 6).map((categoria) {
+                    return Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OpcionesPage(categoriaSeleccionada: categoria.titulo),
+                              ),
+                            );
+                          },
+                          child: Text(categoria.titulo),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  }).toList(),
                 ),
               ],
             ),

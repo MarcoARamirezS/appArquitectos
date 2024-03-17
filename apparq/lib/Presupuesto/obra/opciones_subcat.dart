@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'categorias.dart';
-import 'opciones_subcat.dart';
 
-class OpcionesPage extends StatelessWidget {
+class OpcionesSubcatPage extends StatelessWidget {
   final String categoriaSeleccionada;
+  final String subcategoriaSeleccionada;
 
-  const OpcionesPage({super.key, required this.categoriaSeleccionada});
+  const OpcionesSubcatPage({super.key, required this.categoriaSeleccionada, required this.subcategoriaSeleccionada});
 
   @override
   Widget build(BuildContext context) {
     List<Subcategoria> subcategorias = categorias
         .firstWhere((categoria) => categoria.titulo == categoriaSeleccionada)
         .subcategorias;
+
+    List<String> opciones = subcategorias.firstWhere((subcategoria) => subcategoria.titulo == subcategoriaSeleccionada).opciones;
 
     return Scaffold(
       appBar: AppBar(
@@ -22,7 +24,7 @@ class OpcionesPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Clase $categoriaSeleccionada:',
+              '$subcategoriaSeleccionada:',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -30,17 +32,12 @@ class OpcionesPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Column(
-              children: subcategorias.map((subcategoria) {
+              children: opciones.map((opcion) {
                 return ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => OpcionesSubcatPage(categoriaSeleccionada: categoriaSeleccionada, subcategoriaSeleccionada: subcategoria.titulo),
-                      ),
-                    );
+
                   },
-                  child: Text(subcategoria.titulo),
+                  child: Text(opcion),
                 );
               }).toList(),
             ),
