@@ -6,6 +6,12 @@ class PresConPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final ButtonStyle elevatedButtonStyle = ElevatedButton.styleFrom(
+      backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Presupuesto y Construcción'),
@@ -18,17 +24,33 @@ class PresConPage extends StatelessWidget {
               onPressed: () {
                 // No hace nada cuando se presiona el botón de "Construcción"
               },
-              child: const Text('Construcción'),
+              style: elevatedButtonStyle,
+              child: const Text(
+                'Construcción',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
-                   context,
-                   MaterialPageRoute(builder: (context) => AspectosPage()),
-                 );
+                  context,
+                  MaterialPageRoute(builder: (context) => AspectosPage()),
+                );
               },
-              child: const Text('Presupuesto'),
+              style: elevatedButtonStyle,
+              child: const Text(
+                'Presupuesto',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),

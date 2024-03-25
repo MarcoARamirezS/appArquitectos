@@ -5,6 +5,13 @@ class ObraPage extends StatelessWidget {
   const ObraPage({super.key});
   @override
   Widget build(BuildContext context) {
+
+    final ButtonStyle elevatedButtonStyle = ElevatedButton.styleFrom(
+      backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+      minimumSize: const Size(170, 50),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Obra'),
@@ -25,17 +32,29 @@ class ObraPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                    context,
-                   MaterialPageRoute(builder: (context) => PublicaPage()),
+                   MaterialPageRoute(builder: (context) => const PublicaPage()),
                  );
               },
-              child: const Text('Pública'),
+              style: elevatedButtonStyle,
+              child: const Text('Pública',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
             ),
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 // Acción cuando se presiona el botón "Privada"
               },
-              child: const Text('Privada'),
+              style: elevatedButtonStyle,
+              child: const Text('Privada',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                )
+              ),
             ),
           ],
         ),

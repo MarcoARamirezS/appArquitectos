@@ -29,20 +29,50 @@ class OpcionesPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Column(
-              children: subcategorias.map((subcategoria) {
-                return ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => OpcionesSubcatPage(categoriaSeleccionada: categoriaSeleccionada, subcategoriaSeleccionada: subcategoria.titulo),
-                      ),
-                    );
-                  },
-                  child: Text(subcategoria.titulo),
-                );
-              }).toList(),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 16.0), // Agregar un padding abajo
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: subcategorias.map((subcategoria) {
+                      return Column(
+                        children: [
+                          SizedBox(
+                            width: 350,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OpcionesSubcatPage(
+                                      categoriaSeleccionada: categoriaSeleccionada,
+                                      subcategoriaSeleccionada: subcategoria.titulo,
+                                    ),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xEEEEEEEE),
+                                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                              ),
+                              child: Text(
+                                subcategoria.titulo,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

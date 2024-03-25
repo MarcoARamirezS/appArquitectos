@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'aspectoProyecto.dart';
+import 'aspecto_proyecto.dart';
 
 class ProyectoPage extends StatefulWidget {
   const ProyectoPage({super.key});
@@ -92,40 +92,43 @@ class _ProyectoPageState extends State<ProyectoPage> {
   }
 
   Widget _buildMenu() {
-    return SizedBox(
-      height: 50.0,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: aspectosProyecto.length,
-        itemBuilder: (context, index) {
-          final aspecto = aspectosProyecto[index];
-          bool isSelected = index == _menuIndex;
+  return SizedBox(
+    height: 50.0,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: aspectosProyecto.length,
+      itemBuilder: (context, index) {
+        final aspecto = aspectosProyecto[index];
+        bool isSelected = index == _menuIndex;
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _menuIndex = index;
-                });
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  isSelected ? Colors.blue : Colors.grey,
-                ),
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _menuIndex = index;
+              });
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                isSelected ? const Color(0xFF044C70) : const Color(0xFF6C6F72),
               ),
-              child: Text(
-                aspecto.titulo,
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
+              minimumSize: MaterialStateProperty.all<Size>(
+                const Size(150, 50),
               ),
             ),
-          );
-        },
-      ),
-    );
-  }
+            child: Text(
+              aspecto.titulo,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        );
+      },
+    ),
+  );
+}
 
   void _showConfirmationDialog(BuildContext context) {
     showDialog(

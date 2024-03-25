@@ -7,6 +7,13 @@ class PublicaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final ButtonStyle elevatedButtonStyle = ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xEEEEEEEE),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+      minimumSize: const Size(50, 50),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pública'),
@@ -39,7 +46,14 @@ class PublicaPage extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Text(categoria.titulo),
+                          style: elevatedButtonStyle,
+                          child: Text(categoria.titulo,
+                            style: const TextStyle(
+                             color: Colors.black,
+                             fontSize: 16,
+                             fontWeight: FontWeight.bold,
+                            )
+                          ),
                         ),
                         const SizedBox(height: 10),
                       ],
@@ -59,7 +73,14 @@ class PublicaPage extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Text(categoria.titulo),
+                          style: elevatedButtonStyle,
+                          child: Text(categoria.titulo,
+                            style: const TextStyle(
+                             color: Colors.black,
+                             fontSize: 16,
+                             fontWeight: FontWeight.bold,
+                            )
+                          ),
                         ),
                         const SizedBox(height: 10),
                       ],
