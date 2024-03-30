@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'categorias.dart';
+import 'pres_subcat.dart';
 
 class OpcionesSubcatPage extends StatelessWidget {
   final String categoriaSeleccionada;
@@ -35,7 +36,16 @@ class OpcionesSubcatPage extends StatelessWidget {
               children: opciones.map((opcion) {
                 return ElevatedButton(
                   onPressed: () {
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PresSubcatPage(
+                          categoriaSeleccionada: categoriaSeleccionada,
+                          subcategoriaSeleccionada: subcategoriaSeleccionada,
+                          opcion: opcion,
+                        ),
+                      ),
+                    );
                   },
                   child: Text(opcion),
                 );

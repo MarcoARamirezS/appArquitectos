@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'obra/obra.dart';
 import 'proyecto/proyecto.dart';
+import 'tramite/tramite.dart';
 class AspectosPage extends StatelessWidget {
   const AspectosPage({super.key});
 
@@ -57,7 +58,10 @@ class AspectosPage extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // Acción cuando se presiona el botón de Trámite
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CSVReaderPage()),
+                );
               },
               style: elevatedButtonStyle,
               child: const Text(

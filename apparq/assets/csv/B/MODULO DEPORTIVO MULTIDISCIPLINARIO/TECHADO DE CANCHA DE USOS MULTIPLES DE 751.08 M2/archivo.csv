@@ -1,0 +1,79 @@
+﻿,,,
+CLAVE,CONCEPTO,UNIDAD,CANTIDAD
+A,TECHADO CANCHA DE USOS MÚLTIPLES,,
+A01,PRELIMINARES,,
+A0101,TRAZO Y NIVELACION,,
+UEC.ED.12.100.1015,"Trazo y nivelación con equipo topográfico, en terreno plano. Incluye trabajos en sitio, mojoneras, referencias de nivel y planos de trazo.",m2,751.08
+A02,MOVIMIENTO DE TIERRAS / TERRACERÍAS,,
+A0201,EXCAVACIONES,,
+UEC.ED.12.105.1020,"Excavación manual en zanja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en zanja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,77.98
+A0202,MEJORAMIENTOS,,
+UEC.ED.12.140.1001,"Mejoramiento de terreno a base de cal hidratada a razón de 1.5 kg/m2 ( 7.5 kg/m3) a 20 cm de profundidad. Incluye: escarificado, hidratado, mezclado, nivelado y compactado con equipo al 90% de su PVSM.",m3,8.66
+A0203,RELLENOS,,
+UEC.ED.12.125.1205,"Relleno semi-mecánico en zanja con material de calidad de sub-base, compactado al 90% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N-CTR-CAR-1-01-011/20.",m3,17.33
+UEC.ED.12.125.1115,"Relleno semi-mecánico en zanja con material inerte, compactado al 90% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,60.65
+A0204,CARGAS Y ACARREOS,,
+UEC.ED.14.115.1060,"Acarreo en carretilla de material producto de excavación a una distancia máxima de 100 m. Incluye: carga, transporte y descarga.",m3,101.37
+UEC.ED.14.120.1070,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,101.37
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,506.85
+A03,CIMENTACIÓN,,
+A0301,PLANTILLAS,,
+UEC.ED.16.100.1010,"Plantilla de 5 cm de espesor, a base de concreto fabricado en obra f'c = 100 kg/cm2, tma 19 mm (3/4""), incluye: mezcla, vaciado y limpieza.",m2,20.28
+A0302,HABILITADO DE ACERO DE REFUERZO EN CIMENTACIÓN,,
+UEC.ED.16.105.1015,"Acero de refuerzo del No. 3 (3/8""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.27
+UEC.ED.16.105.1025,"Acero de refuerzo del No. 5 (5/8""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.27
+A0303,CIMBRA EN CIMENTACIÓN,,
+UEC.ED.16.110.1015,"Cimbra acabado común en cimentación a base de madera de pino de 3ra., incluye: dimensionamiento, cortes, armado, lubricado, alambres, torzales, separadores, andamiaje, obra falsa necesaria, descimbrado, limpieza retiro de sobrantes del frente de trabajo.",m2,30.84
+A0304,CONCRETOS EN CIMENTACIÓN,,
+UEC.ED.16.115.1010,"Concreto fabricado en obra f´c = 250 kg/cm2, tma = 19 mm (3/4""), RN, en cimentación. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,5.15
+A04,ESTRUCTURA ,,
+A0401,ACERO ESTRUCTURAL,,
+UEC.ED.22.120.1120,"Columna a base de perfil comercial HSS, ASTM A500 Grado B. Incluye: planos de taller, dimensionamiento, cartabones, cortes, perfilado, erección, presentación, plomeado, punteo, soldadura, primario de taller y limpieza.",kg,"2,093.08"
+UEC.ED.22.100.1110,"Base para columna fabricada de placa de acero estructural ASTM A36. Incluye: planos de taller, dimensionamiento, cortes, perfilado y barrenos.",kg,247.46
+UEC.ED.22.110.1115,"Ancla de acero redondo 19.1 mm (3/4""), doblada en L, con rosca estándar con tuerca estructural hexagonal y arandela de seguridad. Incluye: planos de taller, fabricación, embebido,  torque especificado y limpieza.",kg,85.83
+A0402,ADITIVOS EN ESTRUCTURA,,
+UEC.ED.30.200.1010,"Mortero nivelante grout entre superficie de concreto hidráulico y placa de acero marca FESTER catalogo FESTERGROUT o similar en calidad, costo y garantía, curado de áreas expuestas. Incluye: preparación, inyección, fraguado, corte de cantos, aplicación de protector, limpieza. Norma CRD-21 Y ASTM C1107.",cm3,"44,100.00"
+A05,SUPERESTRUCTURA ,,
+A0501,ACERO ESTRUCTURAL,,
+UEC.ED.22.120.1305,"Armadura a base de perfil comercial ángulo, ASTM A36. Incluye: planos de taller, dimensionamiento, cartabones, cortes, perfilado, erección, presentación, plomeado, punteo, soldadura, primario de taller y limpieza.",kg,"4,759.57"
+UEC.ED.22.120.1180,"Largueros a base de perfil comercial polín MonTen, ASTM A500 . Incluye: planos de taller, dimensionamiento, cartabones, cortes, perfilado, erección, presentación, plomeado, punteo, soldadura, primario de taller y limpieza.",kg,"4,746.56"
+UEC.ED.22.120.1350,"Contraviento a base de perfil comercial redondo solido (OS IMCA), ASTM A36 . Incluye: planos de taller, dimensionamiento, cartabones, cortes, perfilado, erección, presentación, plomeado, punteo, soldadura, primario de taller y limpieza.",kg,534.95
+UEC.ED.22.120.1355,"Contravientos a base de perfil comercial ángulo, ASTM A36. Incluye: planos de taller, dimensionamiento, cartabones, cortes, perfilado, erección, presentación, plomeado, punteo, soldadura, primario de taller y limpieza.",kg,219.65
+UEC.ED.22.120.1405,"Tensor a base de perfil comercial redondo solido (OS IMCA), ASTM A36 . Incluye: planos de taller, dimensionamiento, cartabones, cortes, perfilado, erección, presentación, plomeado, punteo, soldadura, primario de taller y limpieza.",kg,125.17
+UEC.ED.22.120.1155,"Trabe a base de perfil comercial PTR (OR IMCA) ASTM A500. Incluye: planos de taller, dimensionamiento, cartabones, cortes, perfilado, erección, presentación, plomeado, punteo, soldadura, primario de taller y limpieza.",kg,539.74
+A0502,CONEXIONES DE ACERO,,
+UEC.ED.22.125.1010,"Conexión soldada  entre elementos de acero, a base de placa de acero A-36, a cualquier altura. Incluye: planos de taller, dimensionamiento, cartabones, cortes, perfilado, erección, presentación, punteo, soldadura, primario de taller y limpieza.",kg,249.53
+UEC.ED.22.125.1020,"Conexión soldada  entre elementos de acero, a base de ángulo de acero A-36, a cualquier altura. Incluye: planos de taller, dimensionamiento, cartabones, cortes, perfilado, erección, presentación, punteo, soldadura, primario de taller y limpieza.",kg,182.89
+A0503,CUBIERTAS ,,
+UEC.ED.28.130.1000,"Cubierta a base de lámina galvanizada Calibre 24, Pintro marca TERNIUM línea TR-72, P o similar en calidad, costo y garantía. Incluye: dimensionamiento, trazo, elevación, empalme, sello de juntas y limpieza.",m2,741.99
+UEC.ED.28.150.1050,"Cumbrera (caballete) para lámina galvanizada Calibre 24, Pintro marca TERNIUM línea TR-72, P. Incluye: dimensionamiento, trazo, elevación, empalme, sello de juntas y limpieza.",m,32.60
+UEC.ED.28.100.1015,"Canalón de lámina galvanizada Calibre 18, engargolado y colocado a cualquier altura en lámina de cubierta o estructura de acero. Incluye: dimensionamiento, troquelado, doblado, fijación, nivelación, sellado, calafateo y limpieza.",kg,447.09
+A06,ACABADOS,,
+A0601,ACABADOS EN ACERO ESTRUCTURAL,,
+UEC.ED.78.155.1015,"Pintura de esmalte primera calidad en superficies metálicas, a cualquier altura. Incluye: preparación de la superficie, dilución, aplicación a dos manos hasta cubrir perfectamente la superficie, andamiaje y limpieza.",kg,"13,784.43"
+A0602,LIMPIEZAS,,
+UEC.ED.100.115.1055,"Limpieza general al termino de la obra, incluye: retiros de materiales sobrantes en lugar especificado por la supervisión, equipo y herramienta.",m2,721.50
+A07,INSTALACIÓN PLUVIAL,,
+A0701,SOPORTERÍA,,
+UEC.ED.36.100.1145,"Abrazadera para unicanal galvanizada para tubo de 102 mm de diámetro, con tornillo, a cualquier altura. Incluye: trazo, presentación, elementos de fijación y limpieza.",Pieza,48.00
+UEC.ED.36.110.1015,"Riel unicanal liso de 4 x 4 cm tramo de 3 metros, a cualquier altura. Incluye: preparación, cortes, colocación, trazo, presentación, elementos de fijación y limpieza.",Pieza,29.28
+A0702,TUBERÍA Y PIEZAS ESPECIALES,,
+UEC.ED.42.100.1010,"Tubo de PVC DWV, un extremo liso y otro con bocina, de 100 mm (4"") diámetro nominal, a cualquier altura. Incluye: trazo, nivelación, colocación, fijación, conexión con otros tubos o conexiones y limpieza.",m,56.00
+UEC.ED.42.105.1030,"Codo de 45° para tubo de PVC DWV, de 100 mm (4"") de diámetro, a cualquier altura. Incluye: trazo, nivelación, colocación, fijación, conexión con otros tubos o conexiones y limpieza.",Pieza,32.00
+UEC.ED.40.120.1010,"Coladera para azotea, con cúpula, conexión para tubo de 102 mm (4”) para roscar, fierro colado, marca HELVEX 444 o similar en calidad, costo y garantía. Incluye: fijación a piso y conexión línea sanitaria.",Pieza,8.00
+UEC.ED.42.105.1150,"Cople para tubo de PVC DWV, de 100 mm (4"") de diámetro, a cualquier altura. Incluye: trazo, nivelación, colocación, fijación, conexión con otros tubos o conexiones y limpieza.",Pieza,16.00
+B,ACCIONES COMPLEMENTARIAS,,
+B01,INSTALACIÓN PLUVIAL,,
+B0101,OBRA CIVIL,,
+UEC.ED.12.105.1020,"Excavación manual en zanja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en zanja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,23.94
+UEC.ED.14.120.1070,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,31.12
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,155.60
+UEC.ED.12.125.1210,"Relleno semi-mecánico en zanja con material de calidad de sub-base, compactado al 95% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N-CTR-CAR-1-01-011/20.",m3,0.42
+UEC.ED.18.102.1015,"Cimbra de madera acabado común para castillos, dalas, cadenas y cerramientos. Incluye: dimensionamiento, cortes, armado, limpieza, calafateado, lubricado, descimbrado, acarreos a siguiente posición o retiro fuera de la obra.",m2,46.38
+UEC.ED.18.100.1110,"Acero de refuerzo del No. 3 (3/8""), en albañilería (castillos, dalas, cerramientos, cadenas). Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.60
+UEC.ED.18.105.1015,"Concreto fabricado en obra f´c = 200 kg/cm2, tma = 19 mm (3/4""), RN, en castillos, dalas, cerramientos, cadenas y repizones. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,7.50
+UEC.ED.30.205.1421,"Aplanado de 2 cm de espesor a base de mortero cemento-arena proporción 1:4 acabado pulido, con impermeabilizante integral de primera calidad a razón de 2 kg por cada 50 kg de cemento, en muro a 3.50 m de altura. Incluye: preparación de la superficie, mezcla, aplicación, plomeado, andamiaje y limpieza.",m2,61.38
+UEC.ED.86.200.1010,"Marco y contramarco a base de perfil comercial ángulo. Incluye: trazo, dimensionamiento, cortes, anclas, soldadura, primario de taller, presentación y fijación.",kg,68.20
+UEC.ED.86.210.1030,"Rejilla de acero marca IRVING IS-05 o similar en calidad, costo y garantía. Incluye: trazo, dimensionamiento, cortes, soldadura, primario de taller, presentación y fijación.",m2,23.87
+"NOTA: Los códigos identificados de manera diferente a los del Tabulador UEC, corresponden a conceptos de equipamientos o acabados que presentan variabilidad en sus modelos de manera constante, por lo que se consideran atípicos y no forman parte del mismo.",,,
+,,,
