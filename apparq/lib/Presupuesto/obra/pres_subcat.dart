@@ -21,7 +21,8 @@ class PresSubcatPage extends StatefulWidget {
 }
 
 class _PresSubcatPageState extends State<PresSubcatPage> {
-  List<List<dynamic>> csvData = [];
+  List<Map<String, Map<String, String>>> categoriasList = [];
+  String? subcategoriaSeleccionada;
 
   @override
   void initState() {
@@ -33,18 +34,48 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     final subcategoriaMayusculas = removeAccents(widget.subcategoriaSeleccionada.toUpperCase());
     final opcionMayusculas = removeAccents(widget.opcion.toUpperCase());
     String ruta = '${widget.categoriaSeleccionada}/$subcategoriaMayusculas/$opcionMayusculas/archivo.csv';
+    
     try {
       final ByteData data = await rootBundle.load('assets/csv/$ruta');
       final List<int> bytes = data.buffer.asUint8List();
       final String csvString = utf8.decode(bytes);
       List<List<dynamic>> parsedCSV = const CsvToListConverter().convert(csvString);
+
+      List<Map<String, Map<String, String>>> tempCategoriasList = [];
+
+      for (var row in parsedCSV) {
+        if (row.isNotEmpty && row[0] is String && row[0].startsWith('A')) {
+          String subcategoria = row[0];
+          String nombreSubcategoria = row[1];
+
+          if (subcategoria.length == 3) {
+            Map<String, Map<String, String>> categoriaMap = {
+              'nombreCategoria': {subcategoria: nombreSubcategoria},
+              'subcategorias': {},
+            };
+            tempCategoriasList.add(categoriaMap);
+          } else if (subcategoria.length == 5) {
+            String categoriaKey = subcategoria.substring(0, 3);
+            for (var categoria in tempCategoriasList) {
+              if (categoria['nombreCategoria']!.containsKey(categoriaKey)) {
+                categoria['subcategorias']![subcategoria] = nombreSubcategoria;
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      print(tempCategoriasList);
+
       setState(() {
-        csvData = parsedCSV;
+        categoriasList = tempCategoriasList;
       });
     } catch (e) {
       print('Error al cargar el archivo CSV: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,22 +84,38 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
         title: Text('Página ${widget.categoriaSeleccionada}'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('CSV Data:'),
-            Expanded(
-              child: ListView.builder(
-                itemCount: csvData.length,
-                itemBuilder: (context, index) {
-                  List<dynamic> row = csvData[index];
-                  return ListTile(
-                    title: Text(row.join(', ')), // Mostrar la fila como texto
-                  );
-                },
-              ),
-            ),
-          ],
+        child: ListView.builder(
+          itemCount: categoriasList.length,
+          itemBuilder: (context, index) {
+            String nombreCategoria = categoriasList[index]['nombreCategoria']!.values.first;
+            List<String> subcategorias = categoriasList[index]['subcategorias']!.values.toList();
+            
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    nombreCategoria,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: subcategorias.map((subcategoria) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                      child: Text(subcategoria),
+                    );
+                  }).toList(),
+                ),
+                const Divider(),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -76,9 +123,20 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
 }
 
 String removeAccents(String input) {
-  return input.replaceAll('Á', 'A')
-              .replaceAll('É', 'E')
-              .replaceAll('Í', 'I')
-              .replaceAll('Ó', 'O')
-              .replaceAll('Ú', 'U');
+  return input
+      .replaceAll('Á', 'A')
+      .replaceAll('É', 'E')
+      .replaceAll('Í', 'I')
+      .replaceAll('Ó', 'O')
+      .replaceAll('Ú', 'U');
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: PresSubcatPage(
+      categoriaSeleccionada: 'Categoria',
+      subcategoriaSeleccionada: 'Subcategoria',
+      opcion: 'Opcion',
+    ),
+  ));
 }
