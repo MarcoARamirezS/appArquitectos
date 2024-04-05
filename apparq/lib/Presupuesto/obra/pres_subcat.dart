@@ -21,7 +21,7 @@ class PresSubcatPage extends StatefulWidget {
 }
 
 class _PresSubcatPageState extends State<PresSubcatPage> {
-  List<Map<String, Map<String, String>>> categoriasList = [];
+  List<Categoria> categoriasList = [];
   String? subcategoriaSeleccionada;
 
   @override
@@ -34,39 +34,41 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     final subcategoriaMayusculas = removeAccents(widget.subcategoriaSeleccionada.toUpperCase());
     final opcionMayusculas = removeAccents(widget.opcion.toUpperCase());
     String ruta = '${widget.categoriaSeleccionada}/$subcategoriaMayusculas/$opcionMayusculas/archivo.csv';
-    
+
     try {
       final ByteData data = await rootBundle.load('assets/csv/$ruta');
       final List<int> bytes = data.buffer.asUint8List();
       final String csvString = utf8.decode(bytes);
       List<List<dynamic>> parsedCSV = const CsvToListConverter().convert(csvString);
-
-      List<Map<String, Map<String, String>>> tempCategoriasList = [];
+      List<Categoria> tempCategoriasList = [];
+      Categoria? categoriaActual;
+      Subcat? subcategoriaActual;
 
       for (var row in parsedCSV) {
-        if (row.isNotEmpty && row[0] is String && row[0].startsWith('A')) {
-          String subcategoria = row[0];
-          String nombreSubcategoria = row[1];
+        if (row.isNotEmpty && row[0] is String) {
+          final codigo = row[0];
 
-          if (subcategoria.length == 3) {
-            Map<String, Map<String, String>> categoriaMap = {
-              'nombreCategoria': {subcategoria: nombreSubcategoria},
-              'subcategorias': {},
-            };
-            tempCategoriasList.add(categoriaMap);
-          } else if (subcategoria.length == 5) {
-            String categoriaKey = subcategoria.substring(0, 3);
-            for (var categoria in tempCategoriasList) {
-              if (categoria['nombreCategoria']!.containsKey(categoriaKey)) {
-                categoria['subcategorias']![subcategoria] = nombreSubcategoria;
-                break;
-              }
-            }
+          if (codigo.length == 3) {
+            categoriaActual = Categoria(nombre: row[1], subcategorias: []);
+            tempCategoriasList.add(categoriaActual);
+          } else if (codigo.length == 5 && categoriaActual != null) {
+            subcategoriaActual = Subcat(nombre: row[1], productos: []);
+            categoriaActual.subcategorias.add(subcategoriaActual);
+          } else if (codigo.length > 0 && subcategoriaActual != null && row[1].length > 0) {
+            final nombre = row.isNotEmpty ? row[1] : '';
+            final unidad = row.isNotEmpty ? row[2] : '';
+            final precioString = row.isNotEmpty ? row[3].toString().replaceAll(',', '') : '0'; // Convertir a cadena
+            final precio = double.tryParse(precioString) ?? 0;
+            print(precioString);
+            subcategoriaActual.productos.add(Producto(
+              clave: codigo,
+              nombre: nombre,
+              unidad: unidad,
+              precio: precio,
+            ));
           }
         }
       }
-
-      print(tempCategoriasList);
 
       setState(() {
         categoriasList = tempCategoriasList;
@@ -81,38 +83,27 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Página ${widget.categoriaSeleccionada}'),
+        title: Text(widget.opcion),
       ),
       body: Center(
         child: ListView.builder(
           itemCount: categoriasList.length,
           itemBuilder: (context, index) {
-            String nombreCategoria = categoriasList[index]['nombreCategoria']!.values.first;
-            List<String> subcategorias = categoriasList[index]['subcategorias']!.values.toList();
-            
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            final categoria = categoriasList[index];
+            return ExpansionTile( // ExpansionTile para la categoría
+              title: Text(categoria.nombre),
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    nombreCategoria,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: subcategorias.map((subcategoria) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
-                      child: Text(subcategoria),
-                    );
-                  }).toList(),
-                ),
-                const Divider(),
+                // Iterar sobre las subcategorías
+                ...categoria.subcategorias.map((subcategoria) => ExpansionTile( // ExpansionTile para la subcategoría
+                  title: Text(subcategoria.nombre),
+                  children: [
+                    // Iterar sobre los productos
+                    ...subcategoria.productos.map((producto) => ListTile(
+                      title: Text(producto.nombre),
+                      subtitle: Text('${producto.unidad} - \$${producto.precio}'),
+                    )).toList(),
+                  ],
+                )).toList(),
               ],
             );
           },
@@ -129,6 +120,42 @@ String removeAccents(String input) {
       .replaceAll('Í', 'I')
       .replaceAll('Ó', 'O')
       .replaceAll('Ú', 'U');
+}
+
+class Categoria {
+  final String nombre;
+  final List<Subcat> subcategorias;
+
+  Categoria({
+    required this.nombre,
+    required this.subcategorias,
+  });
+}
+
+class Subcat {
+  final String nombre;
+  final List<Producto> productos;
+
+  Subcat({
+    required this.nombre,
+    required this.productos,
+  });
+}
+
+class Producto {
+  final String clave;
+  final String nombre;
+  final String unidad;
+  final int cantidad;
+  final double precio;
+
+  Producto({
+    required this.clave,
+    required this.nombre,
+    required this.unidad,
+    required this.precio,
+    this.cantidad = 0,
+  });
 }
 
 void main() {
