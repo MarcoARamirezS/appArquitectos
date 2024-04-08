@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
-import 'package:flutter/services.dart' show ByteData, rootBundle;
+import 'package:flutter/services.dart' show ByteData, FilteringTextInputFormatter, rootBundle;
 import 'dart:convert';
 
 class PresSubcatPage extends StatefulWidget {
@@ -85,32 +85,154 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
       appBar: AppBar(
         title: Text(widget.opcion),
       ),
-      body: Center(
-        child: ListView.builder(
-          itemCount: categoriasList.length,
-          itemBuilder: (context, index) {
-            final categoria = categoriasList[index];
-            return ExpansionTile( // ExpansionTile para la categoría
-              title: Text(categoria.nombre),
-              children: [
-                // Iterar sobre las subcategorías
-                ...categoria.subcategorias.map((subcategoria) => ExpansionTile( // ExpansionTile para la subcategoría
-                  title: Text(subcategoria.nombre),
-                  children: [
-                    // Iterar sobre los productos
-                    ...subcategoria.productos.map((producto) => ListTile(
-                      title: Text(producto.nombre),
-                      subtitle: Text('${producto.unidad} - \$${producto.precio}'),
-                    )).toList(),
-                  ],
-                )).toList(),
-              ],
-            );
-          },
-        ),
+      body: Column(
+        children: [
+          Expanded( // Expandir el ListView para que ocupe el espacio disponible
+            child: Center(
+              child: ListView.builder(
+                itemCount: categoriasList.length,
+                itemBuilder: (context, index) {
+                  final categoria = categoriasList[index];
+                  return ExpansionTile(
+                    title: Text(categoria.nombre),
+                    children: [
+                      ...categoria.subcategorias.map((subcategoria) => ExpansionTile(
+                        title: Text(subcategoria.nombre),
+                        children: [
+                          ...subcategoria.productos.map((producto) => Table(
+                            border: TableBorder.all(),
+                            columnWidths: const {
+                              // Ancho de las columnas
+                              0: FlexColumnWidth(3.1), // Columna del nombre
+                              1: FlexColumnWidth(1), // Columna de la cantidad
+                              2: FlexColumnWidth(0.7), // Columna de la unidad
+                              3: FlexColumnWidth(1.2), // Columna del precio
+                            },
+                            children: [
+                              TableRow(
+                                children: [
+                                  TableCell(
+                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(producto.nombre),
+                                    ),
+                                  ),
+                                  TableCell(
+                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none, 
+                                        contentPadding: EdgeInsets.all(3.0),
+                                      ),
+                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      initialValue: producto.cantidad.toString(),
+                                      onChanged: (String valor) {
+                                        setState(() {
+                                          producto.cantidad = int.tryParse(valor) ?? 0;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  TableCell(
+                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(child: Text(producto.unidad)),
+                                    ),
+                                  ),
+                                  TableCell(
+                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(child: Text('\$${producto.precio}')),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )).toList(),
+                        ],
+                      )).toList(),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                String resumen = generarResumenTicket();
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Resumen del Presupuesto'),
+                      content: SingleChildScrollView( // Envolver el contenido en SingleChildScrollView
+                        child: Text(resumen),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('Cerrar'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }, 
+              child: Text('Acción'),
+            ),
+          ),
+        ],
       ),
     );
   }
+
+  String generarResumenTicket() {
+    String resumen = '';
+    double totalGeneral = 0.0;
+
+    List<Categoria> categoriasConProductos = obtenerCategoriasConProductos();
+
+    for (var categoria in categoriasConProductos) {
+      for (var subcategoria in categoria.subcategorias) {
+        for (var producto in subcategoria.productos) {
+          if (producto.cantidad > 0) {
+            double precioTotalProducto = producto.cantidad * producto.precio;
+            resumen += '${producto.nombre} (${producto.cantidad} ${producto.unidad}) - \$${precioTotalProducto.toStringAsFixed(2)}\n';
+            totalGeneral += precioTotalProducto;
+          }
+        }
+      }
+    }
+
+    resumen += '\nTotal General: \$${totalGeneral.toStringAsFixed(2)}';
+    return resumen;
+  }
+
+  List<Categoria> obtenerCategoriasConProductos() {
+    return categoriasList.map((categoria) {
+      // Filtrar subcategorías con productos con cantidad > 0
+      List<Subcat> subcategoriasFiltradas = categoria.subcategorias
+          .where((subcat) => subcat.productos.any((producto) => producto.cantidad > 0))
+          .toList();
+
+      // Crear nuevas subcategorías con productos filtrados
+      subcategoriasFiltradas = subcategoriasFiltradas.map((subcat) {
+        List<Producto> productosFiltrados =
+            subcat.productos.where((producto) => producto.cantidad > 0).toList();
+        return Subcat(nombre: subcat.nombre, productos: productosFiltrados);
+      }).toList();
+
+      // Crear nueva categoría con subcategorías filtradas
+      return Categoria(nombre: categoria.nombre, subcategorias: subcategoriasFiltradas);
+    }).toList();
+  }
+
 }
 
 String removeAccents(String input) {
@@ -146,7 +268,7 @@ class Producto {
   final String clave;
   final String nombre;
   final String unidad;
-  final int cantidad;
+  int cantidad;
   final double precio;
 
   Producto({
@@ -167,3 +289,4 @@ void main() {
     ),
   ));
 }
+
