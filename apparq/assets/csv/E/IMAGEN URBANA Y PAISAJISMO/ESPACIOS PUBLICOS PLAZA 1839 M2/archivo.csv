@@ -1,0 +1,113 @@
+﻿,,,
+CLAVE,CONCEPTO,UNIDAD,CANTIDAD
+A ,ESPACIOS PÚBLICOS (PLAZA),,
+A01,PRELIMINARES,,
+A0101,TRAZO Y NIVELACION,,
+UEC.ED.12.100.1015,"Trazo y nivelación con equipo topográfico, en terreno plano. Incluye trabajos en sitio, mojoneras, referencias de nivel y planos de trazo.",m2,"1,839.10"
+A02,MOVIMIENTO DE TIERRAS / TERRACERÍAS,,
+A0201,EXCAVACIONES,,
+UEC.ED.12.110.1050,"Excavación con equipo en caja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en caja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,246.31
+A0202,CARGAS Y ACARREOS,,
+UEC.ED.14.120.1065,"Acarreo en camión de material producto de demolición al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,320.21
+UEC.ED.14.135.1055,Acarreo en camión de material producto de demolición en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,"1,601.05"
+A03,ACABADOS,,
+A0301,PISOS (PLAZAS Y ANDADORES),,
+UEC.ED.12.140.1005,"Mejoramiento de terreno a base de cal hidratada a razón de 6 kg/m2 ( 30 kg/m3) a 20 cm de profundidad. Incluye: escarificado, hidratado, mezclado, nivelado y compactado con equipo al 90% de su PVSM.",m3,920.40
+UEC.ED.12.125.1424,"Relleno mecánico en caja con material inerte, compactado al 95% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,480.30
+UEC.UB.10.100.1055,"Capa Subrasante, con material procedente de banco, compactada al 95 % de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N·CTR·CAR·1·01·009/16.",m3,920.40
+UEC.UB.10.100.1155,"Capa Base Hidráulica, con material producto de la trituración de roca sana, procedente de banco, compactada al 100 % de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N·CTR·CAR·1·04·002/11.",m3,920.40
+UEC.UB.10.103.1050,"Cimbra metálica para banquetas y losas. Incluye: dimensionamiento, cortes, armado, limpieza, calafateado, lubricado, descimbrado, acarreos a siguiente posición o retiro fuera de la obra.",m2,22.25
+UEC.ED.18.100.1305,"Malla electrosoldada 6 x 6 - 10 / 10 para armado de firmes, pisos o capas de compresión. Incluye: dimensionamiento, cortes, silletas, traslapes y amarre con alambre.",m2,194.17
+UEC.ED.18.100.1310,"Malla electrosoldada 6 x 6 - 8 / 8 para armado de firmes, pisos o capas de compresión. Incluye: dimensionamiento, cortes, silletas, traslapes y amarre con alambre.",m2,40.05
+UEC.UB.10.115.1110,"Losa de concreto hidráulico con f´c = 150 kg/cm², tiro directo, revenimiento 10 ± 2.5 cm, tamaño máximo de agregado 19 mm, resistencia normal. Incluye: colado, vibrado, curado y limpieza. N.CTR.CAR.1.04.009/20.",m3,15.54
+UEC.UB.10.115.1115,"Losa de concreto hidráulico con f´c = 200 kg/cm², tiro directo, revenimiento 10 ± 2.5 cm, tamaño máximo de agregado 19 mm, resistencia normal. Incluye: colado, vibrado, curado y limpieza. N.CTR.CAR.1.04.009/20.",m3,3.21
+UEC.UB.10.200.1025,"Acabado oxidado sobre concreto hidráulico. Incluye: trazo, preparación de la superficie, dilución, oxidante de concreto, barniz sellador, aplicación con aspersor y limpieza.",m2,194.17
+UEC.UB.10.200.1020,"Acabado pulido rayado con brocha de pelo sobre concreto hidráulico. Incluye: trazo, delimitación de la superficie y limpieza.",m2,234.22
+UEC.UB.10.123.1015,"Piso de adocreto de 6 cm de espesor, asentado sobre cama de arena de 5 cm, emboquillado de juntas arena fina. Incluye: trazo, nivelación, compactación del terreno al 95% de su PVSM, ajustes, cortes, desperdicios y limpieza.",m2,73.59
+A0302,ELEMENTOS DE ORNATO,,
+UEC.ED.30.135.1110,"Muro de 14 cm de espesor construido con tabique de barro 7 x 14 x 28 cm, asentado con mortero cemento-arena proporción 1:4 con junta de 1 cm acabado común, hasta 3.50 m de altura. Incluye: trazo, nivelación, plomeado, andamiaje y limpieza.",m2,57.75
+UEC.ED.18.105.1010,"Concreto fabricado en obra f´c = 200 kg/cm2, tma = 19 mm (3/4""), RN, en estructura. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,16.82
+UEC.ED.16.110.1015,"Cimbra acabado común en cimentación a base de madera de pino de 3ra., incluye: dimensionamiento, cortes, armado, lubricado, alambres, torzales, separadores, andamiaje, obra falsa necesaria, descimbrado, limpieza retiro de sobrantes del frente de trabajo.",m2,214.09
+UEC.ED.30.205.1421,"Aplanado de 2 cm de espesor a base de mortero cemento-arena proporción 1:4 acabado pulido, con impermeabilizante integral de primera calidad a razón de 2 kg por cada 50 kg de cemento, en muro a 3.50 m de altura. Incluye: preparación de la superficie, mezcla, aplicación, plomeado, andamiaje y limpieza.",m2,25.81
+UEC.ED.78.145.1010,"Pintura vinílica primera calidad sobre  muro con superficie fina hasta 3.50 m de altura. Incluye: preparación de la superficie, aplicación de sellador 5 x 1, dilución y aplicación a dos manos hasta cubrir perfectamente la superficie, andamiaje y limpieza.",m2,25.81
+A0303,MOBILIARIO URBANO,,
+UEC.ED.30.295.1050,"Muerto a base de concreto f'c= 100 kg/cm2, tma 19 mm. Incluye: excavación a mano, afine de fondo y talud, desperdicios, colado, curado, vibrado, movimiento del material dentro de la obra y limpieza.",m3,1.88
+ESPUB.10.OEX.1001,"Módulo de bote de basura doble de 1.12 x 1.00 x 0.38 m, marca MUPA, modelo BTCAD002 o similar en calidad, costo y garantía, acabado en pintura electrostática con pre tratamiento de fosfato de zinc. Incluye: trazo, presentación, fijación y limpieza.",Pieza,5.00
+ESPUB.10.OEX.1002,"Columpio doble de 3.33 x 1.42 x 2.52 m, marca PLAY CLUB, modelo 1CLM5 o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+ESPUB.10.OEX.1003,"Sube y baja de dos plazas, de 2.22 x 0.63 x 1.50 m, con capacidad de 2 niños, marca PLAY CLUB, modelo SYBMT200 o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,2.00
+ESPUB.10.OEX.1004,"Resbaladilla metálica de 3.40 x 2.15 x 2.00 m, con capacidad de 3 niños, marca JUMBO, modelo RPL-117 o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+ESPUB.10.OEX.1005,"Ejercitador twister triple para fortalecimiento cardio pulmonar de 1.58 x 1.40 x 1.26 m, marca PLAY CLUB, modelo E20TWI-TUB o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,2.00
+ESPUB.10.OEX.1006,"Ejercitador tipo caballo para desarrollo muscular de pierna, abdomen y hombro de 1.01 x 0.68 x 1.20 m, marca PLAY CLUB, modelo E26CAB-TUB o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+ESPUB.10.OEX.1007,"Ejercitador prensa doble para entrenamiento de músculos superiores de 2.15 x 0.69 x 2.26 m, marca PLAY CLUB, modelo E7PPE-TUB o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+ESPUB.10.OEX.1008,"Ejercitador tonificador doble de pierna de 1.78 x 0.51 x 2.00 m, marca PLAY CLUB, modelo E13TON-BAR o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+ESPUB.10.OEX.1009,"Ejercitador tipo remo para desarrollo de musculatura de espalda y hombro de 1.18 x 0.75 x 0.79 m, marca PLAY CLUB, modelo E23REMO o similar en calidad, costo y garantía, acabado con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+A0304,JARDINERIA Y VEGETACIÓN,,
+ESPUB.30.OEX.1001,"Árbol de la especie Fresno blanco, de 0.05 m de diámetro de tronco y 3.00 m de alto. Incluye: excavación, plantación, relleno, tratamiento de las raíces con fungicidas, enraizadores, riego y limpieza.",Pieza,3.00
+ESPUB.30.OEX.1002,"Planta de ornato tipo Peonia. Incluye: excavación, plantación, relleno, riego y limpieza.",Pieza,122.00
+ESPUB.30.OEX.1003,"Planta cubresuelo tipo dedo moro. Incluye: excavación, plantación, relleno, riego y limpieza.",Pieza,122.00
+ESPUB.30.OEX.1004,"Cubresuelo tipo corteza procesada. Incluye: excavación, plantación, relleno, riego y limpieza.",m2,447.00
+ESPUB.30.OEX.1005,"Planta de ornato tipo Lavanda. Incluye: excavación, plantación, relleno, riego y limpieza.",Pieza,18.00
+ESPUB.30.OEX.1006,"Planta de ornato tipo Cola de Zorro. Incluye: excavación, plantación, relleno, riego y limpieza.",Pieza,18.00
+UEC.OE.30.110.1010,"Pasto en rollo tipo San Agustín. Incluye: carga, acarreo, capa de tierra de 10 cm, nivelación, riego y limpieza.",m2,50.00
+A0305,LIMPIEZAS,,
+UEC.ED.100.115.1055,"Limpieza general al termino de la obra, incluye: retiros de materiales sobrantes en lugar especificado por la supervisión, equipo y herramienta.",m2,"1,839.10"
+A04,INSTALACIÓN HIDRÁULICA,,
+A0401,OBRA CIVIL,,
+UEC.IH.18.110.1010,"Trazo y nivelación con equipo topográfico para el desplante de estructuras para redes de agua. Incluye: ubicación de bancos, niveles, trazo, marcas y señales, de conformidad con las Especificaciones de Construcción.",m2,8.00
+UEC.ED.12.110.1015,"Excavación con equipo en zanja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en zanja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,3.36
+UEC.IH.18.140.1010,"Plantilla con material inerte de banco  a cualquier profundidad, para obra hidráulica, compactado al 90% de su PVSM en capas de hasta 10 cm.  Incluye: selección del material, carga, acarreo, tiro en zona de relleno, incorporación de agua, compactación y acarreo, de conformidad con las Especificaciones de Construcción.",m3,4.80
+UEC.ED.12.125.1115,"Relleno semi-mecánico en zanja con material inerte, compactado al 90% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,4.80
+UEC.IH.18.155.1010,"Atraque a base de concreto hecho en obra fc = 150 kg/cm2 para sujetar tuberías. Incluye: trazo, preparación de la superficie, cimbra, vibrado y curado.",m3,0.03
+A0402,TUBERÍA Y PIEZAS ESPECIALES,,
+ESPUB.18.URB.1001,"Toma para bebedero en línea de 3"" a base de tubería flexible multicapas PEAD-AL-PEAD de 1/2"" de diámetro, de hasta 8.00 m de longitud. Incluye: abrazadera de PVC 3"" x 1/2"", válvula de inserción de 1/2"", codo bronce combinado de compresión de 90° x 1/2"", niple galvanizado de 1/2"" con forro de polietileno de alta densidad de 50 cm de longitud, llave de candado de 1/2"", niple galvanizado de 1/2"" de 30 cm de longitud, codo galvanizado de 1/2"" x 90°, niple galvanizado de 1/2"" de cuerda corrida.",Pieza,1.00
+A0403,EQUIPOS Y ACCESORIOS,,
+ESPUB.10.OEX.1010,"Bebedero de pedestal de 1.85 x 1.20 m, con dos brazos laterales en forma de cruz, especificaciones de acuerdo a proyecto. Incluye: trazo, traslado, montaje, maniobras, fijación y limpieza.",Pieza,1.00
+A05,INSTALACIÓN ELÉCTRICA,,
+A0501,ALUMBRADO EXTERIOR,,
+UEC.ED.43.130.1010,"Tubo conduit de acero galvanizado de pared gruesa de 13 mm diámetro comercial, 16 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,8.00
+UEC.ED.43.130.1105,"Codo de acero galvanizado de pared gruesa de 13 mm diámetro comercial, 16 mm SEDE, a cualquier altura. Incluye: presentación y fijación a tubería u otras conexiones.",Pieza,2.00
+UEC.ED.43.175.1015,"Caja de conexiones eléctricas, de lamina galvanizada troquelada de 12 x 12 x 5 cm, para tubería de 25 mm, a cualquier altura. Incluye: presentación, colocación, fijación y conexión a tubería.",Pieza,2.00
+UEC.ED.43.220.1030,"Condulet de aluminio serie ovalada, serie 7, T, para tubo de 41 mm, marca CROUSE-HINDS EATON, Catalogo T57, o similar en calidad, costo y garantía, a cualquier altura. Incluye: fijación y conexión a tubos.",Pieza,2.00
+UEC.ED.46.102.1015,"Cable de cobre suave electrolítico con aislamiento de PVC tipo THW-LS/THHW-LS 90°C, 600V, calibre No 12 AWG, libre de sustancias peligrosas (RoHS), marca CONDUMEX o similar en calidad, costo y garantía, a cualquier altura. Incluye: identificación, dimensionamiento, instalación en canalización, cortes, amarres y empalmes con cinta aislante.",m,30.00
+UEC.ED.46.118.1055,"Cable de cobre electrolítico semiduro desnudo, calibre No 12 AWG, marca CONDUMEX o similar en calidad, costo y garantía, a cualquier altura. Incluye: identificación, dimensionamiento, instalación en canalización, cortes, amarres y empalmes con cinta aislante.",m,15.00
+UEC.ED.46.108.1050,"Cordón de uso rudo tipo SJT, de cobre suave con aislamiento de PVC 60°C, 300 V RoHS, con 3 conductores calibre No 14 AWG, marca CONDUMEX o similar en calidad, costo y garantía, a cualquier altura. Incluye: identificación, dimensionamiento, instalación en canalización, cortes, amarres y empalmes con cinta aislante.",m,1.00
+ESPUB.50.URB.1001,"Luminaria Vaportite Led de 4', marca METALUX, modelo 4APVTLD-40L850 o similar en calidad, costo y garantía. Incluye: andamiaje, conexiones, correcto funcionamiento y elementos de fijación.",Pieza,2.00
+ESPUB.50.URB.1002,"Protección antivandálica a base de solera de 1/2"" x 1/8"", para luminaria de 129 x 1265 mm. Incluye: andamiaje, presentación, fijación y limpieza.",Pieza,2.00
+UEC.ED.46.245.1053,"Interruptor termomagnético tipo QO, enchufable, 120/240 V, 10,000 A simétricos, de 2 polos, 15 A marca SQUARE D, catalogo QO215, o similar en calidad, costo y garantía, a cualquier altura. Incluye: montaje, ensamblado y arranque.",Pieza,2.00
+UEC.ED.36.110.1015,"Riel unicanal liso de 4 x 4 cm tramo de 3 metros, a cualquier altura. Incluye: preparación, cortes, colocación, trazo, presentación, elementos de fijación y limpieza.",Pieza,1.00
+UEC.ED.36.100.1105,"Abrazadera para unicanal galvanizada para tubo de 16 mm de diámetro, con tornillo, a cualquier altura. Incluye: trazo, presentación, elementos de fijación y limpieza.",Pieza,6.00
+UEC.ED.46.225.1220,"Centro de carga tipo QOD, con zapatas principales, con 4 espacios, 60A, 2F-3H, para empotrar, catalogo QOD4F, marca SQUARE D  o similar en calidad, costo y garantía. Incluye: Trazo, montaje, ensamblado, etiquetado, peinado de cables, arranque y pruebas.",Pieza,1.00
+ESPUB.50.URB.1003,"Luminario Night Falcon, marca LUMARK, modelo NFFLD-S-C15 o similar en calidad, costo y garantía. Incluye: andamiaje, conexiones, correcto funcionamiento y elementos de fijación.",Pieza,4.00
+ESPUB.50.URB.1004,"Luminaria funcional antivandálica, marca ATP, modelo LIBRA A o similar en calidad, costo y garantía, potencia de 55 Watts. Incluye: andamiaje, conexiones, correcto funcionamiento y elementos de fijación.",Pieza,13.00
+UEC.UB.50.120.1115,"Poste cónico circular, fabricado con lámina de acero rolado en caliente calibre 11, de 4.5 m de altura, acabado en pintura esmalte. Incluye: presentación, parado, plomeo, fijación y limpieza.",Pieza,13.00
+UEC.UB.50.120.1160,"Poste cónico circular, fabricado con lámina de acero rolado en caliente calibre 11, de 9 m de altura, acabado en pintura esmalte. Incluye: presentación, plomeo, fijación y limpieza.",Pieza,2.00
+UEC.UB.50.110.1020,"Base tipo pirámide prefabricado de concreto de 40 x 80 x 100 cm, marca CENMEX o similar en calidad, costo y garantía. Incluye: trazo, nivelación, excavación, relleno, compactación, acarreo fuera de obra de material sobrante y limpieza.",Pieza,15.00
+UEC.ED.46.285.1015,"Registro eléctrico prefabricado de concreto polimérico con tapa de 40 x 40 x 60 cm, para alumbrado, marca CENMEX o similar en calidad, costo y garantía. Incluye: trazo, nivelación, excavación, relleno, compactación, acarreo fuera de obra de material sobrante y limpieza.",Pieza,21.00
+UEC.UB.50.150.1355,"Cable para distribución subterránea XLP-DRS, con conductores de aluminio duro (2+1), calibre No 6 AWG, aislamiento de polietileno de cadena cruzada XLP, 90 °C, 600 V, a cualquier altura. Incluye: identificación, dimensionamiento, instalación en canalización, cortes, amarres, empalmes, pruebas de operación, de acuerdo a Norma CFE E1000-02.",m,246.00
+ESPUB.50.URB.1005,"Empalme de compresión de cobre, para calibre no 6 AWG, barril corto, estañado, a cualquier altura. Incluye: presentación, fijación y limpieza.",Pieza,63.00
+ESPUB.50.URB.1006,"Termocontráctil de 3/4"" de diámetro para sellado de conexiones, a cualquier altura. Incluye: dimensionamiento, cortes, presentación, fijación y limpieza.",Pieza,63.00
+UEC.ED.43.110.1025,"Tubo poliducto liso de 32 mm diámetro comercial, 35 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,246.00
+UEC.ED.46.255.1010,"Varilla de tierra de 3.05 m de longitud, de 5/8"" de diámetro, marca COPPER WELD o similar en calidad, costo y garantía. Incluye: enterrado y conexión a cable de tierra.",Pieza,6.00
+ESPUB.50.URB.1007,"Combinación de alumbrado, de 2 polos, capacidad de 40 A y tensión maxima de 240 V. Incluye: presentación, fijación, nivelación, conexiones, arranque y pruebas.",Pieza,1.00
+UEC.ED.46.225.1060,"Centro de carga tipo QO, con zapatas principales, con 2 espacios, 40A, 1F-3H, NEMA-3R, catalogo QO2L40RB, marca SQUARE D  o similar en calidad, costo y garantía. Incluye: Trazo, montaje, ensamblado, etiquetado, peinado de cables, arranque y pruebas.",Pieza,1.00
+ESPUB.56.URB.1003,"Fotocontactor de alumbrado público monofásico, 127 V - 30 A, especificaciones de acuerdo a proyecto. Incluye: presentación y fijación.",Pieza,1.00
+ESPUB.50.URB.1008,"Interruptor astronómico digital, especificación de acuerdo a proyecto. Incluye: presentación, fijación en gabinete, puesta en marcha y limpieza.",Pieza,1.00
+UEC.ED.43.130.1115,"Codo de acero galvanizado de pared gruesa de 25 mm diámetro comercial, 27 mm SEDE, a cualquier altura. Incluye: presentación y fijación a tubería u otras conexiones.",Pieza,2.00
+UEC.ED.46.150.1125,"Mufa seca para acometida, de aluminio fundido, para tubo de 32 mm diámetro comercial, 35 mm SEDE, a cualquier altura. Incluye: Fijación a tubo.",Pieza,1.00
+UEC.ED.43.130.1025,"Tubo conduit de acero galvanizado de pared gruesa de 32 mm diámetro comercial, 35 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,3.00
+UEC.ED.46.250.1015,"Base para medidor monofásico (wathorimetro) con gabinete de lámina de acero rolada en frío, con portacandado; con capacidad para 100 Amperes y con 5 mordazas, catálogo MS1005J, marca SQUARE D o similar en calidad, costo y garantía, a cualquier altura. Incluye: Trazo, montaje y conexiones.",Pieza,1.00
+UEC.ED.43.125.1010,"Tubo conduit de acero galvanizado de pared delgada de 13 mm diámetro comercial, 16 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,3.00
+UEC.ED.43.125.1205,"Conector recto con tornillo de fijación, de acero galvanizado para tubería conduit pared delgada, de 13 mm diámetro comercial, 16 mm SEDE, a cualquier altura. Incluye: presentación y fijación a tubería u otras conexiones.",Pieza,1.00
+UEC.ED.46.255.1080,"Conector para varilla de cobre de 16 mm, a cualquier altura. Incluye: sujeción y conexión a cable de tierra.",Pieza,1.00
+UEC.UB.50.230.1730,"Fleje a base de lámina de acero inoxidable, de 16 mm de ancho, designación 316 de acuerdo con la norma NMX-B-083, a cualquier altura. Incluye: dimensionamiento, cortes y fijación, de acuerdo a Norma CFE 2G000-97.",m,3.00
+UEC.UB.50.230.1740,"Grapa a base de lámina de acero inoxidable, para fleje de 16 mm de ancho, designación 316 de acuerdo con la norma NMX-B-083, a cualquier altura. Incluye: presentación, montaje y fijación, de acuerdo a Norma CFE 2G000-97.",Pieza,6.00
+UEC.ED.46.249.1050,"Gabinete metálico de 25 x 20 x 15 cm, pintada exterior e interiormente con resina de epoxi-poliéster color gris, grado de protección IP66, puerta y chapa de seguridad. Incluye: elevaciones, fijación, perforaciones requeridas, presentación, colocación y elementos de fijación.",Pieza,1.00
+UEC.ED.43.135.1020,"Tubería conduit flexible de acero engargolado a prueba de líquidos, tipo liquid tight de 25 mm diámetro comercial, 27 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,2.50
+UEC.ED.43.135.1120,"Conector recto para tubo liquid tight de 25 mm diámetro comercial, 27 mm SEDE, a cualquier altura. Incluye: presentación y  fijación a tubo u otras conexiones.",Pieza,4.00
+UEC.ED.43.135.1220,"Conector curvo para tubo liquid tight de 25 mm diámetro comercial, 27 mm SEDE, a cualquier altura. Incluye: presentación y  fijación a tubo u otras conexiones.",Pieza,2.00
+UEC.ED.43.130.1215,"Contra y monitor de acero galvanizado de pared gruesa de 25 mm diámetro comercial, 27 mm SEDE, a cualquier altura. Incluye: presentación y fijación a tubería u otras conexiones.",Pieza,8.00
+UEC.UB.50.120.1030,"Poste de concreto reforzado PCR-9-400, de 9 metros de longitud, carga de prueba de 400 kg. Incluye: presentación, parado, plomeo y limpieza, de acuerdo a Norma CFE J6200-03 y DCCIAMBT.",Pieza,1.00
+UEC.UB.50.230.1320,"Cruceta PR 200 fabricada en perfil tubular, con placa refuerzo y dado de solera, 2000 mm de longitud y acabado galvanizado por inmersión en caliente, a cualquier altura. Incluye: presentación, montaje y fijación, de acuerdo a Norma CFE 2C900-93 y DCCIAMBT.",Pieza,2.00
+UEC.UB.50.230.1045,"Abrazadera UL  a base de redondo de acero de 15.88 mm con puntas redondeadas, acabado galvanizado por inmersión en caliente, a cualquier altura. Incluye: 2 tuercas hexagonales, 2 arandelas de presión, presentación, montaje y fijación, de acuerdo a Norma CFE 2A100-05 y DCCIAMBT.",Pieza,2.00
+UEC.UB.50.150.1115,"Cable neutranel con conductores de aluminio AAC-AAC (2+1), calibre No 6 AWG, con aislamiento de polietileno de alta densidad, para distribución aérea, 75 °C, 600 V, a cualquier altura. Incluye: identificación, dimensionamiento, tendido aéreo, cortes, amarres y empalmes, de acuerdo a Norma CFE E0000-09.",m,95.45
+"NOTA: Los códigos identificados de manera diferente a los del Tabulador UEC, corresponden a conceptos de equipamientos o acabados que presentan variabilidad en sus modelos de manera constante, por lo que se consideran atípicos y no forman parte del mismo.",,,

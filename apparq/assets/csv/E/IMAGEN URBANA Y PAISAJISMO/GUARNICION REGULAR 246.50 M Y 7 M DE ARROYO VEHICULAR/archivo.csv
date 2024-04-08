@@ -1,0 +1,154 @@
+﻿,,,
+CLAVE,CONCEPTO,UNIDAD,CANTIDAD
+A,ARROYO VEHICULAR,,
+A01,PRELIMINARES,,
+A0101,TRAZO Y NIVELACION,,
+UEC.ED.12.100.1015,"Trazo y nivelación con equipo topográfico, en terreno plano. Incluye trabajos en sitio, mojoneras, referencias de nivel y planos de trazo.",m2,"1,986.52"
+A02,MOVIMIENTO DE TIERRAS/ TERRACERÍAS,,
+A0201,EXCAVACIONES,,
+UEC.ED.12.110.1050,"Excavación con equipo en caja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en caja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,"1,375.98"
+A0202,CARGAS Y ACARREOS,,
+UEC.ED.14.120.1070,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,"1,788.77"
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,"8,943.85"
+A0203,AFINES Y COMPACTACIONES,,
+UEC.ED.12.135.1055,"Compactación de terreno natural al 95% de su P.V.S.M., por medios mecánicos, incluye: incorporación de agua.",m2,"1,986.52"
+A0204,RELLENOS,,
+UEC.UB.10.100.1010,"Capa Subyacente, con material procedente de banco, compactada al 90 % de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N·CTR·CAR·1·01·009/16.",m3,397.30
+UEC.UB.10.100.1055,"Capa Subrasante, con material procedente de banco, compactada al 95 % de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N·CTR·CAR·1·01·009/16.",m3,397.30
+UEC.UB.10.100.1110,"Capa Subbase Hidráulica, procedente de banco, compactada al 95 % de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N·CTR·CAR·1·04·002/11.",m3,397.30
+UEC.UB.10.100.1155,"Capa Base Hidráulica, con material producto de la trituración de roca sana, procedente de banco, compactada al 100 % de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N·CTR·CAR·1·04·002/11.",m3,297.98
+A03,ALBAÑILERIA/CONSTRUCTIVO,,
+A0301,CARPETAS ASFÁLTICAS Y RIEGOS,,
+UEC.IV.16.115.1010,"Riego de impregnación con emulsiones asfálticas ECI-60 a razón de 1.5 lts/m2, por unidad de obra terminada. N·CTR·CAR·1·04·004/15",m2,"1,986.52"
+UEC.IV.16.115.1015,"Arena para proteger el riego de impregnación, por unidad de obra terminada. N·CTR·CAR·1·04·004/15",m3,7.95
+A0302,FIRMES Y PISOS VEHICULARES,,
+UEC.UB.10.103.1050,"Cimbra metálica para banquetas y losas. Incluye: dimensionamiento, cortes, armado, limpieza, calafateado, lubricado, descimbrado, acarreos a siguiente posición o retiro fuera de la obra.",m2,37.00
+UEC.UB.10.140.1010,"Pasajunta a base de varilla de acero del No. 4 (1/2""). Incluye: dimensionamiento y corte.",kg,982.45
+UEC.UB.10.115.1070,"Losa de concreto hidráulico con MR = 38 kg/cm², tiro directo, revenimiento 10 ± 2.5 cm, tamaño máximo de agregado 38 mm, resistencia normal. Incluye: colado, vibrado, curado y limpieza. N.CTR.CAR.1.04.009/20.",m3,286.59
+UEC.UB.10.200.1015,"Acabado rayado sobre concreto hidráulico. Incluye: trazo, delimitación de la superficie y limpieza.",m2,"1,910.60"
+UEC.UB.10.150.1025,"Corte con disco de 3 a 5 cm de profundidad en pavimento de concreto hidráulico. Incluye: trazo, guía y limpieza.",m,460.98
+UEC.ED.18.115.1030,"Sistema de calafateo para juntas de entre 6 y 12 mm a base de espuma de polietileno de baja densidad SIKAROD y sellador elástico SIKAFLEX -1CSL marca SIKA o similar en calidad, costo y garantía. Incluye: Preparación, limpieza y presentación.",m,"1,328.24"
+UEC.UB.10.110.1010,"Guardalosa en la orilla del pavimento y banquetas con sección de 0.15 x 0.40 m de concreto hidráulico normal de f´c=200 kg/cm2, colada en el lugar por unidad de obra terminada. N-CTR-CAR-1-02-010/00.",m,39.53
+B,GUARNICIONES Y BANQUETA,,
+B01,PRELIMINARES,,
+B0101,TRAZO Y NIVELACION,,
+UEC.ED.12.100.1015,"Trazo y nivelación con equipo topográfico, en terreno plano. Incluye trabajos en sitio, mojoneras, referencias de nivel y planos de trazo.",m2,887.79
+B02,MOVIMIENTO DE TIERRAS/TERRACERÍAS,,
+B0201,EXCAVACIONES,,
+UEC.ED.12.105.1020,"Excavación manual en zanja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en zanja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,239.30
+B0202,CARGAS Y ACARREOS,,
+UEC.ED.14.120.1070,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,311.09
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,"1,555.45"
+B0203,AFINES Y COMPACTACIONES,,
+UEC.ED.12.135.1010,"Compactación de terreno natural al 90% de su P.V.S.M., por medios semi-mecánicos, incluye: incorporación de agua.",m2,887.79
+B0204,RELLENOS,,
+UEC.ED.12.125.1221,"Relleno semi-mecánico en caja con material inerte, compactado al 90% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,99.42
+B03,ALBAÑILERIA/CONSTRUCTIVO,,
+B0301,GUARNICIONES Y BANQUETAS,,
+UEC.UB.10.105.1013,"Banqueta de 8 cm de espesor construida de concreto premezclado f`c = 200 kg/cm2, tma = 19 mm, RN, acabado escobillado, armada con malla electrosoldada 6 x 6 / 10-10 y juntas de dilatación @ 2 m en ambos sentidos. Incluye: cimbras en fronteras, armado, colado, vibrado, curado, retiro de cimbra y limpieza. N-CTR-CAR-1-02-010-00.",m2,714.35
+UEC.UB.10.110.1040,"Guarnición trapezoidal de 15 x 20 x 40 cm elaborada a base de concreto premezclado f'c = 200 kg/cm2, tma 19 mm (3/4""), acabado aparente. Incluye: trazo, cimbra en fronteras, colado, vibrado, curado, retiro de cimbra y limpieza. N·CTR·CAR·1·02·010/00",m,482.86
+C,RED DE AGUA POTABLE,,
+C01,PRELIMINARES,,
+C0101,TRAZO Y NIVELACION,,
+UEC.IH.18.110.1015,"Trazo y nivelación con equipo topográfico para la instalación de tuberías. Incluye: ubicación de bancos, niveles, trazo, marcas y señales, de conformidad con las Especificaciones de Construcción.",m,313.71
+C02,MOVIMIENTO DE TIERRAS/TERRACERÍAS,,
+C0201,EXCAVACIONES,,
+UEC.ED.12.105.1020,"Excavación manual en zanja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en zanja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,150.58
+C0202,CARGAS Y ACARREOS,,
+UEC.ED.14.120.1070,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,195.76
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,978.80
+C0203,RELLENOS,,
+UEC.IH.18.140.1015,"Plantilla con arena a cualquier profundidad, para obra hidráulica, en capas de hasta 15 cm. Incluye: selección del material, carga, acarreo, tiro en zona de relleno, de conformidad con las Especificaciones de Construcción.",m3,13.18
+UEC.ED.12.125.1222,"Relleno semi-mecánico en caja con material inerte, compactado al 95% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,123.06
+C03,INSTALACION HIDRAULICA,,
+C0301,TUBERÍA Y PIEZAS ESPECIALES,,
+UEC.IH.20.105.1035,"Suministro de tubería de PVC hidráulico anger, serie inglesa, RD-26, de 50 mm de diámetro nominal, conforme a Norma NMX-E-145/1-SCFI-2002 y NOM-001-CONAGUA-2011. Incluye anillo empaque de material elastomérico en parte proporcional, lubricante para PVC, flete, acarreos y maniobras locales puesto LAB en el almacén de la obra en la localidad.",m,104.57
+UEC.IH.20.105.1045,"Suministro de tubería de PVC hidráulico anger, serie inglesa, RD-26, de 76 mm de diámetro nominal, conforme a Norma NMX-E-145/1-SCFI-2002 y NOM-001-CONAGUA-2011. Incluye anillo empaque de material elastomérico en parte proporcional, lubricante para PVC, flete, acarreos y maniobras locales puesto LAB en el almacén de la obra en la localidad.",m,209.14
+UEC.IH.20.105.1535,"Instalación de tubería de PVC hidráulico RD-64, RD-41, RD-32.5, RD-26, RD-13.5, A-5, A-7, A-10, A-14, A-20, de 50 mm de diámetro nominal. Incluye: mano de obra, materiales de consumo, equipo y herramienta para instalación, maniobras y acarreos locales, bajada, junteo, acomodo hasta su sitio final, norma NOM-001-CONAGUA-2011.",m,104.57
+UEC.IH.20.105.1545,"Instalación de tubería de PVC hidráulico RD-64, RD-41, RD-32.5, RD-26, RD-13.5, A-5, A-7, A-10, A-14, A-20, de 76 mm de diámetro nominal. Incluye: mano de obra, materiales de consumo, equipo y herramienta para instalación, maniobras y acarreos locales, bajada, junteo, acomodo hasta su sitio final, norma NOM-001-CONAGUA-2011.",m,209.14
+UEC.IH.22.100.1285,"Extremidad espiga de PVC anger serie inglesa de 50 mm de diámetro, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,2.00
+UEC.IH.22.100.1295,"Extremidad espiga de PVC anger serie inglesa de 75 mm de diámetro, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,2.00
+UEC.IH.22.100.1240,"Extremidad campana de PVC anger serie inglesa de 50 mm de diámetro, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,3.00
+UEC.IH.22.100.1250,"Extremidad campana de PVC anger serie inglesa de 75 mm de diámetro, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,3.00
+UEC.IH.22.100.1105,"Codo de PVC anger serie inglesa de 50 mm de diámetro x 90°, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,5.00
+UEC.IH.22.100.1115,"Codo de PVC anger serie inglesa de 75 mm de diámetro x 90°, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,5.00
+UEC.IH.22.100.1155,"Cople de reparación de PVC anger serie inglesa de 50 mm de diámetro, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,7.00
+UEC.IH.22.100.1165,"Cople de reparación de PVC anger serie inglesa de 75 mm de diámetro, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,7.00
+UEC.IH.22.100.1460,"TEE de PVC anger serie inglesa de 50 mm x 50 mm de diámetro, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,1.00
+UEC.IH.22.100.1465,"TEE de PVC anger serie inglesa de 75 mm x 75 mm de diámetro, conforme a la norma NMX-E-223. Incluye: presentación, colocación y limpieza.",Pieza,1.00
+UEC.IH.18.155.1010,"Atraque a base de concreto hecho en obra fc = 150 kg/cm2 para sujetar tuberías. Incluye: trazo, preparación de la superficie, cimbra, vibrado y curado.",m3,0.25
+C0302,VALVULAS,,
+UEC.ED.38.210.1100,"Válvula tipo compuerta con cuerpo de hierro fundido, extremos bridados, vástago fijo, clase 125, Figura W719F, marca WALWORTH o similar en calidad, costo y garantía, para tubo de 50 mm (2"") de diámetro, instalada a cualquier altura. Incluye: presentación, atornillado, sellado con garlok o neopreno y conexión a tubería.",Pieza,1.00
+UEC.ED.38.210.1105,"Válvula tipo compuerta con cuerpo de hierro fundido, extremos bridados, vástago fijo, clase 125, Figura W719F, marca WALWORTH o similar en calidad, costo y garantía, para tubo de 75 mm (3"") de diámetro, instalada a cualquier altura. Incluye: presentación, atornillado, sellado con garlok o neopreno y conexión a tubería.",Pieza,2.00
+C0303,CAJA DE VALVULAS,,
+UEC.IH.18.190.1010,"Caja para operación de válvulas tipo 1, con tapas de acero fundido conforme a las Especificaciones de Construcción. Incluye: trazo, excavaciones y todos los materiales para su correcta ejecución.",Pieza,1.00
+UEC.IH.18.190.1015,"Caja para operación de válvulas tipo 2, con tapas de acero fundido conforme a las Especificaciones de Construcción. Incluye: trazo, excavaciones y todos los materiales para su correcta ejecución.",Pieza,2.00
+C0304,EQUIPOS Y ACCESORIOS,,
+UEC.ED.38.215.1050,"Toma domiciliaria en línea de 3"" a base de tubería flexible multicapas PEAD-AL-PEAD de 1/2"" de diámetro, de hasta 2.50 m de longitud. Incluye: abrazadera de PVC 3"" x 1/2"", válvula de inserción de 1/2"", codo bronce combinado de compresión de 90° x 1/2"", niple galvanizado de 1/2"" con forro de polietileno de alta densidad de 50 cm de longitud, válvula restrictora de flujo con dispositivo antifraude de 1/2"", 2 niples galvanizados de 1/2"" de 30 cm de longitud, 2 codos galvanizados de 1/2"" x 90°, 2 niples galvanizados de 1/2"" de 10 cm de longitud y medidor de flujo.",Pieza,34.00
+D,ALCANTARILLADO,,
+D01,PRELIMINARES,,
+D0101,TRAZO Y NIVELACION,,
+UEC.IH.18.110.1015,"Trazo y nivelación con equipo topográfico para la instalación de tuberías. Incluye: ubicación de bancos, niveles, trazo, marcas y señales, de conformidad con las Especificaciones de Construcción.",m,243.03
+D02,MOVIMIENTO DE TIERRAS/TERRACERÍAS,,
+D0201,EXCAVACIONES,,
+UEC.IH.18.135.1010,"Excavación con equipo en zanja en material tipo B en seco, de 0.00 a 2.00 m de profundidad, para tuberías. Incluye: delimitación de la zona, afloje y extracción del material, afine de taludes, fondo y conservación de la zanja hasta la instalación de la tubería, carga y acarreo libre a 20 m, de conformidad con las Especificaciones de Construcción.",m3,327.31
+D0202,CARGAS Y ACARREOS,,
+UEC.ED.14.120.1070,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,425.50
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,"2,127.50"
+D0203,RELLENOS,,
+UEC.IH.18.140.1010,"Plantilla con material inerte de banco  a cualquier profundidad, para obra hidráulica, compactado al 90% de su PVSM en capas de hasta 10 cm.  Incluye: selección del material, carga, acarreo, tiro en zona de relleno, incorporación de agua, compactación y acarreo, de conformidad con las Especificaciones de Construcción.",m3,95.00
+UEC.ED.12.125.1120,"Relleno semi-mecánico en zanja con material inerte, compactado al 95% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,180.41
+D03,INSTALACION SANITARIA,,
+D0301,TUBERÍA Y PIEZAS ESPECIALES,,
+UEC.IH.20.105.2115,"Suministro de tubería de PVC alcantarillado sanitario serie 20, de 200 mm de diámetro nominal, de acuerdo a la NOM-001-CONGUA-2011 y NMX-E-215/1-CNCP-2012; incluye: flete, acarreos y maniobras locales puesto L.A.B. en el almacén de la obra de la localidad, anillo empaque en parte proporcional.",m,100.00
+UEC.IH.20.105.2120,"Suministro de tubería de PVC alcantarillado sanitario serie 20, de 250 mm de diámetro nominal, de acuerdo a la NOM-001-CONGUA-2011 y NMX-E-215/1-CNCP-2012; incluye: flete, acarreos y maniobras locales puesto L.A.B. en el almacén de la obra de la localidad, anillo empaque en parte proporcional.",m,143.50
+UEC.IH.20.105.2515,"Instalación de tubería de PVC sanitario Tipo 35, Tipo 41, Tipo 51, Serie 25, Serie 20, Serie 16.5, de 200 mm de diámetro nominal; incluye: mano de obra, materiales de consumo, equipo para instalación, maniobras, acarreos locales, bajada, junteo y acomodo hasta su sitio final.",m,100.00
+UEC.IH.20.105.2520,"Instalación de tubería de PVC sanitario Tipo 35, Tipo 41, Tipo 51, Serie 25, Serie 20, Serie 16.5, de 250 mm de diámetro nominal; incluye: mano de obra, materiales de consumo, equipo para instalación, maniobras, acarreos locales, bajada, junteo y acomodo hasta su sitio final.",m,143.50
+D0302,OBRA CIVIL,,
+UEC.IH.18.215.1020,"Pozo de visita tronco cónico de 1.01 a 1.25 m de profundidad, construido con cimentación a base de losa de concreto simple de 15 cm de espesor para desplante con resistencia de f`c=200 kg/cm2, muro de tabique rojo recocido de 28 cm de espesor, asentado con mortero de cemento-arena proporción 1:3 adicionado con impermeabilizante integral en proporción de 2 kg/bulto de cemento, aplanados con el mismo mortero de 2.0 cm de espesor mínimo, terminado fino exterior y pulido interior, medias cañas de concreto, escalones de varilla corrugada de acero No 8 @ 40 cm. Sin brocal y tapa. Incluye: trazo, nivelación, excavación, afine y compactación de terreno natural, cimentación, construcción del pozo, relleno calidad subrasante compactado al 95% Proctor, carga y acarreo de material sobrante a al sitio de desperdicio.",Pieza,1.00
+UEC.IH.18.215.1025,"Pozo de visita tronco cónico de 1.26 a 1.50 m de profundidad, construido con cimentación a base de losa de concreto simple de 15 cm de espesor para desplante con resistencia de f`c=200 kg/cm2, muro de tabique rojo recocido de 28 cm de espesor, asentado con mortero de cemento-arena proporción 1:3 adicionado con impermeabilizante integral en proporción de 2 kg/bulto de cemento, aplanados con el mismo mortero de 2.0 cm de espesor mínimo, terminado fino exterior y pulido interior, medias cañas de concreto, escalones de varilla corrugada de acero No 8 @ 40 cm. Sin brocal y tapa. Incluye: trazo, nivelación, excavación, afine y compactación de terreno natural, cimentación, construcción del pozo, relleno calidad subrasante compactado al 95% Proctor, carga y acarreo de material sobrante a al sitio de desperdicio.",Pieza,2.00
+UEC.IH.18.215.1030,"Pozo de visita tronco cónico de 1.51 a 1.75 m de profundidad, construido con cimentación a base de losa de concreto simple de 15 cm de espesor para desplante con resistencia de f`c=200 kg/cm2, muro de tabique rojo recocido de 28 cm de espesor, asentado con mortero de cemento-arena proporción 1:3 adicionado con impermeabilizante integral en proporción de 2 kg/bulto de cemento, aplanados con el mismo mortero de 2.0 cm de espesor mínimo, terminado fino exterior y pulido interior, medias cañas de concreto, escalones de varilla corrugada de acero No 8 @ 40 cm. Sin brocal y tapa. Incluye: trazo, nivelación, excavación, afine y compactación de terreno natural, cimentación, construcción del pozo, relleno calidad subrasante compactado al 95% Proctor, carga y acarreo de material sobrante a al sitio de desperdicio.",Pieza,1.00
+UEC.IH.18.215.1035,"Pozo de visita tronco cónico de 1.76 a 2.00 m de profundidad, construido con cimentación a base de losa de concreto simple de 15 cm de espesor para desplante con resistencia de f`c=200 kg/cm2, muro de tabique rojo recocido de 28 cm de espesor, asentado con mortero de cemento-arena proporción 1:3 adicionado con impermeabilizante integral en proporción de 2 kg/bulto de cemento, aplanados con el mismo mortero de 2.0 cm de espesor mínimo, terminado fino exterior y pulido interior, medias cañas de concreto, escalones de varilla corrugada de acero No 8 @ 40 cm. Sin brocal y tapa. Incluye: trazo, nivelación, excavación, afine y compactación de terreno natural, cimentación, construcción del pozo, relleno calidad subrasante compactado al 95% Proctor, carga y acarreo de material sobrante a al sitio de desperdicio.",Pieza,2.00
+UEC.IH.18.225.1010,"Brocal y tapa para pozo de visita a base de concreto hidráulico, de 90 cm de diámetro. Incluye: nivelación, presentación, fijación y limpieza.",Pieza,6.00
+E,DESCARGAS DOMICILIARIAS,,
+E01,PRELIMINARES,,
+E0101,TRAZO Y NIVELACION,,
+UEC.IH.18.110.1015,"Trazo y nivelación con equipo topográfico para la instalación de tuberías. Incluye: ubicación de bancos, niveles, trazo, marcas y señales, de conformidad con las Especificaciones de Construcción.",m,281.34
+E02,MOVIMIENTO DE TIERRAS/TERRACERÍAS,,
+E0201,EXCAVACIONES,,
+UEC.IH.18.135.1010,"Excavación con equipo en zanja en material tipo B en seco, de 0.00 a 2.00 m de profundidad, para tuberías. Incluye: delimitación de la zona, afloje y extracción del material, afine de taludes, fondo y conservación de la zanja hasta la instalación de la tubería, carga y acarreo libre a 20 m, de conformidad con las Especificaciones de Construcción.",m3,317.27
+E0202,CARGAS Y ACARREOS,,
+UEC.ED.14.120.1070,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,412.45
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,"2,062.25"
+E0203,RELLENOS,,
+UEC.IH.18.140.1010,"Plantilla con material inerte de banco  a cualquier profundidad, para obra hidráulica, compactado al 90% de su PVSM en capas de hasta 10 cm.  Incluye: selección del material, carga, acarreo, tiro en zona de relleno, incorporación de agua, compactación y acarreo, de conformidad con las Especificaciones de Construcción.",m3,19.69
+UEC.ED.12.125.1120,"Relleno semi-mecánico en zanja con material inerte, compactado al 95% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,292.60
+E03,INSTALACION SANITARIA,,
+E0301,TUBERÍA Y PIEZAS ESPECIALES,,
+UEC.IH.20.105.2110,"Suministro de tubería de PVC alcantarillado sanitario serie 20, de 160 mm de diámetro nominal, de acuerdo a la NOM-001-CONGUA-2011 y NMX-E-215/1-CNCP-2012; incluye: flete, acarreos y maniobras locales puesto L.A.B. en el almacén de la obra de la localidad, anillo empaque en parte proporcional.",m,281.34
+UEC.IH.20.105.2510,"Instalación de tubería de PVC sanitario Tipo 35, Tipo 41, Tipo 51, Serie 25, Serie 20, Serie 16.5, de 160 mm de diámetro nominal; incluye: mano de obra, materiales de consumo, equipo para instalación, maniobras, acarreos locales, bajada, junteo y acomodo hasta su sitio final.",m,281.34
+UEC.ED.42.115.1010,"Codo 45° de PVC para alcantarillado serie 20, de 160 mm de diámetro nominal. Incluye: trazo, nivelación, colocación, fijación, conexión con otros tubos o conexiones y limpieza.",Pieza,44.00
+UEC.ED.42.115.1035,"Silleta de PVC para alcantarillado serie 20, de 250 x 160 mm. Incluye: trazo, nivelación, colocación, fijación, conexión con otros tubos o conexiones y limpieza.",Pieza,44.00
+E0302,OBRA CIVIL,,
+UEC.IH.18.200.1415,"Registro sanitario de 60 x 40 x 80 cm a interiores (largo-ancho-altura) construido con muro de tabique de barro rojo recocido 7 x 14 x 28 cm de 14 cm de espesor, asentado con mortero cemento-arena proporción 1:5, aplanado interior con mortero cemento arena proporción 1:5 de 2 cm de espesor acabado pulido con impermeabilizante integral proporción de 2 kg/bote de cemento, dala de concreto f'c =150 kg/cm2 con dimensiones 15 x 15 cm. armada con armex 10x10-4 acabado común, firme para desplantar registro de concreto f'c = 150 kg/cm2 de 10 cm de espesor armado con malla electrosoldada 6x6 6/6, firme interior de concreto f'c = 150 kg/cm2 con chaflán a 45 grados y media caña de tubo de PVC sanitario de 15 cm, tapa de concreto  f'c =150 kg/cm2 , armada con varilla de No. 3. a 10 cm en ambos sentidos, marco y contramarco de ángulo de 2"" x 3/16"".",Pieza,12.00
+UEC.IH.18.200.1420,"Registro sanitario de 60 x 40 x 100 cm a interiores (largo-ancho-altura) construido con muro de tabique de barro rojo recocido 7 x 14 x 28 cm de 14 cm de espesor, asentado con mortero cemento-arena proporción 1:5, aplanado interior con mortero cemento arena proporción 1:5 de 2 cm de espesor acabado pulido con impermeabilizante integral proporción de 2 kg/bote de cemento, dala de concreto f'c =150 kg/cm2 con dimensiones 15 x 15 cm. armada con armex 10x10-4 acabado común, firme para desplantar registro de concreto f'c = 150 kg/cm2 de 10 cm de espesor armado con malla electrosoldada 6x6 6/6, firme interior de concreto f'c = 150 kg/cm2 con chaflán a 45 grados y media caña de tubo de PVC sanitario de 15 cm, tapa de concreto  f'c =150 kg/cm2 , armada con varilla de No. 3. a 10 cm en ambos sentidos, marco y contramarco de ángulo de 2"" x 3/16"".",Pieza,22.00
+F,SEÑALAMIENTO,,
+F01,ACABADOS,,
+F0101,SEÑALETICA,,
+UEC.UB.15.105.1010,"Pintura para trafico base solvente de primera calidad, en color blanco o amarillo, sobre pavimento. Incluye: preparación de la superficie, dilución, aplicación a dos manos hasta cubrir perfectamente la superficie y limpieza. N·CTR·CAR·1·07·001/00.",m2,85.43
+UEC.UB.15.105.1020,"Pintura para trafico base solvente de primera calidad, en color blanco o amarillo, sobre guarnición y banquetas. Incluye: preparación de la superficie, dilución, aplicación a dos manos hasta cubrir perfectamente la superficie y limpieza. N·CTR·CAR·1·07·002/00.",m2,46.13
+UEC.UB.15.110.1010,"Señal restrictiva (SR-6) de 30 cm por lado, a base de lamina galvanizada calibre 16 con fondo rojo reflejante grado ingeniería y texto en vinil opaco. Incluye: excavación, poste de PTR de 2"" x 2"" calibre 14, 2.50 m altura libre, ahogado en muerto de concreto de f´c=150 kg/cm2 con una profundidad de 80 cm y un diámetro de 40 cm mínimo, presentación, elementos para su fijación y limpieza. N·CTR·CAR·1·07·005/00.",Pieza,3.00
+UEC.UB.15.110.1015,"Señal restrictiva (SR-7) de 85 cm por lado, a base de lamina galvanizada calibre 16 con fondo blanco reflejante grado ingeniería y texto en vinil opaco. Incluye: excavación, poste de PTR de 2"" x 2"" calibre 14, 2.50 m altura libre, ahogado en muerto de concreto de f´c=150 kg/cm2 con una profundidad de 80 cm y un diámetro de 40 cm mínimo, presentación, elementos para su fijación y limpieza. N·CTR·CAR·1·07·005/00.",Pieza,3.00
+UEC.UB.15.110.1020,"Señal restrictiva (SR) de 61 x 61 cm, a base de lamina galvanizada calibre 16 con fondo blanco reflejante grado ingeniería, texto y símbolos en vinil opaco. Incluye: excavación, poste de PTR de 2"" x 2"" calibre 14, 2.50 m altura libre, ahogado en muerto de concreto de f´c=150 kg/cm2 con una profundidad de 80 cm y un diámetro de 40 cm mínimo, presentación, elementos para su fijación y limpieza. N·CTR·CAR·1·07·005/00.",Pieza,2.00
+UEC.UB.15.110.1025,"Tablero adicional para señal restrictiva (SR) de 25 x 61 cm, a base de lamina galvanizada calibre 16 con fondo blanco reflejante grado ingeniería, texto en vinil opaco, sobre poste a una altura libre de 2.50 m. Incluye: presentación, elementos para su fijación y limpieza. N·CTR·CAR·1·07·005/00.",Pieza,8.00
+UEC.UB.15.110.1030,"Señal restrictiva (SR-37) de 20 x 61 cm, a base de lamina galvanizada calibre 16 con fondo color negro mate y flecha que indica el sentido en color blanco reflejante grado ingeniería, sobre poste a una altura libre de 2.50 m. Incluye: presentación, elementos para su fijación y limpieza. N·CTR·CAR·1·07·005/00.",Pieza,3.00
+UEC.UB.15.110.1050,"Señal preventiva (SP) de 61 x 61 cm, a base de lamina galvanizada calibre 16 con fondo amarillo reflejante grado ingeniería, símbolos y texto en vinil opaco. Incluye: excavación, poste de PTR de 2"" x 2"" calibre 14, 2.50 m altura libre, ahogado en muerto de concreto de f´c=150 kg/cm2 con una profundidad de 80 cm y un diámetro de 40 cm mínimo, presentación, elementos para su fijación y limpieza. N·CTR·CAR·1·07·005/00.",Pieza,1.00
+UEC.UB.15.110.1055,"Tablero adicional para señal preventiva (SP) de 25 x 61 cm, a base de lamina galvanizada calibre 16 con fondo amarillo reflejante grado ingeniería, texto en vinil opaco, sobre poste a una altura libre de 2.50 m. Incluye: presentación, elementos para su fijación y limpieza. N·CTR·CAR·1·07·005/00.",Pieza,1.00
+UEC.UB.15.110.1105,"Señal informativa de identificación (SII-6) de 20 x 91 cm, a base de lamina galvanizada calibre 16 con fondo amarillo reflejante grado ingeniería y texto en vinil opaco. Incluye: excavación, poste de PTR de 2"" x 2"" calibre 14, 2.50 m altura libre, ahogado en muerto de concreto de f´c=150 kg/cm2 con una profundidad de 80 cm y un diámetro de 40 cm mínimo, presentación, elementos para su fijación y limpieza. N·CTR·CAR·1·07·005/00.",Pieza,3.00
+UEC.ED.30.295.1055,"Muerto a base de concreto f'c= 150 kg/cm2, tma 19 mm. Incluye: excavación a mano, afine de fondo y talud, desperdicios, colado, curado, vibrado, movimiento del material dentro de la obra y limpieza.",m3,0.65
+G,COMPLEMENTARIOS,,
+G01,ACABADOS,,
+G0101,LIMPIEZAS,,
+UEC.ED.100.115.1015,"Limpieza para entrega final de obra, al banco autorizado que elija el contratista. Incluye: retiro de material. N-CTR-CAR-1-01-013/00.",m2,"2,874.31"
+"NOTA: Los códigos identificados de manera diferente a los del tabulador, corresponden a conceptos de equipamientos o acabados que presentan variabilidad en sus modelos de manera constante, por lo que se consideran atípicos y no forman parte del mismo.",,,
+,,,

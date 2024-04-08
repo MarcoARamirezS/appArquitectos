@@ -1,0 +1,276 @@
+﻿,,,
+CLAVE,CONCEPTO,UNIDAD,CANTIDAD
+A,AULA AISLADA DE 2.00 E.E. EN ESTRUCTURA U-1C,,
+A01,PRELIMINARES,,
+A0101,TRAZO Y NIVELACION,,
+UEC.ED.12.100.1010,"Trazo y nivelación de terreno, para superficies menores de 300 m2, con equipo topográfico para desplante de estructuras, estableciendo ejes y referencias, incluye: limpieza, deshierbe, estacas, bancos de nivel.",m2,92.18
+A0102,DESPALMES,,
+UEC.ED.10.100.1015,"Despalme de terreno tipo B, por medios manuales, a 20 cm de profundidad. Incluye: carga y retiro de material fuera de la obra.",m2,92.18
+A02,MOVIMIENTO DE TIERRAS / TERRACERÍAS,,
+A0201,EXCAVACIONES,,
+UEC.ED.12.110.1050,"Excavación con equipo en caja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en caja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,55.31
+UEC.ED.12.110.1015,"Excavación con equipo en zanja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en zanja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,27.35
+A0202,AFINES Y COMPACTACIONES,,
+UEC.ED.12.135.1010,"Compactación de terreno natural al 90% de su P.V.S.M., por medios semi-mecánicos, incluye: incorporación de agua.",m2,92.18
+A0203,RELLENOS,,
+UEC.ED.12.125.1210,"Relleno semi-mecánico en zanja con material de calidad de sub-base, compactado al 95% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N-CTR-CAR-1-01-011/20.",m3,13.14
+UEC.ED.12.125.1105,"Relleno semi-mecánico en zanja con material producto de excavación, compactado al 90% de su PVSM en capas de 20 cm. Incluye: limpieza, selección, abundamiento, acarreo de material e incorporación de agua para compactar.",m3,11.03
+UEC.ED.12.125.1221,"Relleno semi-mecánico en caja con material inerte, compactado al 90% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,103.20
+A0204,CARGAS Y ACARREOS,,
+UEC.ED.14.120.1070,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,114.24
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,571.20
+A03,CIMENTACIÓN ,,
+A0301,PLANTILLAS,,
+UEC.ED.16.100.1010,"Plantilla de 5 cm de espesor, a base de concreto fabricado en obra f'c = 100 kg/cm2, tma 19 mm (3/4""), incluye: mezcla, vaciado y limpieza.",m2,23.74
+A0302,HABILITADO DE ACERO DE REFUERZO EN CIMENTACIÓN,,
+UEC.ED.16.105.1015,"Acero de refuerzo del No. 3 (3/8""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.44
+UEC.ED.16.105.1020,"Acero de refuerzo del No. 4 (1/2""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.02
+UEC.ED.16.105.1025,"Acero de refuerzo del No. 5 (5/8""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.23
+UEC.ED.16.105.1030,"Acero de refuerzo del No. 6 (3/4""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.10
+A0303,CIMBRA EN CIMENTACIÓN,,
+UEC.ED.16.110.1015,"Cimbra acabado común en cimentación a base de madera de pino de 3ra., incluye: dimensionamiento, cortes, armado, lubricado, alambres, torzales, separadores, andamiaje, obra falsa necesaria, descimbrado, limpieza retiro de sobrantes del frente de trabajo.",m2,49.00
+A0304,CONCRETOS EN CIMENTACIÓN,,
+UEC.ED.16.120.1015,"Concreto premezclado en cimentación, f´c = 250 kg/cm2, no bombeable tiro directo, Clase 1 estructural, Rev. 10 cm +/- 2.50 cm, tma = 19 mm, pvf > 2.20 t/m3. Incluye: dosificación de agregados, mezclado, transporte, vaciado y curado.",m3,7.73
+A0305,ENRASES,,
+UEC.ED.16.105.1010,"Acero de refuerzo del No. 2 (1/4""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.03
+UEC.ED.16.105.1015,"Acero de refuerzo del No. 3 (3/8""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.08
+UEC.ED.16.110.1015,"Cimbra acabado común en cimentación a base de madera de pino de 3ra., incluye: dimensionamiento, cortes, armado, lubricado, alambres, torzales, separadores, andamiaje, obra falsa necesaria, descimbrado, limpieza retiro de sobrantes del frente de trabajo.",m2,15.78
+UEC.ED.16.115.1005,"Concreto fabricado en obra f´c = 200 kg/cm2, tma = 19 mm (3/4""), RN, en cimentación. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,1.16
+UEC.ED.16.170.1010,"Muro de enrase, en cimentación, con tabicón macizo de 10x14x28 cm de 14 cm de espesor, asentado y junteado con mortero cemento-arena con una proporción 1:3, incluye: trazo, nivelación, plomeado y limpieza.",m2,12.00
+AU2EE.30.UED.1010,"Nariz de 30 cm de ancho por 10 cm de peralte, a base de concreto fabricado en obra f'c = 250 kg/cm2, t.m.a. 19 mm (3/4""), armada con varillas de 3/8"" con un desarrollo en ángulo de 70 cm hasta elemento de concreto a cada 20 cm, y 1 varilla de 3/8"" a todo lo largo para remate de piso, colado de manera integral, incluye: malla electrosoldada 6x6-10x10, habilitado, cimbra aparente, amarres, ganchos, traslapes, cortes, colado, vibrado, curado, retiro de cimbra y limpieza.",m,14.93
+A04,ESTRUCTURA,,
+A0401,HABILITADO DE ACERO DE REFUERZO EN ESTRUCTURA,,
+UEC.ED.18.100.1015,"Acero de refuerzo del No. 3 (3/8""), en estructura. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.29
+UEC.ED.18.100.1020,"Acero de refuerzo del No. 4 (1/2""), en estructura. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.03
+UEC.ED.18.100.1030,"Acero de refuerzo del No. 6 (3/4""), en estructura. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.15
+A0402,CIMBRA EN ESTRUCTURA,,
+UEC.ED.18.102.1020,"Cimbra de madera acabado aparente para estructura. Incluye: dimensionamiento, cortes, armado, limpieza, calafateado, lubricado, descimbrado, acarreos a siguiente posición o retiro fuera de la obra.",m2,66.42
+A0403,CONCRETOS EN ESTRUCTURA,,
+UEC.ED.18.110.1020,"Concreto premezclado f´c = 250 kg/cm2, en estructura, bombeable, Clase 1 estructural, Rev. 14 cm +/- 2.50 cm, tma = 19 mm, pvf > 2.20 t/m3. Incluye: dosificación de agregados, mezclado, transporte, vaciado, vibrado y curado.",m3,4.35
+A05,SUPERESTRUCTURA,,
+A0501,HABILITADO DE ACERO DE REFUERZO EN SUPERESTRUCTURA,,
+UEC.ED.20.100.1015,"Acero de refuerzo del No. 3 (3/8""), en superestructura. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.61
+UEC.ED.20.100.1025,"Acero de refuerzo del No. 5 (5/8""), en superestructura. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.13
+UEC.ED.20.100.1030,"Acero de refuerzo del No. 6 (3/4""), en superestructura. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.31
+UEC.ED.18.100.1305,"Malla electrosoldada 6 x 6 - 10 / 10 para armado de firmes, pisos o capas de compresión. Incluye: dimensionamiento, cortes, silletas, traslapes y amarre con alambre.",m2,8.36
+UEC.ED.18.100.1310,"Malla electrosoldada 6 x 6 - 8 / 8 para armado de firmes, pisos o capas de compresión. Incluye: dimensionamiento, cortes, silletas, traslapes y amarre con alambre.",m2,6.90
+A0502,CIMBRA EN SUPERESTRUCTURA,,
+UEC.ED.20.102.1020,"Cimbra de madera acabado aparente para superestructura. Incluye: dimensionamiento, cortes, armado, limpieza, calafateado, lubricado, descimbrado, acarreos a siguiente posición o retiro fuera de la obra.",m2,99.19
+UEC.ED.20.102.1040,"Casetón de Poliestireno con una densidad de 15 Kg/m3. Incluye: dimensionamiento, cortes, armado, limpieza y acarreos.",m3,0.07
+A0503,CONCRETOS EN SUPERESTRUCTURA,,
+UEC.ED.20.110.1020,"Concreto premezclado f´c = 250 kg/cm2, en superestructura, bombeable, Clase 1 superestructural, Rev. 14 cm +/- 2.50 cm, tma = 19 mm, pvf > 2.20 t/m3. Incluye: dosificación de agregados, mezclado, transporte, vaciado, vibrado y curado.",m3,7.82
+AU2EE.20.UED.1001,"Concreto fabricado en obra f´c = 100 kg/cm2, tma = 13 mm (1/2""), RN. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,0.21
+AU2EE.20.UED.1002,"Concreto fabricado en obra f´c = 100 kg/cm2, tma = 19 mm (3/4""), RN. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,0.59
+A0504,ELEMENTOS EN SUPERESTRUCTURA ESPECIALES,,
+UEC.ED.20.135.1010,"Losa de 19 cm de espesor total, a base de sistema prefabricado de vigueta pretensada y bovedilla de jalcreto, armada con malla electrosoldada 6x6-8/8, con capa de compresión mínima de 6 cm de espesor de concreto premezclado bombeado f'c= 250 kg/cm2, tma 19 mm, terminado para recibir acabados, incluye: cimbra común en fronteras, elevación del material, habilitado, ganchos, dobleces, colado, vibrado, curado, retiro de cimbra y limpieza. NMX-C-406-ONNCCE-2019, NMX-C-155-ONNCCE-2014 Y NMX-C-159-ONNCCE-2016, sobre carga de diseño de 500 kg/m2.",m2,74.52
+A06,ALBAÑILERÍA,,
+A0601,CADENAS Y CASTILLOS,,
+UEC.ED.18.100.1105,"Acero de refuerzo del No. 2 (1/4""), en albañilería (castillos, dalas, cerramientos, cadenas). Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.04
+UEC.ED.18.100.1110,"Acero de refuerzo del No. 3 (3/8""), en albañilería (castillos, dalas, cerramientos, cadenas). Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.12
+UEC.ED.18.105.1015,"Concreto fabricado en obra f´c = 200 kg/cm2, tma = 19 mm (3/4""), RN, en castillos, dalas, cerramientos, cadenas y repizones. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,1.23
+UEC.ED.18.102.1015,"Cimbra de madera acabado común para castillos, dalas, cadenas y cerramientos. Incluye: dimensionamiento, cortes, armado, limpieza, calafateado, lubricado, descimbrado, acarreos a siguiente posición o retiro fuera de la obra.",m2,14.84
+UEC.ED.18.102.1025,"Cimbra de acabado aparente para castillos, dalas, cadenas y cerramientos. Incluye: dimensionamiento, cortes, armado, limpieza, calafateado, lubricado, descimbrado, acarreos a siguiente posición o retiro fuera de la obra.",m2,2.69
+A0602,FIRME,,
+UEC.ED.30.100.1110,"Firme de 10 cm de espesor de concreto fabricado en obra f´c = 200 kg/cm², tma = 19 mm, armado con malla electrosoldada 6,6 / 10-10,  para recibir acabado. Incluye: compactación de terreno, trazo, habilitados de malla, separadores, cimbra en fronteras, curado y limpieza.",m2,51.00
+UEC.UB.10.150.1020,"Corte con disco de 1 a 3 cm de profundidad en pavimento de concreto hidráulico. Incluye: trazo, guía y limpieza.",m,25.00
+A0603,MUROS,,
+UEC.ED.30.135.1150,"Muro de 14 cm de espesor construido con tabique de barro 7 x 14 x 28 cm, asentado con mortero cemento-arena proporción 1:5 con junta de 1 cm acabado común, hasta 3.50 m de altura. Incluye: trazo, nivelación, plomeado, andamiaje y limpieza.",m2,27.58
+A07,ACABADOS,,
+A0701,ACABADOS DE PISO,,
+UEC.ED.78.110.1010,"Piso de loseta cerámica primera calidad, de 40 x 40 cm, con boquilla sin arena de 3 mm de espesor. Incluye: nivelación, dimensionamiento, cortes, cemento adhesivo, junteado con boquilla y limpieza.",m2,49.30
+A0702,ACABADOS DE MURO,,
+UEC.ED.30.205.1230,"Aplanado de 2 cm de espesor a base de mortero cemento-arena proporción 1:5 acabado fino, en muro a 3.50 m de altura. Incluye: preparación de la superficie, mezcla, aplicación, plomeado, andamiaje y limpieza.",m2,67.54
+UEC.ED.30.215.1020,"Emboquillado de 17 cm de 2 cm de espesor a base de mortero cemento-arena proporción 1:5. Incluye: preparación de la superficie, mezcla, aplicación, plomeado, andamiaje y limpieza.",m,11.76
+UEC.ED.78.150.1010,"Pintura en muros, columnas y castillos, tipo 100% acrílica primera calidad, lavable, considerando dos manos de pintura y una mano de sellador acrílico 5x1, hasta 3.50 m de altura. Incluye: andamiaje, preparación de la superficie.",m2,135.02
+A0703,ACABADOS DE PLAFÓN,,
+UEC.ED.30.210.1230,"Aplanado de 2 cm de espesor a base de mortero cemento-arena proporción 1:5 acabado fino, en plafón hasta 3.50 m de altura. Incluye: preparación de la superficie, mezcla, aplicación, plomeado, andamiaje y limpieza.",m2,81.18
+UEC.ED.78.150.1015,"Pintura en faldones, trabes y plafones, tipo 100% acrílica primera calidad, lavable, considerando dos manos de pintura y una mano de sellador acrílico 5x1, hasta 3.50 m de altura. Incluye: andamiaje, preparación de la superficie.",m2,131.47
+A0704,ACABADOS DE AZOTEA,,
+UEC.ED.98.125.1010,"Impermeabilizante prefabricado de 4 mm de espesor, APP o SBS, con refuerzo de poliéster 180 gr/m2, elongación mínima de 45%, acabado aparente con gravilla color terracota, marca Imperquimia o similar en calidad, costo y garantía, garantía por escrito de 10 años, colocado a cualquier altura. Incluye: preparación de la superficie, dimensionamiento y limpieza.",m2,89.40
+A0705,CANCELERÍA,,
+AU2EE.82.UED.1001,"Ventana de aluminio de 2.95x1.30 m, anodizado natural de 2"" marca CUPRUM, o similar en calidad, costo y garantía, dividida en 8 secciones, con 4 fijos y 4 corredizos, (sin cristal). Incluye: trazo, rectificación de vano, dimensionamiento, selección de perfiles, cortes, presentación, ensamblado, sellado entre ventana y vano con material acrílico de primera calidad, accesorios, repizón, fijación y pruebas.",Pieza,2.00
+AU2EE.82.UED.1002,"Ventana de aluminio de 1.75x1.30 m, anodizado natural de 2"" marca CUPRUM, o similar en calidad, costo y garantía, dividida en 4 secciones, con 2 fijos y 2 corredizos, (sin cristal). Incluye: trazo, rectificación de vano, dimensionamiento, selección de perfiles, cortes, presentación, ensamblado, sellado entre ventana y vano con material acrílico de primera calidad, accesorios, repizón, fijación y pruebas.",Pieza,1.00
+AU2EE.82.UED.1003,"Ventana de aluminio de 2.95x0.40 m, anodizado natural de 2"" marca CUPRUM, o similar en calidad, costo y garantía, dividida en 3 secciones, con 2 fijos y 1 corredizo, (sin cristal). Incluye: trazo, rectificación de vano, dimensionamiento, selección de perfiles, cortes, presentación, ensamblado, sellado entre ventana y vano con material acrílico de primera calidad, accesorios, repizón, fijación y pruebas.",Pieza,1.00
+UEC.ED.80.105.1010,"Cristal claro de 6 mm de espesor, instalado en ventanas o cancelería. Incluye: dimensionamiento, cortes, presentación, sellado con material acrílico de primera calidad y fijación.",m2,11.13
+A0706,HERRERÍA,,
+UEC.ED.86.125.1050,"Herrería para puertas de hasta 125 kg, a base de perfiles comerciales de acero. Incluye: trazo, dimensionamiento, cortes, soldadura, primario de taller, presentación, nivelación y fijación.",kg,94.01
+UEC.ED.86.115.1110,"Herrería para ventanas y protecciones de hasta 125 kg a base de perfiles comerciales de acero. Incluye: trazo, dimensionamiento, cortes, soldadura, primario de taller, presentación, nivelación y fijación.",kg,373.29
+UEC.ED.78.155.1015,"Pintura de esmalte primera calidad en superficies metálicas, a cualquier altura. Incluye: preparación de la superficie, dilución, aplicación a dos manos hasta cubrir perfectamente la superficie, andamiaje y limpieza.",kg,467.30
+AU2EE.86.UED.1001,"Bisagras de libro con baleros para marcos de madera, fierro y aluminio de 3"" x 3"", acabado de acuerdo a proyecto. Incluye: presentación, fijación y limpieza.",Pieza,4.00
+AU2EE.86.UED.1002,"Cerradura de manija de sobreponer, con mecanismo cilindrico para puertas de madera o metálicas,  especificaciones de acuerdo a proyecto. Incluye: presentación, fijación y limpieza.",Pieza,1.00
+AU2EE.86.UED.1003,"Cerradura de alta seguridad de sobreponer de barra chica para puertas de madera o metálicas, llave de puntos de 5 pernos, especificaciones de acuerdo a proyecto. Incluye: presentación, fijación y limpieza.",Pieza,2.00
+AU2EE.86.UED.1004,"Tope esferico de piso para puerta media luna de acero inoxidable, especificaciones de acuerdo a proyecto. Incluye: presentación, fijación y limpieza.",Pieza,1.00
+A0707,MUEBLES DE DISEÑO,,
+AU2EE.30.UED.1001,"Repisa de 294x120x35 cm a base de concreto fabricado en obra f'c= 150 kg/cm2, tma 19 mm (3/4""), de 7 cm de espesor, dividida en 4 secciones, armada con malla electrosoldada 6x6-10/10 y reforzada en marco lateral con varillas de 3/8"", bastones con varillas de 3/8"" a cada 40 cm anclados a cadena, 2 manos de pintura tipo esmalte y 1 mano de sellador acrílico 5x1 primera calidad, acabado pulido, Incluye: habilitado, cortes, dobleces, traslapes, cimbra aparente, colado, curado, vibrado, retiro de cimbra.",Pieza,1.00
+AU2EE.30.UED.1002,"Repisa de 294x85x35 cm a base de concreto fabricado en obra f'c= 150 kg/cm2, tma 19 mm (3/4""), de 7 cm de espesor, dividida en 2 secciones, armada con malla electrosoldada 6x6-10/10 y reforzada en marco lateral con varillas de 3/8"", bastones con varilla de 3/8"" a cada 40 cm anclados a cadena, 2 manos de pintura tipo esmalte y 1 mano de sellador acrílico 5x1 primera calidad, acabado pulido, Incluye: habilitado, cortes, dobleces, traslapes, cimbra aparente, colado, curado, vibrado, retiro de cimbra.",Pieza,1.00
+AU2EE.30.UED.1003,"Repisa de 294x35 cm a base de concreto fabricado en obra f'c= 150 kg/cm2, tma 19 mm (3/4""), de 7 cm de espesor, armada con malla electrosoldada 6x6-10/10 y reforzada en marco lateral con varillas de 3/8"", bastones con varillas de 3/8"" a cada 40 cm anclados a cadena, 2 manos de pintura tipo esmalte y 1 mano de sellador acrílico 5x1 primera calidad, acabado pulido, Incluye: habilitado, cortes, dobleces, traslapes, cimbra aparente, colado, curado, vibrado, retiro de cimbra.",Pieza,1.00
+A0708,SEÑALÉTICA,,
+UEC.ED.92.100.1010,"Señalamiento para ruta de evacuación de 20x25 cm, de lámina de PVC en color verde como fondo y en blanco como contraste, colocados sobre muro, incluye: taquetes de fijación. norma NOM-03-SEGOB-2011 y NOM-026-STPS-2008.",Pieza,2.00
+UEC.ED.92.100.1015,"Señalamiento para ubicación de extintor contra incendio de 20x25 cm, de lámina de PVC en color rojo como fondo y en blanco como contraste, colocados sobre muro, incluye: taquetes de fijación. norma NOM-03-SEGOB-2011 y NOM-026-STPS-2008.",Pieza,1.00
+UEC.ED.92.100.1020,"Señalamiento para ubicación del punto de reunión de 35x35 cm, de lámina de PVC en color verde como fondo y en blanco como contraste, colocados sobre muro, incluye: taquetes de fijación. norma NOM-03-SEGOB-2011 y NOM-026-STPS-2008.",Pieza,1.00
+UEC.ED.92.100.1025,"Señalamiento para ubicación del punto de reunión de 1.00x1.00 m, con pintura epóxica en colores verde como fondo y blanco como contraste, pintado sobre firme de concreto, incluye: trazo y aplicación. norma NOM-03-SEGOB-2011 y NOM-026-STPS-2008.",Pieza,1.00
+AU2EE.94.UED.1001,"Logotipo representativo de gobierno del estado, rotulado sobre muro de fachada y/o cabecero, a base de pintura de esmalte., con dimensiones, color y diseño de acuerdo a las especificaciones y tipografia establecidas en el manual de identidad vigente.",m2,3.06
+A0709,LIMPIEZAS,,
+UEC.ED.100.115.1010,"Limpieza general de la obra para entrega de espacio, incluye: limpieza de pisos, vidrios, muros, herrerías, plafones, etc.",m2,131.30
+A08,INSTALACIÓN ELÉCTRICA,,
+A0801,TABLEROS ELÉCTRICOS E INTERRUPTORES,,
+UEC.ED.46.225.1220,"Centro de carga tipo QOD, con zapatas principales, con 4 espacios, 60A, 2F-3H, para empotrar, catalogo QOD4F, marca SQUARE D  o similar en calidad, costo y garantía. Incluye: Trazo, montaje, ensamblado, etiquetado, peinado de cables, arranque y pruebas.",Pieza,1.00
+UEC.ED.46.245.1005,"Interruptor termomagnético tipo QO, enchufable, 120/240 V, 10,000 A simétricos, de 1 polo, 10 A marca SQUARE'D, catalogo QO110, o similar en calidad, costo y garantía, a cualquier altura. Incluye: montaje, ensamblado y arranque.",Pieza,1.00
+UEC.ED.46.245.1010,"Interruptor termomagnético tipo QO, enchufable, 120/240 V, 10,000 A simétricos, de 1 polo, 15 A marca SQUARE'D, catalogo QO115, o similar en calidad, costo y garantía, a cualquier altura. Incluye: montaje, ensamblado y arranque.",Pieza,1.00
+UEC.ED.46.245.1253,"Interruptor termomagnético tipo QOB, atornillable, 120/240 V, 10,000 A simétricos, de 2 polos, 15 A marca SQUARE'D, catalogo QOB215, o similar en calidad, costo y garantía, a cualquier altura. Incluye: montaje, ensamblado y arranque.",Pieza,1.00
+A0802,ALUMBRADO EN SISTEMA NORMAL,,
+UEC.ED.43.110.1115,"Tubo poliducto corrugado extra resistente de 19 mm diámetro comercial, 21 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,46.00
+UEC.ED.46.102.1015,"Cable de cobre suave electrolítico con aislamiento de PVC tipo THW-LS/THHW-LS 90°C, 600V, calibre No 12 AWG, libre de sustancias peligrosas (RoHS), marca CONDUMEX o similar en calidad, costo y garantía, a cualquier altura. Incluye: identificación, dimensionamiento, instalación en canalización, cortes, amarres y empalmes con cinta aislante.",m,138.00
+UEC.ED.43.175.1070,"Caja de conexiones eléctricas, tipo chalupa de PVC de 10 x 5 cm, para tubería de 13 mm y 19 mm, a cualquier altura. Incluye: presentación, colocación, fijación y conexión a tubería.",Pieza,2.00
+UEC.ED.43.175.1080,"Caja de conexiones eléctricas de PVC de 10 x 10 cm, para tubería de 13 mm y 19 mm, a cualquier altura. Incluye: presentación, colocación, fijación y conexión a tubería.",Pieza,8.00
+AU2EE.46.UED.1001,"Apagador sencillo de 16 A, 127/277 V, 60 Hz, resistente al impacto, color blanco, especificaciones de acuerdo a proyecto, a cualquier altura. Incluye: montaje, ensamblado, nivelación y pruebas.",Pieza,3.00
+AU2EE.46.UED.1002,"Placa de un modulo de resina con accesorios, color blanco, especificaciones de acuerdo a proyecto, a cualquier altura. Incluye: presentación, alineación y fijación a caja.",Pieza,1.00
+AU2EE.46.UED.1003,"Placa de dos modulo de resina con accesorios, color blanco, especificaciones de acuerdo a proyecto, a cualquier altura. Incluye: presentación, alineación y fijación a caja.",Pieza,1.00
+AU2EE.56.UED.1002,"Luminaria en gabinete de sobreponer de 1.22 m x 0.30 m, diodo emisor led, con las siguientes características: flujo luminoso de 4000 a 5400 lm, rango de potencia de consumo de 36-50 W, driver de operación multivoltaje 120/277 V, factor de potencia mínimo 0.9, temperatura de color neutra máximo: 4000-4100 °K, CRI mínimo 80, opcional driver dimeable de 0-10 V, carcasa fabricada en lámina de acero rolada en frio con acabado de esmalte blanco, difusor opalina de acrílico extruido, certificación UL/ANCE, vida útil mínima de 50,000 horas., promedio al 100%, garantía por escrito mínima de 5 años, incluye: andamiaje, conexiones, correcto funcionamiento y elementos de fijación.",Pieza,7.00
+AU2EE.56.UED.1001,"luminaria en gabinete de sobreponer, diodo emisor led, 2 altavoces inalámbricos integrados en el gabinete, controlados por bluetooth, con las siguientes características: - vida util mínima de 50,000 hrs., promedio al 100%, - garantía por escrito mínima de 5 años, - flujo luminoso de 3600 a 4000 lumen, - rango de potencia de consumo de 30-40 watts, – dimensiones maximas largo 122 cm x ancho 6.5 cm., - driver de operación 120 volts, - temperatura de color neutra máximo: 4000-4100° k, cri mínimo 80, - carcasa de policarbonato, - certificación ul / ance o similar en calidad, costo y garantia, incluye:  andamiaje, conexiones, correcto funcionamiento y elementos de fijación.",Pieza,1.00
+A0803,CONTACTOS EN SISTEMA NORMAL,,
+UEC.ED.43.110.1115,"Tubo poliducto corrugado extra resistente de 19 mm diámetro comercial, 21 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,40.00
+UEC.ED.46.102.1020,"Cable de cobre suave electrolítico con aislamiento de PVC tipo THW-LS/THHW-LS 90°C, 600V, calibre No 10 AWG, libre de sustancias peligrosas (RoHS), marca CONDUMEX o similar en calidad, costo y garantía, a cualquier altura. Incluye: identificación, dimensionamiento, instalación en canalización, cortes, amarres y empalmes con cinta aislante.",m,120.00
+UEC.ED.43.175.1070,"Caja de conexiones eléctricas, tipo chalupa de PVC de 10 x 5 cm, para tubería de 13 mm y 19 mm, a cualquier altura. Incluye: presentación, colocación, fijación y conexión a tubería.",Pieza,5.00
+AU2EE.46.UED.1004,"Contacto duplex, tamper-resistant, puesta a tierra automatica, 2P+T, 20 A, 125 V, 60 Hz, uso comercial, color blanco, especificaciones de acuerdo a proyecto, a cualquier altura. Incluye: montaje, ensamblado, nivelación y pruebas.",Pieza,5.00
+AU2EE.46.UED.1005,"Placa de pared, una ventana, de nylon, color blanca, especificaciones de acuerdo a proyecto, a cualquier altura. Incluye: presentación, alineación y fijación a caja.",Pieza,5.00
+A0804,ALIMENTACIÓN ELÉCTRICA A EQUIPOS,,
+AU2EE.46.UED.1006,"Registro eléctrico de fibra de vidrio de 40x40x60 cm, con espesor de 1/8"" (0.3175 cm) con marco y tapa de concreto polimérico f'c=800 kg/cm2, reforzado con fibra de vidrio, marca MIT CONCRETO o similar en calidad, costo y garantía, Incluye: trazo, nivelación, excavación, filtro de grava triturada de 3/4"" de 40 cm de profundidad y limpieza.",Pieza,1.00
+UEC.ED.46.255.1010,"Varilla de tierra de 3.05 m de longitud, de 5/8"" de diámetro, marca COPPER WELD o similar en calidad, costo y garantía. Incluye: enterrado y conexión a cable de tierra.",Pieza,1.00
+UEC.ED.43.110.1120,"Tubo poliducto corrugado extra resistente de 25 mm diámetro comercial, 27 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,10.00
+A0805,INSTALACIÓN SOLAR FOTOVOLTAICA,,
+UEC.ED.43.110.1120,"Tubo poliducto corrugado extra resistente de 25 mm diámetro comercial, 27 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,5.00
+AU2EE.46.UED.1007,"Kit solar fotovoltaico interconectado con microinversor. Incluye: de 2 paneles solares tipo monocristalino ó policrisalino, con rango de 360 a 385 watts por cada panel; 1 microinversor, 1 dispositivo controlador de datos por internet, base de estructura soporte de aluminio, kit de material electrico, mano de obra con certificado como proveedor verificado ANCE, equipo para la correcta instalación y puesta en marcha de la planta solar y registro en internet para su monitoreo para cumplir con los requerimientos físicos, técnicos y de seguridad que solicita C.F.E. para la interconexión a la red, medidor y contrato.",Kit,1.00
+UEC.ED.86.115.1110,"Herrería para ventanas y protecciones de hasta 125 kg a base de perfiles comerciales de acero. Incluye: trazo, dimensionamiento, cortes, soldadura, primario de taller, presentación, nivelación y fijación.",kg,38.27
+UEC.ED.78.155.1015,"Pintura de esmalte primera calidad en superficies metálicas, a cualquier altura. Incluye: preparación de la superficie, dilución, aplicación a dos manos hasta cubrir perfectamente la superficie, andamiaje y limpieza.",kg,38.27
+A09,INSTALACIÓN CONTRA INCENDIO,,
+A0901,EQUIPOS Y ACCESORIOS,,
+UEC.UB.18.115.1010,"Extintor sistema de polvo químico seco, capacidad de 6 kg, tiempo de descarga de 8 a 25 segundos, alcances de descarga de 3.00 m mínimo, incluye: presentación, alineación, gancho de sujeción a 1.50 m de altura y fijación. NOM-002-STPS-2010, NOM-154-SCFI-2005.",Pieza,1.00
+A10,INSTALACIÓN DE VOZ Y DATOS,,
+A1001,CANALIZACIONES,,
+UEC.ED.43.110.1115,"Tubo poliducto corrugado extra resistente de 19 mm diámetro comercial, 21 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,10.00
+UEC.ED.43.110.1120,"Tubo poliducto corrugado extra resistente de 25 mm diámetro comercial, 27 mm SEDE, a cualquier altura. Incluye: trazo, dimensionamiento, cortes, limpieza y guía de alambre recuperable.",m,10.00
+A1002,CABLEADO Y ACCESORIOS,,
+UEC.ED.43.175.1070,"Caja de conexiones eléctricas, tipo chalupa de PVC de 10 x 5 cm, para tubería de 13 mm y 19 mm, a cualquier altura. Incluye: presentación, colocación, fijación y conexión a tubería.",Pieza,3.00
+AU2EE.62.UED.1001,"Cable HDMI de alta velocidad, 1080 p, conectores macho - macho, color negro, 15.24 metros (50 pies) de longitud, marca TRIPP LITE, modelo P568-050 o similar en calidad, costo y garantía. Incluye: Conexión, instalación, identificación, puesta a punto y revisión de correcto desempeño.",Pieza,1.00
+AU2EE.62.UED.1002,"Placa de pared HDMI de paso directo para envío/recepción (H/H), marca TRIPP LITE, modelo P166-001-P o similar en calidad, costo y garantía. Incluye: Conexión, instalación, identificación, puesta a punto y revisión de correcto desempeño.",Pieza,2.00
+UEC.ED.43.175.1170,"Tapa para caja de PVC de 10 x 5 cm (rectangular), a cualquier altura. Incluye: presentación, alineación y fijación a caja.",Pieza,3.00
+B,OBRA EXTERIOR,,
+B01,CONSTRUCTIVO,,
+B0101,GUARNICIONES Y BANQUETAS,,
+UEC.UB.10.105.1005,"Banqueta de 10 cm de espesor, elaborada a base de concreto fabricado en obra f'c= 200 kg/cm2, tma 19 mm (3/4""), armada con malla electrosoldada 6x6-10/10, forjado de nariz por el frente y corte con disco de diamante a cada 3.00 m acabado de acuerdo a especificaciones de proyecto, incluye: cimbra metálica en fronteras, cortes, dobleces, colado, vibrado, curado, retiro de cimbra y limpieza. (N-CTR-CAR-1-02-010-00 / 03.01.02.026 y 027)",m2,14.60
+UEC.ED.18.115.1015,"Sistema de calafateo de juntas de 5 mm de ancho y 8 mm de profundidad a base de sellador de poliuretano de la línea SIKA ""SIKAFLEX AT"" en color gris o similar en calidad, costo y garantía. incluye: preparación y limpieza de la superficie.",m,6.30
+UEC.UB.10.110.1025,"Guarnición de 14x40 cm elaborada a base de concreto fabricado en obra f'c= 200 kg/cm2, tma 19 mm (3/4""), armada con 4 varillas de 3/8"" y estribos de alambrón de 1/4"" a cada 20 cm, incluye: habilitado, cortes, empalmes y amarrado con alambre de acero, dobleces, ganchos, anclajes, trazo, preparación de la superficie, alineado, cimbra metálica, colado, vibrado, curado, retiro de cimbra y limpieza.",m,9.92
+"NOTA: Los códigos identificados de manera diferente a los del Tabulador UEC, corresponden a conceptos de equipamientos o acabados que presentan variabilidad en sus modelos de manera constante, por lo que se consideran atípicos y no forman parte del mismo.",,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,

@@ -59,7 +59,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
             final unidad = row.isNotEmpty ? row[2] : '';
             final precioString = row.isNotEmpty ? row[3].toString().replaceAll(',', '') : '0'; // Convertir a cadena
             final precio = double.tryParse(precioString) ?? 0;
-            print(precioString);
+            //print(precioString);
             subcategoriaActual.productos.add(Producto(
               clave: codigo,
               nombre: nombre,
@@ -193,28 +193,32 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
   }
 
   String generarResumenTicket() {
-    String resumen = '';
+    String resumen = 'Resumen del Presupuesto\n\n';
     double totalGeneral = 0.0;
 
-    List<Categoria> categoriasConProductos = obtenerCategoriasConProductos();
+    List<Categoria?> categoriasConProductos = obtenerCategoriasConProductos();
 
     for (var categoria in categoriasConProductos) {
-      for (var subcategoria in categoria.subcategorias) {
+      resumen += 'Categoría: ${categoria?.nombre}\n';
+
+      for (var subcategoria in categoria!.subcategorias) {
+        resumen += '  - ${subcategoria.nombre}\n';
+
         for (var producto in subcategoria.productos) {
-          if (producto.cantidad > 0) {
-            double precioTotalProducto = producto.cantidad * producto.precio;
-            resumen += '${producto.nombre} (${producto.cantidad} ${producto.unidad}) - \$${precioTotalProducto.toStringAsFixed(2)}\n';
-            totalGeneral += precioTotalProducto;
-          }
-        }
+          double precioTotalProducto = producto.cantidad * producto.precio;
+          totalGeneral += precioTotalProducto;
+          resumen += '    * ${producto.nombre} (${producto.cantidad} ${producto.unidad}) - \$${precioTotalProducto.toStringAsFixed(2)}\n'; // Detalle del producto
+        } 
       }
+
+      resumen += '\n';
     }
 
     resumen += '\nTotal General: \$${totalGeneral.toStringAsFixed(2)}';
     return resumen;
   }
 
-  List<Categoria> obtenerCategoriasConProductos() {
+  List<Categoria?> obtenerCategoriasConProductos() {
     return categoriasList.map((categoria) {
       // Filtrar subcategorías con productos con cantidad > 0
       List<Subcat> subcategoriasFiltradas = categoria.subcategorias
@@ -228,9 +232,11 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
         return Subcat(nombre: subcat.nombre, productos: productosFiltrados);
       }).toList();
 
-      // Crear nueva categoría con subcategorías filtradas
-      return Categoria(nombre: categoria.nombre, subcategorias: subcategoriasFiltradas);
-    }).toList();
+      if(subcategoriasFiltradas.isNotEmpty) {
+        return Categoria(nombre: categoria.nombre, subcategorias: subcategoriasFiltradas);
+      }
+      return null;
+    }).whereType<Categoria>().toList();
   }
 
 }

@@ -1,0 +1,45 @@
+﻿,,,
+CLAVE,CONCEPTO,UNIDAD,CANTIDAD
+A,LÍNEA DE CONDUCCIÓN,,
+A01,PRELIMINARES,,
+A0101,TRAZO Y NIVELACION,,
+UEC.IH.18.110.1015,"Trazo y nivelación con equipo topográfico para la instalación de tuberías. Incluye: ubicación de bancos, niveles, trazo, marcas y señales, de conformidad con las Especificaciones de Construcción.",m,14.49
+A02,MOVIMIENTO DE TIERRAS / TERRACERÍAS,,
+A0201,EXCAVACIONES,,
+UEC.IH.18.130.1010,"Excavación manual en zanja en material tipo B en seco, de 0.00 a 2.00 m de profundidad, para tuberías. Incluye: delimitación de la zona, afloje y extracción del material, afine de taludes, fondo y conservación de la zanja hasta la instalación de la tubería, carga y acarreo libre a 20 m, de conformidad con las Especificaciones de Construcción.",m3,2.10
+UEC.IH.18.135.1010,"Excavación con equipo en zanja en material tipo B en seco, de 0.00 a 2.00 m de profundidad, para tuberías. Incluye: delimitación de la zona, afloje y extracción del material, afine de taludes, fondo y conservación de la zanja hasta la instalación de la tubería, carga y acarreo libre a 20 m, de conformidad con las Especificaciones de Construcción.",m3,0.70
+UEC.IH.18.135.1020,"Excavación con equipo en zanja en material tipo C en seco, de 0.00 a 2.00 m de profundidad, para tuberías. Incluye: delimitación de la zona, afloje y extracción del material, afine de taludes, fondo y conservación de la zanja hasta la instalación de la tubería, carga y acarreo libre a 20 m, de conformidad con las Especificaciones de Construcción.",m3,1.10
+A0202,RELLENOS,,
+UEC.IH.18.140.1010,"Plantilla con material inerte de banco  a cualquier profundidad, para obra hidráulica, compactado al 90% de su PVSM en capas de hasta 10 cm.  Incluye: selección del material, carga, acarreo, tiro en zona de relleno, incorporación de agua, compactación y acarreo, de conformidad con las Especificaciones de Construcción.",m3,1.50
+UEC.IH.18.145.1050,"Relleno semi-mecánico en zanja, para obra hidráulica, con material suministrado (tepetate) compactado al 90% prueba proctor, en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,4.50
+A0203,CARGAS Y ACARREOS,,
+UEC.IH.18.150.1015,"Acarreo con equipo al primer kilómetro de cualquier material que deba de ser retirado de la obra. Incluye: carga con equipo, de conformidad con la norma N·CTR·CAR·1·01·013/00 y con las Especificaciones de Construcción.",m3,10.00
+UEC.IH.18.150.1020,"Acarreo a kilómetros subsecuentes de cualquier material que deba de ser retirado de la obra. Incluye: descarga, de conformidad con la norma N·CTR·CAR·1·01·013/00 y con las Especificaciones de Construcción.",m3-km,8.00
+A03,INSTALACIÓN HIDRÁULICA,,
+A0301,OBRA CIVIL,,
+LIDIS.18.UIH.1001,"Atraque de concreto armado de F'c = 200 kg/cm² para tubería superficial de 0.80 x 0.80 x 0.80 m, anclado en el terreno un 10% de su altura y acero de refuerzo con varilla de 3/8""a cada 30 cm en sus 6 caras con un recubrimiento de 5 cm. Incluye: ruptura del terreno, dos anclas para sujetar tubería con varillas de 5/8"", cimbra, descimbra y limpieza.",Pieza,3.00
+A0302,TUBERÍA Y PIEZAS ESPECIALES,,
+UEC.IH.20.140.1050,"Suministro de tubería nueva de acero galvanizado por inmersión en caliente, con rosca, cédula 40, de 102 mm de diámetro nominal, conforme a Normas NMX-B-177-1990 y NOM-001-CONAGUA-2011. Incluye cople reforzado en parte proporcional,  flete, acarreos y maniobras locales puesto LAB en el almacén de la obra en la localidad.",m,14.49
+UEC.IH.20.140.1550,"Instalación de tubería de acero galvanizado por inmersión en caliente, con rosca, cédula 30, cédula 40, cédula 80 y Norma X, de 100 mm de diámetro nominal. Incluye: mano de obra, materiales de consumo, equipo y herramienta para instalación, maniobras y acarreos locales, cortes y roscas, junteo, acomodo hasta su sitio final, conforme a la norma NOM-001-CONAGUA-2011.",m,14.49
+UEC.IH.20.240.1050,"Prueba hidrostática para fierro galvanizado por inmersión en caliente, con cédula 30, cédula 40, cédula 80 y Norma X, conforme a Norma NT-001-CNA-2001, de 102 mm de diámetro nominal; Incluye: llenado de la tubería con agua a muy baja presión y aumento de presión hasta 1.5 veces la presión de trabajo. Operación de prueba con: bomba hidráulica manual, manómetro, válvula de retención y demás accesorios necesarios para la prueba.",m,14.49
+UEC.IH.20.145.1025,"Suministro de tubería nueva de acero negro cédula-40, de 102 mm de diámetro nominal, conforme a Normas NOM-002-CNA-1995 y NMX-B-177-1990. Incluye: flete, acarreos y maniobras locales puesto LAB en el almacén de la obra en la localidad.",m,15.00
+UEC.IH.20.145.1125,"Instalación de tubería de acero negro, cédula 40 y Norma X, de 102 mm de diámetro nominal; incluye: mano de obra, materiales de consumo, equipo y herramienta para instalación, maniobras y acarreos locales, cortado, biselado, bajada y acomodo hasta su sitio final, alineado y soldadura a tope.",m,15.00
+UEC.IH.20.245.1025,"Prueba hidrostática para tubería de acero negro, cédula 40 y Norma X, conforme a Norma NOM-001-CONAGUA-2011, de 102 mm de diámetro nominal; incluye: llenado de la tubería con agua a muy baja presión y aumento de presión hasta 1.5 veces la presión de trabajo. Operación de prueba con: bomba hidráulica manual, manómetro, válvula de retención y demás accesorios necesarios para la prueba.",m,15.00
+UEC.IH.22.130.1055,"Codo de acero galvanizado con refuerzo, clase 150 de 100 mm de diámetro x  45°, conforme a las normas ASTM A 153 y ASTM A 197. Incluye: presentación, colocación y limpieza.",Pieza,4.00
+LIDIS.22.UIH.1001,"Niple de acero galvanizado, cédula 40, de 100 mm de diámetro con 100 mm de longitud, conforme a la norma NMX-B-177-1990. Incluye: presentación, colocación y limpieza. ",Pieza,2.00
+LIDIS.22.UIH.1002,"Niple de acero galvanizado, cédula 40, de 100 mm de diámetro con 500 mm de longitud, conforme a la norma NMX-B-177-1990. Incluye: presentación, colocación y limpieza. ",Pieza,1.00
+LIDIS.22.UIH.1003,"Niple de acero galvanizado, cédula 40, de 100 mm de diámetro con 1500 mm de longitud, conforme a la norma NMX-B-177-1990. Incluye: presentación, colocación y limpieza. ",Pieza,1.00
+UEC.IH.22.135.1035,"Brida roscada de acero fundido para un diámetro de tubería de 100 mm de diámetro. Incluye: Incluye: presentación, colocación, fijación y limpieza.",Pieza,2.00
+LIDIS.22.UIH.1004,"Reducción bridada de acero fundido de 100 mm x 76 mm de diámetro. Incluye: presentación, colocación, fijación y limpieza.",Pieza,1.00
+LIDIS.22.UIH.1005,"Brida soldable de acero fundido  para un diametro de tubería de 100 mm. Incluye: presentación, colocación, fijación y limpieza.",Pieza,4.00
+UEC.IH.22.160.1050,"Tornillo de acero con tuerca hexagonal de 16 mm de diámetro por un largo de 64 mm. Incluye: presentación, colocación y fijación.",Pieza,4.00
+UEC.IH.22.160.1055,"Tornillo de acero con tuerca hexagonal de 16 mm de diámetro por un largo de 76 mm. Incluye: presentación, colocación y fijación.",Pieza,32.00
+LIDIS.22.UIH.1006,"Fabricación e instalación de codo de acero al carbón de 90° X 100 mm de diámetro. Incluye: cortes, planos de taller y soldadura.",Pieza,1.00
+UEC.IH.22.160.1155,"Empaque de plomo para bridas de 76 mm. de diámetro. Incluye: presentación, colocación y limpieza.",Pieza,1.00
+UEC.IH.22.160.1160,"Empaque de plomo para bridas de 100 mm de diámetro. Incluye: presentación, colocación y limpieza.",Pieza,4.00
+A0303,PINTURA Y SEÑALIZACIÓN,,
+UEC.IH.18.180.1050,"Recubrimiento de tubería a base de primario epóxico catalizado, especificación PEMEX RP- 6 a una capa, con un espesor de película seca de 2 milésimas de pulgadas. Incluye: preparación de la superficie y limpieza.",m2,5.39
+UEC.IH.18.180.1060,"Recubrimiento de tubería a base de primario epóxico catalizado, especificación PEMEX RA-26 a dos capas, con un espesor de película seca de 5 milésimas de pulgadas cada capa. Incluye: preparación de la superficie y limpieza.",m2,5.39
+"NOTA: Los códigos identificados de manera diferente a los del Tabulador UEC, corresponden a conceptos de equipamientos o acabados que presentan variabilidad en sus modelos de manera constante, por lo que se consideran atípicos y no forman parte del mismo.",,,
+,,,
+,,,

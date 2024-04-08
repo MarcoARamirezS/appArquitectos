@@ -1,0 +1,48 @@
+﻿,,,
+CLAVE,CONCEPTO,UNIDAD,CANTIDAD
+A,BARDA PERIMETRAL CON CIMENTACIÓN DE MAMPOSTERÍA,,
+A01,PRELIMINARES,,
+A0101,TRAZO Y NIVELACION,,
+UEC.ED.12.100.1010,"Trazo y nivelación de terreno, para superficies menores de 300 m2, con equipo topográfico para desplante de estructuras, estableciendo ejes y referencias, incluye: limpieza, deshierbe, estacas, bancos de nivel.",m2,17.70
+A0102,DESPALMES,,
+UEC.ED.10.100.1025,"Despalme de terreno tipo B, con equipo mecánico, a 20 cm de profundidad. Incluye: carga y retiro de material fuera de la obra.",m2,17.70
+A02,MOVIMIENTO DE TIERRAS,,
+A0201,EXCAVACIONES,,
+UEC.ED.12.110.1015,"Excavación con equipo en zanja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en zanja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,7.08
+A0202,AFINES Y COMPACTACIONES,,
+UEC.ED.12.135.1010,"Compactación de terreno natural al 90% de su P.V.S.M., por medios semi-mecánicos, incluye: incorporación de agua.",m2,17.70
+A0203,RELLENOS,,
+UEC.ED.12.125.1205,"Relleno semi-mecánico en zanja con material de calidad de sub-base, compactado al 90% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar, de acuerdo a norma N-CTR-CAR-1-01-011/20.",m3,4.23
+A0204,CARGAS Y ACARREOS,,
+UEC.ED.14.120.1070,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga con equipo, transporte y descarga.",m3,13.81
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,69.05
+A03,CIMENTACIÓN,,
+A0301,PLANTILLAS,,
+UEC.ED.16.100.1010,"Plantilla de 5 cm de espesor, a base de concreto fabricado en obra f'c = 100 kg/cm2, tma 19 mm (3/4""), incluye: mezcla, vaciado y limpieza.",m2,15.93
+A0302,HABILITADO DE ACERO DE REFUERZO EN CIMENTACIÓN,,
+UEC.ED.16.105.1010,"Acero de refuerzo del No. 2 (1/4""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.04
+UEC.ED.16.105.1020,"Acero de refuerzo del No. 4 (1/2""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.13
+A0303,CIMBRA EN CIMENTACIÓN,,
+UEC.ED.16.110.1015,"Cimbra acabado común en cimentación a base de madera de pino de 3ra., incluye: dimensionamiento, cortes, armado, lubricado, alambres, torzales, separadores, andamiaje, obra falsa necesaria, descimbrado, limpieza retiro de sobrantes del frente de trabajo.",m2,13.89
+A0304,CONCRETOS EN CIMENTACIÓN,,
+UEC.ED.16.115.1010,"Concreto fabricado en obra f´c = 250 kg/cm2, tma = 19 mm (3/4""), RN, en cimentación. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,1.46
+A0305,MAMPOSTERIAS,,
+UEC.ED.30.160.1010,"Muro de mampostería, espesor variable, construido con piedra brasa, caras rastreadas, junteado con mortero cemento-arena proporción 1:4. Incluye: trazo, nivelación, plomeado, andamiaje y limpieza.",m3,18.66
+A04,ALBAÑILERÍA / CONSTRUCTIVO,,
+A0401,CADENAS Y CASTILLOS,,
+UEC.ED.18.102.1025,"Cimbra de acabado aparente para castillos, dalas, cadenas y cerramientos. Incluye: dimensionamiento, cortes, armado, limpieza, calafateado, lubricado, descimbrado, acarreos a siguiente posición o retiro fuera de la obra.",m2,19.00
+UEC.ED.18.100.1105,"Acero de refuerzo del No. 2 (1/4""), en albañilería (castillos, dalas, cerramientos, cadenas). Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.05
+UEC.ED.18.100.1110,"Acero de refuerzo del No. 3 (3/8""), en albañilería (castillos, dalas, cerramientos, cadenas). Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.09
+UEC.ED.18.105.1015,"Concreto fabricado en obra f´c = 200 kg/cm2, tma = 19 mm (3/4""), RN, en castillos, dalas, cerramientos, cadenas y repizones. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,1.91
+A0402,MUROS,,
+UEC.ED.18.115.1010,"Junta constructiva, a base de placa de poliestireno de alta densidad de 2"" de espesor, incluye: trazo, limpieza de la superficie.",m2,3.08
+UEC.ED.30.150.1040,"Muro de 15 cm de espesor, construido con block concreto hueco de 15 x 20 x 40 cm, asentado con mortero cemento-arena proporción 1:4, con junta de 1 cm, refuerzo de escalerilla a cada 3 hiladas y castillos ahogados de concreto f´c = 200 kg/cm2, armado con 1 varilla de acero No. 3, colocado a cada 0.61 m, hasta 3.50 m de altura. Incluye: trazo, nivelación, plomeado, andamiaje y limpieza.",m2,27.78
+A0403,CERCADOS,,
+UEC.OE.18.105.1015,"Sistema reja de acero a base de paneles hechos con varillas calibre 6, acabado estándar, sujeta a postes de 2 1/4"" x 2 1/4"" calibre 16. Incluye: tapa de polietileno, abrazaderas, kit de base, elementos de fijación, nivelación, plomeo de elementos, recortes y andamiaje.",m2,15.00
+UEC.ED.86.135.1010,"Reja tubular de 1.80 m de altura, a base de tubo de acero de 76 mm (3"") de diámetro cédula 30, ahogado 25 cm dando un total de tubo de 2.05 m, con corte a 45°en remate, tapa para remate con lamina negra calibre 13, con separación entre cada tubo de 15 cm a centros, ángulo de 1/8""x1"" de 5 cm de longitud, soldado a cada costado del tubo ahogado, una mano de primer anticorrosivo y dos manos de pintura de esmalte primera calidad. Incluye: nivelación y plomeo, presentación, ajustes, recortes, soldadura.",m,8.40
+A05,ACABADOS,,
+A0501,ACABADOS DE MURO,,
+UEC.ED.78.150.1020,"Pintura en muros, columnas y castillos tipo 100% acrílica primera calidad, considerando dos manos de pintura y una mano de sellador acrílico 5x1, hasta 3.50 m de altura. Incluye: andamiaje, preparación de la superficie.",m2,90.02
+A0502,LIMPIEZAS,,
+UEC.ED.100.115.1055,"Limpieza general al termino de la obra, incluye: retiros de materiales sobrantes en lugar especificado por la supervisión, equipo y herramienta.",m2,17.70
+"NOTA: Los códigos identificados de manera diferente a los del Tabulador UEC, corresponden a conceptos de equipamientos o acabados que presentan variabilidad en sus modelos de manera constante, por lo que se consideran atípicos y no forman parte del mismo.",,,

@@ -1,0 +1,48 @@
+﻿,,,
+CLAVE,CONCEPTO,UNIDAD,CANTIDAD
+A ,GIMNASIOS AL AIRRE LIBRE,,
+A01,PRELIMINARES,,
+A0101,TRAZO Y NIVELACION,,
+UEC.ED.12.100.1015,"Trazo y nivelación con equipo topográfico, en terreno plano. Incluye trabajos en sitio, mojoneras, referencias de nivel y planos de trazo.",m2,64.00
+A0102,DESPALME,,
+UEC.ED.10.100.1015,"Despalme de terreno tipo B, por medios manuales, a 20 cm de profundidad. Incluye: carga y retiro de material fuera de la obra.",m2,64.00
+A0103,LETRERO INFORMATIVO,,
+UEC.ED.94.115.1050,"Letrero informativo de obra de 0.80 x 1.20 m, marco y soportes de 2.50 m de altura a base de PTR calibre 14 de 2"" x 2"" (51 x 51mm) y tablero de lámina lisa galvanizada calibre 18. Incluye: aplicación de primer anticorrosivo, dos capas de pintura esmalte blanco de primera calidad, 2 muertos de concreto f´c = 150 kg/cm2 para empotre de 0.20 x 0.20 x 0.40 m y rotulación con pintura esmalte.",Pieza,1.00
+A02,MOVIMIENTO DE TIERRAS/TERRACERÍAS,,
+A0201,EXCAVACIONES,,
+UEC.ED.12.105.1020,"Excavación manual en zanja, en material tipo B de 0 a 2 m de profundidad. Incluye: extracción de material a pie en zanja, afinamiento de taludes y sobre excavaciones por procedimiento.",m3,1.61
+A0202,AFINES Y COMPACTACIONES,,
+UEC.ED.12.135.1050,"Compactación de terreno natural al 90% de su P.V.S.M., por medios mecánicos, incluye: incorporación de agua.",m2,64.00
+A0203,RELLENOS,,
+UEC.ED.12.125.1221,"Relleno semi-mecánico en caja con material inerte, compactado al 90% de su PVSM en capas de 20 cm. Incluye: abundamiento, acarreo de material e incorporación de agua para compactar.",m3,12.80
+A0204,CARGAS Y ACARREOS,,
+UEC.ED.14.120.1060,"Acarreo en camión de material producto de excavación al 1er km. Incluye: carga a mano, transporte y descarga.",m3,18.73
+UEC.ED.14.135.1060,Acarreo en camión de material producto de excavación en los kilómetros subsecuentes al 1ro. Incluye: transporte y descarga.,m3-km,93.65
+A03,CIMENTACION,,
+A0301,HABILITADO DE ACERO DE REFUERZO EN CIMENTACIÓN,,
+UEC.ED.16.105.1010,"Acero de refuerzo del No. 2 (1/4""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.02
+UEC.ED.16.105.1015,"Acero de refuerzo del No. 3 (3/8""), en cimentación. Incluye: dimensionamiento, corte, doblado, amarrado con alambre, ganchos y traslapes.",t,0.02
+A0302,CIMBRA EN CIMENTACIÓN,,
+UEC.ED.16.110.1015,"Cimbra acabado común en cimentación a base de madera de pino de 3ra., incluye: dimensionamiento, cortes, armado, lubricado, alambres, torzales, separadores, andamiaje, obra falsa necesaria, descimbrado, limpieza retiro de sobrantes del frente de trabajo.",m2,12.86
+A0303,CONCRETOS EN CIMENTACIÓN,,
+UEC.ED.16.115.1005,"Concreto fabricado en obra f´c = 200 kg/cm2, tma = 19 mm (3/4""), RN, en cimentación. Incluye: dosificación de agregados, mezclado, vaciado y curado.",m3,1.62
+A04,ALBAÑILERIA/CONSTRUCTIVO,,
+A0401,GUARNICIONES Y BANQUETAS,,
+GIMAL.10.UUB.1001,"Guarnición rectangular  de 15 x 30 cm de sección, a base de concreto fabricado en obra, f'c = 150 kg/cm2 tma 19 mm (3/4"")"", armada con medio castillo prehabilitado de  15-30-4, acabado pulido. Incluye: : trazo, cimbra en fronteras, armado, colado, vibrado, curado, retiro de cimbra, limpieza. y cortes con disco de 3 cm de profundiad a cada 2.50.",m,27.10
+A05,ACABADOS,,
+A0501,PISOS (PLAZAS Y ANDADORES),,
+UEC.UB.10.123.1050,"Piso de adocreto cuadrado de 20 x 20 x 6 cm, color rojo, asentado sobre una cama de arena de 5 cm, emboquillado de juntas arena fina. Incluye: trazo, nivelación, compactación del terreno al 95% de su PVSM, ajustes, cortes, desperdicios y limpieza.",m2,58.64
+A0502,MOBILIARIO URBANO,,
+GIMAL.90.UOE.1001,"Ejercitador prensa doble para entrenamiento de músculos superiores de 2.15 x 0.69 x 2.26 m, marca PLAY CLUB, modelo E7PPE-TUB o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+GIMAL.90.UOE.1002,"Ejercitador doble tipo balancín para ejercicio  cardio pulmonar de 1,00 mx 0,88 m x 1,40 m, modelo E8BAL-TUB, marca PLAY CLUB o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+GIMAL.90.UOE.1003,"Elíptica para desarrollo de músculo en pierna y hombros de 1,07 m x 0,53 m x 1,61 m,  modelo E12ELI-TUB, marca PLAY CLUB o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+GIMAL.90.UOE.1004,"Ejercitador tonificador doble de pierna de 1.78 x 0.51 x 2.00 m, marca PLAY CLUB, modelo E13TON-BAR o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+GIMAL.90.UOE.1005,"Ejercitador doble tipo esquiador para cardio de 1,93 m x 0,46 m x 1,25 m, modelo E16ESQ-TUB, marca PLAY CLUB o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+GIMAL.90.UOE.1006,"Barra doble para abdominales de 1,45 m x 1,37 m x 0,66 m, modelo E22AB-TUB, marca PLAY CLUB o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+GIMAL.90.UOE.1007,"Ejercitador caminadora balance individual de 0.95 x 0.40 x 1.35 m, modelo AEM-214, marca JUMBO o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+GIMAL.90.UOE.1008,"Ejercitador bicicleta balance individual de 0.80 x 0.5 x 1.10 m, modelo AEM-714, marca JUMBO o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+GIMAL.90.UOE.1009,"Ejercitador de brazos balance doble de 2.70 x 0.85 x 1.80 m, modelo AEM-614, marca JUMBO o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+GIMAL.90.UOE.1010,"Ejercitador surfer doble de 1.90 x 0.65 x 1.80 m, modelo AEM-814, marca JUMBO o similar en calidad, costo y garantía, recubierto con pintura electrostática. Incluye: trazo, presentación, fijación y limpieza.",Pieza,1.00
+A0503,LIMPIEZAS,,
+UEC.ED.100.115.1055,"Limpieza general al termino de la obra, incluye: retiros de materiales sobrantes en lugar especificado por la supervisión, equipo y herramienta.",m2,64.00
+"NOTA: Los códigos identificados de manera diferente a los del Tabulador UEC, corresponden a conceptos de equipamientos o acabados que presentan variabilidad en sus modelos de manera constante, por lo que se consideran atípicos y no forman parte del mismo.",,,
