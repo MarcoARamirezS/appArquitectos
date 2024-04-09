@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_map: ^6.1.0
   csv: 6.0.0
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +84,7 @@ flutter:
     - assets/csv/E/TRABAJOS Y OBRA DE EDIFICACION BASICA/BARDA PERIMETRAL – CIMENTACION DE MAMPOSTERIA MODULO DE 18.20 M/archivo.csv
     - assets/csv/F/DUCTOS SUBTERRANEOS PARA SERVICIOS/LINEA DE CONDUCCION 14.49 M/archivo.csv
     - assets/csv/F/DUCTOS SUBTERRANEOS PARA SERVICIOS/LINEA DE DISTRIBUCION 7.95 M/archivo.csv
+    - assets/guanajuato.svg
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

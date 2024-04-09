@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'pres_con_page.dart'; // Asegúrate de importar la siguiente página aquí
+import 'package:flutter_svg/flutter_svg.dart';
+import 'pres_con_page.dart';
 
 class RegionSelectionPage extends StatefulWidget {
   const RegionSelectionPage({super.key});
   @override
-  // ignore: library_private_types_in_public_api
   _RegionSelectionPageState createState() => _RegionSelectionPageState();
 }
 
@@ -13,33 +13,31 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Obtén el tamaño de la pantalla para dimensionar el SVG adecuadamente
+    var screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Selecciona tu región'),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DropdownButton<String>(
-              value: selectedRegion,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedRegion = newValue!;
-                });
-              },
-              items: <String>['1', '2', '3', '4', '5', '6', '7', '8'] // Cambia aquí según tus regiones
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text('Región $value'),
-                );
-              }).toList(),
+            // Asegúrate de que el tamaño del SVG se ajuste bien a la pantalla
+            Container(
+              width: screenSize.width,
+              height: screenSize.height * 0.5, // Ajusta esta proporción según sea necesario
+              child: SvgPicture.asset(
+                'assets/guanajuato.svg',
+                // Ajusta según el tamaño que desees para el SVG
+                semanticsLabel: 'Mapa de Guanajuato',
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Navegar a la siguiente página (pres_con.dart)
+                // Navegar a la siguiente página (pres_con.dart) con la región seleccionada
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const PresConPage()),
@@ -53,4 +51,3 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
     );
   }
 }
-
