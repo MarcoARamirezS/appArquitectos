@@ -36,6 +36,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     final subcategoriaMayusculas = removeAccents(widget.subcategoriaSeleccionada.toUpperCase());
     final opcionMayusculas = removeAccents(widget.opcion.toUpperCase());
     String ruta = '${widget.categoriaSeleccionada}/$subcategoriaMayusculas/$opcionMayusculas/archivo.csv';
+    String rutaRegion = 'REGION/${widget.selectedRegion}/${widget.selectedRegion}.csv';
 
     try {
       final ByteData data = await rootBundle.load('assets/csv/$ruta');
@@ -45,6 +46,11 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
       List<Categoria> tempCategoriasList = [];
       Categoria? categoriaActual;
       Subcat? subcategoriaActual;
+
+      final ByteData dataRegion = await rootBundle.load('assets/csv/$rutaRegion');
+      final List<int> bytesRegion = dataRegion.buffer.asUint8List();
+      final String csvStringRegion = utf8.decode(bytesRegion);
+      List<List<dynamic>> parsedCSVRegion = const CsvToListConverter().convert(csvStringRegion);
 
       for (var row in parsedCSV) {
         if (row.isNotEmpty && row[0] is String) {
@@ -59,9 +65,11 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
           } else if (codigo.length > 0 && subcategoriaActual != null && row[1].length > 0) {
             final nombre = row.isNotEmpty ? row[1] : '';
             final unidad = row.isNotEmpty ? row[2] : '';
-            final precioString = row.isNotEmpty ? row[3].toString().replaceAll(',', '') : '0'; // Convertir a cadena
+            final matchingRow = parsedCSVRegion.firstWhere((row) => row.isNotEmpty && row[0] == codigo, orElse: () => []);
+            final precioString = matchingRow.isNotEmpty ? matchingRow[4].toString().replaceAll('\$', '').replaceAll(',', '') : '0';
+            print('codigo: $codigo');
             final precio = double.tryParse(precioString) ?? 0;
-            //print(precioString);
+            print('Precio: $precio');
             subcategoriaActual.productos.add(Producto(
               clave: codigo,
               nombre: nombre,
