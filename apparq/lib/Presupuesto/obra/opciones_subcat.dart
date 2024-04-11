@@ -19,7 +19,7 @@ class OpcionesSubcatPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Página $categoriaSeleccionada'),
+        title: const Text(''),
       ),
       body: Center(
         child: Column(
@@ -35,7 +35,7 @@ class OpcionesSubcatPage extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 16.0), // Agregar un padding abajo
+                padding: const EdgeInsets.only(bottom: 16.0),
                 child: SingleChildScrollView(
                   child: Column(
                     children: opciones.map((opcion) {
@@ -58,7 +58,7 @@ class OpcionesSubcatPage extends StatelessWidget {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xEEEEEEEE),
+                                backgroundColor: const Color(0xFF044C70),
                                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
                               ),
                               child: Text(
@@ -67,7 +67,7 @@ class OpcionesSubcatPage extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                                 style: const TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),

@@ -89,74 +89,84 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
       ),
       body: Column(
         children: [
-          Expanded( // Expandir el ListView para que ocupe el espacio disponible
+          Expanded(
             child: Center(
               child: ListView.builder(
                 itemCount: categoriasList.length,
                 itemBuilder: (context, index) {
                   final categoria = categoriasList[index];
                   return ExpansionTile(
+                    iconColor: const Color(0xFF044C70),
+                    collapsedIconColor: const Color(0xFF044C70),
+                    backgroundColor: const Color(0xFF6C6F72),
                     title: Text(categoria.nombre),
                     children: [
-                      ...categoria.subcategorias.map((subcategoria) => ExpansionTile(
-                        title: Text(subcategoria.nombre),
-                        children: [
-                          ...subcategoria.productos.map((producto) => Table(
-                            border: TableBorder.all(),
-                            columnWidths: const {
-                              // Ancho de las columnas
-                              0: FlexColumnWidth(3.1), // Columna del nombre
-                              1: FlexColumnWidth(1), // Columna de la cantidad
-                              2: FlexColumnWidth(0.7), // Columna de la unidad
-                              3: FlexColumnWidth(1.2), // Columna del precio
-                            },
+                      ...categoria.subcategorias.map(
+                        (subcategoria) => Container(
+                          color: const Color(0xEEEEEEEE), // Para los tiles hijos, usa un gris un poco más oscuro
+                          child: ExpansionTile(
+                            iconColor: const Color(0xFF044C70),
+                            collapsedIconColor: const Color(0xFF044C70),
+                            title: Text(subcategoria.nombre),
                             children: [
-                              TableRow(
+                              ...subcategoria.productos.map((producto) => Table(
+                                border: TableBorder.all(),
+                                columnWidths: const {
+                                  // Ancho de las columnas
+                                  0: FlexColumnWidth(3.1), // Columna del nombre
+                                  1: FlexColumnWidth(1), // Columna de la cantidad
+                                  2: FlexColumnWidth(0.7), // Columna de la unidad
+                                  3: FlexColumnWidth(1.2), // Columna del precio
+                                },
                                 children: [
-                                  TableCell(
-                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(producto.nombre),
-                                    ),
-                                  ),
-                                  TableCell(
-                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.number,
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none, 
-                                        contentPadding: EdgeInsets.all(3.0),
+                                  TableRow(
+                                    children: [
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(producto.nombre),
+                                        ),
                                       ),
-                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                      initialValue: producto.cantidad.toString(),
-                                      onChanged: (String valor) {
-                                        setState(() {
-                                          producto.cantidad = int.tryParse(valor) ?? 0;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  TableCell(
-                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(child: Text(producto.unidad)),
-                                    ),
-                                  ),
-                                  TableCell(
-                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(child: Text('\$${producto.precio}')),
-                                    ),
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: TextFormField(
+                                          keyboardType: TextInputType.number,
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none, 
+                                            contentPadding: EdgeInsets.all(3.0),
+                                          ),
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                          initialValue: producto.cantidad.toString(),
+                                          onChanged: (String valor) {
+                                            setState(() {
+                                              producto.cantidad = int.tryParse(valor) ?? 0;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Center(child: Text(producto.unidad)),
+                                        ),
+                                      ),
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Center(child: Text('\$${producto.precio}')),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              ),
+                              )).toList(),
                             ],
-                          )).toList(),
-                        ],
-                      )).toList(),
+                          ),
+                        )
+                      ).toList(),
                     ],
                   );
                 },
@@ -185,8 +195,19 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                     );
                   },
                 );
-              }, 
-              child: Text('Acción'),
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF044C70),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+              ),
+              child: const Text(
+                'Calcular',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ],

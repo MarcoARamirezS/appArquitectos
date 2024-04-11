@@ -2,14 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'pres_con_page.dart';
 
+Color region1 = const Color.fromRGBO(243, 236, 199, 1.0);
+Color region2 = const Color.fromRGBO(255, 233, 157, 1.0);
+Color region3 = const Color.fromRGBO(153, 217, 234, 1.0);
+Color region4 = const Color.fromRGBO(211, 240, 123, 1.0);
+Color region5 = const Color.fromRGBO(255, 159, 207, 1.0);
+Color region6 = const Color.fromRGBO(255, 247, 85, 1.0);
+Color region7 = const Color.fromRGBO(228, 197, 228, 1.0);
+Color region8 = const Color.fromRGBO(255, 160, 98, 1.0);
+
 class RegionSelectionPage extends StatefulWidget {
   const RegionSelectionPage({super.key});
   @override
+  // ignore: library_private_types_in_public_api
   _RegionSelectionPageState createState() => _RegionSelectionPageState();
 }
 
 class _RegionSelectionPageState extends State<RegionSelectionPage> {
-  String selectedRegion = '1'; // Suponiendo que tienes regiones numeradas del 1 al 8
+  String selectedRegion = '1';
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +33,10 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 40),
             SizedBox(
               width: screenSize.width,
-              height: screenSize.height * 0.5, // Ajusta esta proporción según sea necesario
+              height: screenSize.height * 0.5,
               child: SvgPicture.asset(
                 'assets/guanajuato.svg',
                 semanticsLabel: 'Mapa de Guanajuato',
@@ -34,6 +45,13 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
             const SizedBox(height: 20),
             DropdownButton<String>(
               value: selectedRegion,
+              icon: const Icon(Icons.arrow_drop_down_sharp),
+              elevation: 16,
+              style: const TextStyle(color: Colors.black),
+              underline: Container(
+                height: 2,
+                color: Colors.grey,
+              ),
               onChanged: (String? newValue) {
                 setState(() {
                   selectedRegion = newValue!;
@@ -41,22 +59,67 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
               },
               items: <String>['1', '2', '3', '4', '5', '6', '7', '8']
                   .map<DropdownMenuItem<String>>((String value) {
+                Color bgColor;
+                switch (value) {
+                  case '1':
+                    bgColor = region1;
+                    break;
+                  case '2':
+                    bgColor = region2;
+                    break;
+                  case '3':
+                    bgColor = region3;
+                    break;
+                  case '4':
+                    bgColor = region4;
+                    break;
+                  case '5':
+                    bgColor = region5;
+                    break;
+                  case '6':
+                    bgColor = region6;
+                    break;
+                  case '7':
+                    bgColor = region7;
+                    break;
+                  case '8':
+                    bgColor = region8;
+                    break;
+                  default:
+                    bgColor = Colors.white;
+                }
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text('Región $value'),
+                  child: Container(
+                    color: bgColor,
+                    child: Text(
+                      'Región $value',
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  ),
                 );
               }).toList(),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Navegar a la siguiente página (pres_con.dart) con la región seleccionada
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>  PresConPage(selectedRegion: selectedRegion)),
                 );
               },
-              child: const Text('Siguiente'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
+                padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+              ),
+              child: const Text(
+                'Siguiente',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),

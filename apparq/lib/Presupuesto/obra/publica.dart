@@ -9,7 +9,7 @@ class PublicaPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final ButtonStyle elevatedButtonStyle = ElevatedButton.styleFrom(
-      backgroundColor: const Color(0xEEEEEEEE),
+      backgroundColor: const Color(0xFF044C70),
       padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
       minimumSize: const Size(50, 50),
     );
@@ -52,7 +52,7 @@ class PublicaPage extends StatelessWidget {
                           style: elevatedButtonStyle,
                           child: Text(categoria.titulo,
                             style: const TextStyle(
-                             color: Colors.black,
+                             color: Colors.white,
                              fontSize: 16,
                              fontWeight: FontWeight.bold,
                             )
@@ -82,7 +82,7 @@ class PublicaPage extends StatelessWidget {
                           style: elevatedButtonStyle,
                           child: Text(categoria.titulo,
                             style: const TextStyle(
-                             color: Colors.black,
+                             color: Colors.white,
                              fontSize: 16,
                              fontWeight: FontWeight.bold,
                             )
