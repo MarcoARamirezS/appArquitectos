@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'opciones.dart';
 import 'categorias.dart';
-
 class PublicaPage extends StatelessWidget {
-  const PublicaPage({super.key});
+  final String selectedRegion;
+  const PublicaPage({super.key, required this.selectedRegion});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,10 @@ class PublicaPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => OpcionesPage(categoriaSeleccionada: categoria.titulo),
+                                builder: (context) => OpcionesPage(
+                                  categoriaSeleccionada: categoria.titulo, 
+                                  selectedRegion: selectedRegion
+                                ),
                               ),
                             );
                           },
@@ -69,7 +72,10 @@ class PublicaPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => OpcionesPage(categoriaSeleccionada: categoria.titulo),
+                                builder: (context) => OpcionesPage(
+                                  categoriaSeleccionada: categoria.titulo, 
+                                  selectedRegion: selectedRegion
+                                ),
                               ),
                             );
                           },

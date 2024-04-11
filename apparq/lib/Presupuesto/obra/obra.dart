@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'publica.dart';
 
 class ObraPage extends StatelessWidget {
-  const ObraPage({super.key});
+  final String selectedRegion;
+  const ObraPage({super.key, required this.selectedRegion});
   @override
   Widget build(BuildContext context) {
 
@@ -32,7 +33,7 @@ class ObraPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                    context,
-                   MaterialPageRoute(builder: (context) => const PublicaPage()),
+                   MaterialPageRoute(builder: (context) => PublicaPage(selectedRegion: selectedRegion)),
                  );
               },
               style: elevatedButtonStyle,

@@ -4,8 +4,9 @@ import 'opciones_subcat.dart';
 
 class OpcionesPage extends StatelessWidget {
   final String categoriaSeleccionada;
+  final String selectedRegion;
 
-  const OpcionesPage({super.key, required this.categoriaSeleccionada});
+  const OpcionesPage({super.key, required this.categoriaSeleccionada, required this.selectedRegion});
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class OpcionesPage extends StatelessWidget {
                                     builder: (context) => OpcionesSubcatPage(
                                       categoriaSeleccionada: categoriaSeleccionada,
                                       subcategoriaSeleccionada: subcategoria.titulo,
+                                      selectedRegion: selectedRegion
                                     ),
                                   ),
                                 );

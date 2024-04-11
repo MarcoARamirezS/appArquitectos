@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'obra/obra.dart';
 import 'proyecto/proyecto.dart';
-import 'tramite/tramite.dart';
 class AspectosPage extends StatelessWidget {
-  const AspectosPage({super.key});
+  final String selectedRegion;
+  const AspectosPage({super.key, required this.selectedRegion});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class AspectosPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ObraPage()),
+                  MaterialPageRoute(builder: (context) => ObraPage(selectedRegion: selectedRegion)),
                 );
               },
               style: elevatedButtonStyle,
@@ -58,10 +58,7 @@ class AspectosPage extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CSVReaderPage()),
-                );
+                
               },
               style: elevatedButtonStyle,
               child: const Text(

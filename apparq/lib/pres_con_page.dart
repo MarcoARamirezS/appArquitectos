@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'Presupuesto/aspectos.dart';
 
 class PresConPage extends StatelessWidget {
-  const PresConPage({super.key});
+  final String selectedRegion;
+
+  const PresConPage({super.key, required this.selectedRegion});
+  
 
   @override
   Widget build(BuildContext context) {
-
     final ButtonStyle elevatedButtonStyle = ElevatedButton.styleFrom(
       backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
       padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
@@ -39,7 +41,7 @@ class PresConPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AspectosPage()),
+                  MaterialPageRoute(builder: (context) => AspectosPage(selectedRegion: selectedRegion)),
                 );
               },
               style: elevatedButtonStyle,

@@ -7,12 +7,14 @@ class PresSubcatPage extends StatefulWidget {
   final String categoriaSeleccionada;
   final String subcategoriaSeleccionada;
   final String opcion;
+  final String selectedRegion;
 
   const PresSubcatPage({
     super.key,
     required this.categoriaSeleccionada,
     required this.subcategoriaSeleccionada,
-    required this.opcion,
+    required this.opcion, 
+    required this.selectedRegion,
   });
 
   @override
@@ -291,7 +293,8 @@ void main() {
     home: PresSubcatPage(
       categoriaSeleccionada: 'Categoria',
       subcategoriaSeleccionada: 'Subcategoria',
-      opcion: 'Opcion',
+      opcion: 'Opcion', 
+      selectedRegion: '',
     ),
   ));
 }

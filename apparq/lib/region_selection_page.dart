@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'pres_con_page.dart';
 
 class RegionSelectionPage extends StatefulWidget {
@@ -9,11 +9,10 @@ class RegionSelectionPage extends StatefulWidget {
 }
 
 class _RegionSelectionPageState extends State<RegionSelectionPage> {
-  String selectedRegion = '1'; // Región predeterminada
+  String selectedRegion = '1'; // Suponiendo que tienes regiones numeradas del 1 al 8
 
   @override
   Widget build(BuildContext context) {
-    // Obtén el tamaño de la pantalla para dimensionar el SVG adecuadamente
     var screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -24,15 +23,29 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Asegúrate de que el tamaño del SVG se ajuste bien a la pantalla
-            Container(
+            SizedBox(
               width: screenSize.width,
               height: screenSize.height * 0.5, // Ajusta esta proporción según sea necesario
               child: SvgPicture.asset(
                 'assets/guanajuato.svg',
-                // Ajusta según el tamaño que desees para el SVG
                 semanticsLabel: 'Mapa de Guanajuato',
               ),
+            ),
+            const SizedBox(height: 20),
+            DropdownButton<String>(
+              value: selectedRegion,
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedRegion = newValue!;
+                });
+              },
+              items: <String>['1', '2', '3', '4', '5', '6', '7', '8']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text('Región $value'),
+                );
+              }).toList(),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -40,7 +53,7 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
                 // Navegar a la siguiente página (pres_con.dart) con la región seleccionada
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const PresConPage()),
+                  MaterialPageRoute(builder: (context) =>  PresConPage(selectedRegion: selectedRegion)),
                 );
               },
               child: const Text('Siguiente'),
