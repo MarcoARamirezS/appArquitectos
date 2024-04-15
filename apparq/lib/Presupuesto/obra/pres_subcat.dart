@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show ByteData, FilteringTextInputFormatter, rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart'; 
 import 'dart:convert';
 
 class PresSubcatPage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     final opcionMayusculas = removeAccents(widget.opcion.toUpperCase());
     String ruta = '${widget.categoriaSeleccionada}/$subcategoriaMayusculas/$opcionMayusculas/archivo.csv';
     String rutaRegion = 'REGION/$selectedRegion/$selectedRegion.csv';
-    print(selectedRegion);
+    //print(selectedRegion);
 
     try {
       final ByteData data = await rootBundle.load('assets/csv/$ruta');
@@ -129,17 +130,50 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                             collapsedIconColor: const Color(0xFF044C70),
                             title: Text(subcategoria.nombre),
                             children: [
-                              ...subcategoria.productos.map((producto) => Table(
+                              Table(
                                 border: TableBorder.all(),
                                 columnWidths: const {
-                                  // Ancho de las columnas
-                                  0: FlexColumnWidth(3.1), // Columna del nombre
-                                  1: FlexColumnWidth(1), // Columna de la cantidad
-                                  2: FlexColumnWidth(0.7), // Columna de la unidad
+                                  0: FlexColumnWidth(2.6), // Columna del nombre
+                                  1: FlexColumnWidth(1.2), // Columna de la cantidad
+                                  2: FlexColumnWidth(1.0), // Columna de la unidad
                                   3: FlexColumnWidth(1.2), // Columna del precio
                                 },
                                 children: [
-                                  TableRow(
+                                  // Fila de títulos
+                                  const TableRow(
+                                    children: [
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('Nombre', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+                                        ),
+                                      ),
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('Cantidad', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+                                        ),
+                                      ),
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('Unidad', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+                                        ),
+                                      ),
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('Precio', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  // Filas de datos para cada producto
+                                  ...subcategoria.productos.map((producto) => TableRow(
                                     children: [
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
@@ -159,6 +193,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                           inputFormatters: [
                                             FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
                                           ],
+                                          textAlign: TextAlign.center,
                                           initialValue: producto.cantidad.toString(),
                                           onChanged: (String valor) {
                                             setState(() {
@@ -171,20 +206,20 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Center(child: Text(producto.unidad)),
+                                          child: Center(child: Text(producto.unidad, textAlign: TextAlign.center)),
                                         ),
                                       ),
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Center(child: Text('\$${producto.precio}')),
+                                          child: Center(child: Text('\$${producto.precio}', textAlign: TextAlign.center)),
                                         ),
                                       ),
                                     ],
-                                  ),
+                                  )).toList(),
                                 ],
-                              )).toList(),
+                              )
                             ],
                           ),
                         )
@@ -199,19 +234,20 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: () {
-                String resumen = generarResumenTicket();
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Resumen del Presupuesto'),
+                      title: const Text('Resumen del Presupuesto'),
                       content: SingleChildScrollView(
-                        child: Text(resumen),
+                        child: RichText(
+                          text: generarResumenTicket(),
+                        ),
                       ),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context),
-                          child: Text('Cerrar'),
+                          child: const Text('Cerrar'),
                         ),
                       ],
                     );
@@ -237,31 +273,47 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     );
   }
 
-  String generarResumenTicket() {
-    String resumen = 'Resumen del Presupuesto\n\n';
-    double totalGeneral = 0.0;
+  TextSpan generarResumenTicket() {
+    List<TextSpan> children = [
+      const TextSpan(text: 'Resumen del Presupuesto\n\n', style: TextStyle(fontWeight: FontWeight.bold)),
+    ];
 
+    double totalGeneral = 0.0;
     List<Categoria?> categoriasConProductos = obtenerCategoriasConProductos();
 
     for (var categoria in categoriasConProductos) {
-      resumen += 'CategorÃ­a: ${categoria?.nombre}\n';
+      children.add(
+        TextSpan(text: 'Categoría: ${categoria?.nombre}\n', style: const TextStyle(fontWeight: FontWeight.bold))
+      );
 
       for (var subcategoria in categoria!.subcategorias) {
-        resumen += '  - ${subcategoria.nombre}\n';
+        children.add(TextSpan(text: '  - ${subcategoria.nombre}\n'));
 
         for (var producto in subcategoria.productos) {
           double precioTotalProducto = producto.cantidad * producto.precio;
           totalGeneral += precioTotalProducto;
-          resumen += '    * ${producto.nombre} (${producto.cantidad} ${producto.unidad}) - \$${precioTotalProducto.toStringAsFixed(2)}\n'; // Detalle del producto
-        } 
+          children.add(TextSpan(text: '    * ${producto.nombre} (${producto.cantidad} ${producto.unidad}) - \$${precioTotalProducto.toStringAsFixed(2)}\n'));
+        }
       }
 
-      resumen += '\n';
+      children.add(const TextSpan(text: '\n'));
     }
 
-    resumen += '\nTotal General: \$${totalGeneral.toStringAsFixed(2)}';
-    return resumen;
+    final formattedTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(totalGeneral);
+
+    children.add(TextSpan(
+      text: 'Total General: $formattedTotal',
+      style: const TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+      ),
+    ));
+
+    return TextSpan(style: const TextStyle(fontSize: 16, color: Colors.black), children: children);
   }
+
+
 
   List<Categoria?> obtenerCategoriasConProductos() {
     return categoriasList.map((categoria) {
