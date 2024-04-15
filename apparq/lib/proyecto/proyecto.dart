@@ -21,9 +21,6 @@ class _ProyectoPageState extends State<ProyectoPage> {
         : [];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Proyecto'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

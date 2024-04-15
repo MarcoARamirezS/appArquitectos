@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
-import 'region_selection_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'menu.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  void initState() {
+    super.initState();
+    _setDefaultRegion();
+  }
+
+  Future<void> _setDefaultRegion() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selected_region', '1');  // Establece la región predeterminada
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -24,29 +40,11 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Usuario:',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
-              ),
-              const SizedBox(height: 20),
               const TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Ingrese su usuario',
                 ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Contraseña:',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
               ),
               const SizedBox(height: 20),
               const TextField(
@@ -57,22 +55,13 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Registrarse',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
-              ),
-              const SizedBox(height: 20),
               Align(
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RegionSelectionPage()),
+                      MaterialPageRoute(builder: (context) => MenuPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

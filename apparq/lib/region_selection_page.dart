@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'pres_con_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'menu.dart';
 
 Color region1 = const Color.fromRGBO(243, 236, 199, 1.0);
 Color region2 = const Color.fromRGBO(255, 233, 157, 1.0);
@@ -13,22 +14,41 @@ Color region8 = const Color.fromRGBO(255, 160, 98, 1.0);
 
 class RegionSelectionPage extends StatefulWidget {
   const RegionSelectionPage({super.key});
+
   @override
   // ignore: library_private_types_in_public_api
   _RegionSelectionPageState createState() => _RegionSelectionPageState();
 }
 
 class _RegionSelectionPageState extends State<RegionSelectionPage> {
-  String selectedRegion = '1';
+  String selectedRegion = '1'; // Valor por defecto
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRegion();
+  }
+
+  Future<void> _saveRegion() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selected_region', selectedRegion);
+  }
+
+  Future<void> _loadRegion() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? region = prefs.getString('selected_region');
+    if (region != null) {
+      setState(() {
+        selectedRegion = region;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Selecciona tu región'),
-      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,12 +73,14 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
                 color: Colors.grey,
               ),
               onChanged: (String? newValue) {
-                setState(() {
-                  selectedRegion = newValue!;
-                });
+                if (newValue != null) {
+                  setState(() {
+                    selectedRegion = newValue;
+                  });
+                }
               },
               items: <String>['1', '2', '3', '4', '5', '6', '7', '8']
-                  .map<DropdownMenuItem<String>>((String value) {
+                .map<DropdownMenuItem<String>>((String value) {
                 Color bgColor;
                 switch (value) {
                   case '1':
@@ -103,17 +125,17 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  PresConPage(selectedRegion: selectedRegion)),
-                );
+                _saveRegion();
+                if (MenuPage.menuPageKey.currentState != null) {
+                  MenuPage.menuPageKey.currentState!.setDashboardPage();
+                } 
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
                 padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
               ),
               child: const Text(
-                'Siguiente',
+                'Seleccionar',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,

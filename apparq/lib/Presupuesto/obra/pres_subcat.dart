@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show ByteData, FilteringTextInputFormatter, rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class PresSubcatPage extends StatefulWidget {
   final String categoriaSeleccionada;
   final String subcategoriaSeleccionada;
   final String opcion;
-  final String selectedRegion;
 
   const PresSubcatPage({
     super.key,
     required this.categoriaSeleccionada,
     required this.subcategoriaSeleccionada,
     required this.opcion, 
-    required this.selectedRegion,
   });
 
   @override
@@ -25,6 +24,7 @@ class PresSubcatPage extends StatefulWidget {
 class _PresSubcatPageState extends State<PresSubcatPage> {
   List<Categoria> categoriasList = [];
   String? subcategoriaSeleccionada;
+  String selectedRegion = '';
 
   @override
   void initState() {
@@ -32,11 +32,21 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     loadCSV();
   }
 
+
   Future<void> loadCSV() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? region = prefs.getString('selected_region');
+    if (region != null) {
+      setState(() {
+        selectedRegion = region;
+      });
+    }
+    
     final subcategoriaMayusculas = removeAccents(widget.subcategoriaSeleccionada.toUpperCase());
     final opcionMayusculas = removeAccents(widget.opcion.toUpperCase());
     String ruta = '${widget.categoriaSeleccionada}/$subcategoriaMayusculas/$opcionMayusculas/archivo.csv';
-    String rutaRegion = 'REGION/${widget.selectedRegion}/${widget.selectedRegion}.csv';
+    String rutaRegion = 'REGION/$selectedRegion/$selectedRegion.csv';
+    print(selectedRegion);
 
     try {
       final ByteData data = await rootBundle.load('assets/csv/$ruta');
@@ -69,12 +79,17 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
             final precioString = matchingRow.isNotEmpty ? matchingRow[4].toString().replaceAll('\$', '').replaceAll(',', '') : '0';
             print('codigo: $codigo');
             final precio = double.tryParse(precioString) ?? 0;
-            print('Precio: $precio');
+            
+            final cantidadString = row.isNotEmpty ? row[3].toString().replaceAll(',', '') : '0';
+            print('CantidadString: $cantidadString');
+            final cantidad = double.tryParse(cantidadString) ?? 0;
+            print('Cantidad: $cantidad');
             subcategoriaActual.productos.add(Producto(
               clave: codigo,
               nombre: nombre,
               unidad: unidad,
               precio: precio,
+              cantidad: cantidad,
             ));
           }
         }
@@ -92,9 +107,6 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.opcion),
-      ),
       body: Column(
         children: [
           Expanded(
@@ -111,7 +123,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                     children: [
                       ...categoria.subcategorias.map(
                         (subcategoria) => Container(
-                          color: const Color(0xEEEEEEEE), // Para los tiles hijos, usa un gris un poco más oscuro
+                          color: const Color(0xEEEEEEEE),
                           child: ExpansionTile(
                             iconColor: const Color(0xFF044C70),
                             collapsedIconColor: const Color(0xFF044C70),
@@ -144,11 +156,13 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                             border: InputBorder.none, 
                                             contentPadding: EdgeInsets.all(3.0),
                                           ),
-                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                                          ],
                                           initialValue: producto.cantidad.toString(),
                                           onChanged: (String valor) {
                                             setState(() {
-                                              producto.cantidad = int.tryParse(valor) ?? 0;
+                                              producto.cantidad = double.tryParse(valor) ?? 0;
                                             });
                                           },
                                         ),
@@ -191,7 +205,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: Text('Resumen del Presupuesto'),
-                      content: SingleChildScrollView( // Envolver el contenido en SingleChildScrollView
+                      content: SingleChildScrollView(
                         child: Text(resumen),
                       ),
                       actions: [
@@ -230,7 +244,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     List<Categoria?> categoriasConProductos = obtenerCategoriasConProductos();
 
     for (var categoria in categoriasConProductos) {
-      resumen += 'Categoría: ${categoria?.nombre}\n';
+      resumen += 'CategorÃ­a: ${categoria?.nombre}\n';
 
       for (var subcategoria in categoria!.subcategorias) {
         resumen += '  - ${subcategoria.nombre}\n';
@@ -251,12 +265,12 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
 
   List<Categoria?> obtenerCategoriasConProductos() {
     return categoriasList.map((categoria) {
-      // Filtrar subcategorías con productos con cantidad > 0
+      // Filtrar subcategorÃ­as con productos con cantidad > 0
       List<Subcat> subcategoriasFiltradas = categoria.subcategorias
           .where((subcat) => subcat.productos.any((producto) => producto.cantidad > 0))
           .toList();
 
-      // Crear nuevas subcategorías con productos filtrados
+      // Crear nuevas subcategorÃ­as con productos filtrados
       subcategoriasFiltradas = subcategoriasFiltradas.map((subcat) {
         List<Producto> productosFiltrados =
             subcat.productos.where((producto) => producto.cantidad > 0).toList();
@@ -305,7 +319,7 @@ class Producto {
   final String clave;
   final String nombre;
   final String unidad;
-  int cantidad;
+  double cantidad;
   final double precio;
 
   Producto({
@@ -313,18 +327,6 @@ class Producto {
     required this.nombre,
     required this.unidad,
     required this.precio,
-    this.cantidad = 0,
+    required this.cantidad,
   });
 }
-
-void main() {
-  runApp(const MaterialApp(
-    home: PresSubcatPage(
-      categoriaSeleccionada: 'Categoria',
-      subcategoriaSeleccionada: 'Subcategoria',
-      opcion: 'Opcion', 
-      selectedRegion: '',
-    ),
-  ));
-}
-
