@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menu.dart';
+import 'dashboard.dart';
 
 Color region1 = const Color.fromRGBO(243, 236, 199, 1.0);
 Color region2 = const Color.fromRGBO(255, 233, 157, 1.0);
@@ -127,7 +128,7 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
               onPressed: () {
                 _saveRegion();
                 if (MenuPage.menuPageKey.currentState != null) {
-                  MenuPage.menuPageKey.currentState!.setDashboardPage();
+                  MenuPage.menuPageKey.currentState!.setPage(DashboardPage(), 'Dashboard');
                 } 
               },
               style: ElevatedButton.styleFrom(

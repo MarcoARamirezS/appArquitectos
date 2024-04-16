@@ -17,6 +17,7 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   String appBarTitle = "Dashboard";
   Widget currentPage = DashboardPage();
+  List<NavigationState> navigationHistory = [];
   
   final List<Widget> _pages = [
     DashboardPage(),
@@ -38,35 +39,46 @@ class _MenuPageState extends State<MenuPage> {
 
   void setPage(Widget page, String title) {
     setState(() {
+      navigationHistory.add(NavigationState(currentPage, appBarTitle));
       appBarTitle = title;
       currentPage = page;
-    });
-  }
-
-  void setDashboardPage() {
-    setState(() {
-      appBarTitle = "Dashboard";
-      currentPage = DashboardPage();
     });
   }
 
   void _onSelectItem(int index) {
     Navigator.pop(context);
     setState(() {
+      navigationHistory.add(NavigationState(currentPage, appBarTitle));
       appBarTitle = _titles[index];
       currentPage = _pages[index];
     });
   }
 
+  Future<bool> _onWillPop() async {
+    if (navigationHistory.isNotEmpty) {
+      NavigationState lastState = navigationHistory.removeLast();
+      setState(() {
+        print('Pagina ${lastState.page}');
+        print('Titulo ${lastState.title}');
+        currentPage = lastState.page;
+        appBarTitle = lastState.title;
+      });
+      return false; // Evita que se cierre la app
+    }
+    return true; // Permite cerrar la app si la historia está vacía
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(appBarTitle),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(appBarTitle),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
             const UserAccountsDrawerHeader(
               // Aquí podrías poner información del usuario si es necesario
               accountName: Text("Nombre del Usuario"),
@@ -123,9 +135,17 @@ class _MenuPageState extends State<MenuPage> {
               },
             ),
           ],
+          ),
         ),
+        body: currentPage,
       ),
-      body: currentPage,
     );
   }
+}
+
+class NavigationState {
+  final Widget page;
+  final String title;
+
+  NavigationState(this.page, this.title);
 }

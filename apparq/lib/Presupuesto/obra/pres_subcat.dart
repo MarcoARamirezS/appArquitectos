@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart'; 
 import 'dart:convert';
 
+bool _isLoading = true;
 class PresSubcatPage extends StatefulWidget {
   final String categoriaSeleccionada;
   final String subcategoriaSeleccionada;
@@ -35,6 +36,9 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
 
 
   Future<void> loadCSV() async {
+    setState(() {
+      _isLoading = true;  // Comienza la carga
+    });
     final prefs = await SharedPreferences.getInstance();
     String? region = prefs.getString('selected_region');
     if (region != null) {
@@ -78,13 +82,13 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
             final unidad = row.isNotEmpty ? row[2] : '';
             final matchingRow = parsedCSVRegion.firstWhere((row) => row.isNotEmpty && row[0] == codigo, orElse: () => []);
             final precioString = matchingRow.isNotEmpty ? matchingRow[4].toString().replaceAll('\$', '').replaceAll(',', '') : '0';
-            print('codigo: $codigo');
+            //print('codigo: $codigo');
             final precio = double.tryParse(precioString) ?? 0;
             
             final cantidadString = row.isNotEmpty ? row[3].toString().replaceAll(',', '') : '0';
-            print('CantidadString: $cantidadString');
+            //print('CantidadString: $cantidadString');
             final cantidad = double.tryParse(cantidadString) ?? 0;
-            print('Cantidad: $cantidad');
+            //print('Cantidad: $cantidad');
             subcategoriaActual.productos.add(Producto(
               clave: codigo,
               nombre: nombre,
@@ -99,8 +103,14 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
       setState(() {
         categoriasList = tempCategoriasList;
       });
+      setState(() {
+        _isLoading = false;
+      });
     } catch (e) {
       print('Error al cargar el archivo CSV: $e');
+      setState(() {
+        _isLoading = false;  // Termina la carga incluso si hay un error
+      });
     }
   }
 
@@ -108,7 +118,21 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: _isLoading
+        ? Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                CircularProgressIndicator(
+                  strokeWidth: 24,
+                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                ),
+                SizedBox(height: 20), // Espacio entre el indicador y el texto
+                Text('Cargando datos, por favor espera...', style: TextStyle(fontSize: 16)),
+              ],
+            ),
+          )
+        : Column(
         children: [
           Expanded(
             child: Center(

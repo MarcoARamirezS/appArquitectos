@@ -53,40 +53,41 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
               }).toList(),
             ),
           ),
-          ExpansionTile(
-            title: Text('Pública'),
-            children: categorias.map((categoria) {
-              return ExpansionTile(
-                title: Text(categoria.titulo),
-                children: categoria.subcategorias.map((subcategoria) {
-                  return ExpansionTile(
-                    title: Text(subcategoria.titulo),
-                    children: subcategoria.opciones.map((opcion) {
-                      return ListTile(
-                        title: Text(opcion),
-                        onTap: () {
-                          // Acciones al seleccionar una opción, por ejemplo, navegar a una pantalla de detalles
-                          if (MenuPage.menuPageKey.currentState != null) {
-                            MenuPage.menuPageKey.currentState!.setPage(PresSubcatPage(
-                                      categoriaSeleccionada: categoria.titulo,
-                                      subcategoriaSeleccionada: subcategoria.titulo,
-                                      opcion: opcion,
-                                      ), opcion);
-                          } 
-                        },
-                      );
-                    }).toList(),
-                  );
-                }).toList(),
-              );
-            }).toList(),
-          ),
-          const ExpansionTile(
-            title: Text('Privada'),
-            children: <Widget>[
-              // Inserta aquí tus subopciones para 'Privada'
-            ],
-          ),
+          if (selectedOption == 'Pública' || selectedOption == 'Todos los Tipos de Obra')
+            ExpansionTile(
+              title: Text('Pública'),
+              children: categorias.map((categoria) {
+                return ExpansionTile(
+                  title: Text(categoria.titulo),
+                  children: categoria.subcategorias.map((subcategoria) {
+                    return ExpansionTile(
+                      title: Text(subcategoria.titulo),
+                      children: subcategoria.opciones.map((opcion) {
+                        return ListTile(
+                          title: Text(opcion),
+                          onTap: () {
+                            if (MenuPage.menuPageKey.currentState != null) {
+                              MenuPage.menuPageKey.currentState!.setPage(PresSubcatPage(
+                                        categoriaSeleccionada: categoria.titulo,
+                                        subcategoriaSeleccionada: subcategoria.titulo,
+                                        opcion: opcion,
+                                        ), opcion);
+                            } 
+                          },
+                        );
+                      }).toList(),
+                    );
+                  }).toList(),
+                );
+              }).toList(),
+            ),
+          if (selectedOption == 'Privada' || selectedOption == 'Todos los Tipos de Obra')
+            const ExpansionTile(
+              title: Text('Privada'),
+              children: <Widget>[
+                // Inserta aquí tus subopciones para 'Privada'
+              ],
+            ),
           // Añade aquí más widgets si necesitas
         ],
       ),
