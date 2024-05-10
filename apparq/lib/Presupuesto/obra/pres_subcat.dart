@@ -1,9 +1,16 @@
+import 'package:apparq/models/presupuesto_detalle.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show ByteData, FilteringTextInputFormatter, rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart'; 
 import 'dart:convert';
+import 'package:excel/excel.dart';
+//import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'dart:io';
 
 bool _isLoading = true;
 class PresSubcatPage extends StatefulWidget {
@@ -127,8 +134,8 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                   strokeWidth: 24,
                   valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
                 ),
-                SizedBox(height: 20), // Espacio entre el indicador y el texto
-                Text('Cargando datos, por favor espera...', style: TextStyle(fontSize: 16)),
+                const SizedBox(height: 20), // Espacio entre el indicador y el texto
+                const Text('Cargando datos, por favor espera...', style: TextStyle(fontSize: 16)),
               ],
             ),
           )
@@ -241,13 +248,13 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                         ),
                                       ),
                                     ],
-                                  )).toList(),
+                                  )),
                                 ],
                               )
                             ],
                           ),
                         )
-                      ).toList(),
+                      ),
                     ],
                   );
                 },
@@ -273,6 +280,155 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                           onPressed: () => Navigator.pop(context),
                           child: const Text('Cerrar'),
                         ),
+                        TextButton(
+                          onPressed: () async {
+                            var formKey = GlobalKey<FormState>();
+                            TextEditingController caducidadController = TextEditingController();
+                            TextEditingController nombreEmpresaController = TextEditingController();
+                            TextEditingController telefonoController = TextEditingController();
+                            TextEditingController domicilioController = TextEditingController();
+                            TextEditingController correoController = TextEditingController();
+                            TextEditingController contratistaController = TextEditingController();
+                            TextEditingController telefonoContratistaController = TextEditingController();
+                            TextEditingController proyectoController = TextEditingController();
+                            TextEditingController giroProyectoController = TextEditingController();
+                            TextEditingController ubicacionProyectoController = TextEditingController();
+                            TextEditingController descripcionProyectoController = TextEditingController();
+
+                            // Solicita los datos mediante un diálogo
+                            bool? formSubmitted = await showDialog<bool>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Datos del Presupuesto'),
+                                  content: SingleChildScrollView(
+                                    child: Form(
+                                      key: formKey,
+                                      child: Column(
+                                        children: <Widget>[
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Fecha de caducidad'), controller: caducidadController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Nombre de la empresa o responsable'), controller: nombreEmpresaController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Teléfono'), controller: telefonoController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Domicilio'), controller: domicilioController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Correo'), controller: correoController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Contratista'), controller: contratistaController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Teléfono del contratista'), controller: telefonoContratistaController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Proyecto'), controller: proyectoController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Giro del proyecto'), controller: giroProyectoController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Ubicación del proyecto'), controller: ubicacionProyectoController),
+                                          TextFormField(decoration: const InputDecoration(hintText: 'Breve descripción del proyecto'), controller: descripcionProyectoController),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () => Navigator.of(context).pop(false),
+                                      child: const Text('Cancelar'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        if (formKey.currentState!.validate()) {
+                                          Navigator.of(context).pop(true);
+                                        }
+                                      },
+                                      child: const Text('Guardar'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+
+                            if (formSubmitted == true) {
+                              var status = await Permission.manageExternalStorage.request();
+                              status = await Permission.manageExternalStorage.status;
+                              if (!status.isGranted) {
+                                openAppSettings();
+                              }
+
+                              status = await Permission.manageExternalStorage.status;
+                              if (status.isGranted) {
+                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+                                final ByteData data = await rootBundle.load("assets/plantillas/PRESUPUESTO.xlsx");
+                                var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+                                var excel = Excel.decodeBytes(bytes);
+                                var sheet = excel['Hoja1'];
+
+                                var j = 0;
+                                double suma = 0;
+                                for (var categoria in categoriasList) {
+                                  for (var subcategoria in categoria.subcategorias) {
+                                    for (var producto in subcategoria.productos) {
+                                      suma = suma + (producto.precio*producto.cantidad);
+                                      sheet.updateCell(CellIndex.indexByString('A${16 + j}'), TextCellValue(producto.clave));
+                                      sheet.merge(CellIndex.indexByString('B${16 + j}'), CellIndex.indexByString('C${16 + j}'), customValue: TextCellValue(producto.nombre));
+                                      sheet.updateCell(CellIndex.indexByString('D${16 + j}'), DoubleCellValue(producto.cantidad));
+                                      sheet.updateCell(CellIndex.indexByString('E${16 + j}'), TextCellValue(producto.unidad));
+                                      sheet.updateCell(CellIndex.indexByString('F${16 + j}'), DoubleCellValue(producto.precio));
+                                      sheet.updateCell(CellIndex.indexByString('G${16 + j}'), DoubleCellValue(producto.precio*producto.cantidad));
+                                      j += 1;
+                                    }
+                                  }
+                                }
+                                sheet.updateCell(CellIndex.indexByString('G${16 + j}'), DoubleCellValue(suma));
+
+                                // Fecha de emisión y caducidad
+                                String fechaEmision = DateFormat('dd/MM/yyyy').format(DateTime.now());
+                                sheet.updateCell(CellIndex.indexByString('C2'), TextCellValue(fechaEmision));
+                                sheet.updateCell(CellIndex.indexByString('F2'), TextCellValue(caducidadController.text));
+
+                                // Otros datos
+                                sheet.updateCell(CellIndex.indexByString('C4'), TextCellValue(nombreEmpresaController.text));
+                                sheet.updateCell(CellIndex.indexByString('F4'), TextCellValue(telefonoController.text));
+                                sheet.updateCell(CellIndex.indexByString('C5'), TextCellValue(domicilioController.text));
+                                sheet.updateCell(CellIndex.indexByString('C6'), TextCellValue(correoController.text));
+                                sheet.updateCell(CellIndex.indexByString('C8'), TextCellValue(contratistaController.text));
+                                sheet.updateCell(CellIndex.indexByString('F8'), TextCellValue(telefonoContratistaController.text));
+                                sheet.updateCell(CellIndex.indexByString('C9'), TextCellValue(proyectoController.text));
+                                sheet.updateCell(CellIndex.indexByString('F9'), TextCellValue(giroProyectoController.text));
+                                sheet.updateCell(CellIndex.indexByString('C10'), TextCellValue(ubicacionProyectoController.text));
+                                sheet.updateCell(CellIndex.indexByString('C11'), TextCellValue(descripcionProyectoController.text));
+
+                                // Guardar el archivo
+                                String fileName = '${proyectoController.text}.xlsx';
+                                String filePath = '$selectedDirectory/$fileName';
+                                File file = File(filePath);
+                                await file.writeAsBytes(excel.encode()!, flush: true);
+
+                                // Guarda el nombre y el total en Hive
+                                double totalPresupuesto = categoriasList.fold(0, (total, cat) => total + cat.subcategorias.fold(0, (subTotal, sub) => subTotal + sub.productos.fold(0, (prodTotal, prod) => prodTotal + prod.precio * prod.cantidad)));
+                                var detalle = PresupuestoDetalle(nombre: proyectoController.text, 
+                                                                 total: totalPresupuesto, 
+                                                                 opcion: widget.opcion, 
+                                                                 fechaEmision: fechaEmision, 
+                                                                 fechaCaducidad: caducidadController.text, 
+                                                                 nombreEmpresa: nombreEmpresaController.text, 
+                                                                 telefono: telefonoController.text, 
+                                                                 domicilio: domicilioController.text,
+                                                                 correo: correoController.text, 
+                                                                 contratista: contratistaController.text, 
+                                                                 telefonoContratista: telefonoContratistaController.text, 
+                                                                 giroProyecto: giroProyectoController.text, 
+                                                                 ubicacionProyecto: ubicacionProyectoController.text, 
+                                                                 descripcionProyecto: descripcionProyectoController.text);
+                                guardarPresupuesto(detalle);
+                                print('Total Presupuesto: $totalPresupuesto');
+                                
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Archivo Excel generado en $filePath')),
+                                );
+                                
+                              } else {
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Permiso denegado. No se pudo guardar el archivo.')),
+                                );
+                              }
+                            }
+                          },
+                          child: const Text('Descargar Excel'),
+                        )
                       ],
                     );
                   },
@@ -324,6 +480,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     }
 
     final formattedTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(totalGeneral);
+    print('Total General: $totalGeneral');
 
     children.add(TextSpan(
       text: 'Total General: $formattedTotal',
@@ -341,12 +498,12 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
 
   List<Categoria?> obtenerCategoriasConProductos() {
     return categoriasList.map((categoria) {
-      // Filtrar subcategorÃ­as con productos con cantidad > 0
+      // Filtrar subcategorias con productos con cantidad > 0
       List<Subcat> subcategoriasFiltradas = categoria.subcategorias
           .where((subcat) => subcat.productos.any((producto) => producto.cantidad > 0))
           .toList();
 
-      // Crear nuevas subcategorÃ­as con productos filtrados
+      // Crear nuevas subcategori­as con productos filtrados
       subcategoriasFiltradas = subcategoriasFiltradas.map((subcat) {
         List<Producto> productosFiltrados =
             subcat.productos.where((producto) => producto.cantidad > 0).toList();
@@ -360,6 +517,11 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     }).whereType<Categoria>().toList();
   }
 
+}
+
+Future<void> guardarPresupuesto(PresupuestoDetalle presupuesto) async {
+  var box = Hive.box<PresupuestoDetalle>('presupuestos');
+  await box.put(presupuesto.nombre, presupuesto);
 }
 
 String removeAccents(String input) {

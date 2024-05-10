@@ -40,6 +40,16 @@ dependencies:
   shared_preferences: ^2.2.3
   intl: ^0.19.0
   tuple: ^2.0.2
+  excel: ^4.0.3
+  path_provider: ^2.1.3
+  permission_handler: ^11.3.1
+  pdf: ^3.10.8
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  video_player: ^2.8.6
+  file_picker: ^8.0.3
+  build_runner: ^2.4.9
+  hive_generator: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -65,7 +75,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/Tab1_2024_Z1.csv
     - assets/csv/B/MODULO DEPORTIVO MULTIDISCIPLINARIO/CANCHA DE USOS MULTIPLES CON RECUBRIMIENTO ACRILICO DE 633.75 M2/archivo.csv
     - assets/csv/B/MODULO DEPORTIVO MULTIDISCIPLINARIO/CANCHA DE USOS MULTIPLES SIN RECUBRIMIENTO ACRILICO DE 633.75 M2/archivo.csv
     - assets/csv/B/MODULO DEPORTIVO MULTIDISCIPLINARIO/TECHADO DE CANCHA DE USOS MULTIPLES DE 751.08 M2/archivo.csv
@@ -88,6 +97,8 @@ flutter:
     - assets/csv/F/DUCTOS SUBTERRANEOS PARA SERVICIOS/LINEA DE CONDUCCION 14.49 M/archivo.csv
     - assets/csv/F/DUCTOS SUBTERRANEOS PARA SERVICIOS/LINEA DE DISTRIBUCION 7.95 M/archivo.csv
     - assets/guanajuato.svg
+    - assets/logo.png
+    - assets/INICIO.mp4
     - assets/csv/REGION/1/1.csv
     - assets/csv/REGION/2/2.csv
     - assets/csv/REGION/3/3.csv
@@ -96,6 +107,9 @@ flutter:
     - assets/csv/REGION/6/6.csv
     - assets/csv/REGION/7/7.csv
     - assets/csv/REGION/8/8.csv
+    - assets/plantillas/PRESUPUESTO.xlsx
+    - assets/plantillas/CONSTRUCCION.xlsx
+    - assets/plantillas/PROYECTO.xlsx
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

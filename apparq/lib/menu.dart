@@ -109,7 +109,7 @@ class _MenuPageState extends State<MenuPage> {
               leading: Icon(Icons.account_tree),
               title: Text('Proyecto'),
               onTap: () {
-                //_onSelectItem(3);
+                _onSelectItem(3);
               },
             ),
             ListTile(
