@@ -68,6 +68,6 @@ List<AspectosProyecto> aspectosProyecto = [
     'Relación de equipos fijos, mecánicas y sus características',
     'Cuadros de gastos hidráulico y descargas',
     'Isométricos y despiece',
-    'Firma de Director Corresponsable en instalaciones hidrosanitarias',
+    'Firma de Director Corresponsable',
   ]),
 ];

@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:apparq/models/presupuesto_detalle.dart';
+import 'package:apparq/models/construccion_detalle.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'aspecto_proyecto.dart';
+import 'ponderaciones.dart';
+import 'dart:math' as math;
 
 class ProyectoDetallePage extends StatefulWidget {
   final String nombre;
@@ -22,11 +25,13 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
   int _menuIndex = 0;
   Map<String, List<String>> selectedOptions = {};
   late PresupuestoDetalle detalle;
+  late ConstruccionDetalle detalleConstruccion;
 
   @override
   void initState() {
     super.initState();
     detalle = cargarPresupuesto(widget.nombre);
+    detalleConstruccion = cargarConstruccion(widget.nombre);
   }
 
   @override
@@ -177,6 +182,9 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
             TextButton(
               onPressed: () {
                 double metros = double.tryParse(metrosController.text) ?? valorDefault;
+                if (metros == 0) {
+                  metros = valorDefault;
+                }
                 Navigator.of(context).pop();
                 _showConfirmationDialog(context, metros);  // Ahora pasamos los metros al siguiente diálogo
               },
@@ -292,6 +300,12 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
       sheet.updateCell(CellIndex.indexByString('C10'), TextCellValue(detalle.ubicacionProyecto));
       sheet.updateCell(CellIndex.indexByString('C11'), TextCellValue(detalle.descripcionProyecto));
 
+      double factorRegional = 0.75;
+      double honorarios = calcularHonorariosTotales(detalle.total, metros, detalleConstruccion.porcentajes, factorRegional);
+      print(honorarios);
+      Map<String, double> costosPorOpcion = calcularCostosPorOpcion(honorarios, selectedOptions);
+      double totalFinal = 0.0;
+
       int rowIndex = 15;  // Comenzar a escribir desde la línea 15
       selectedOptions.forEach((titulo, opciones) {
         // Combinar celdas de la A a la F y añadir título
@@ -302,13 +316,15 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
           // Combinar celdas de la A a la D y añadir nombre de la opción
           sheet.merge(CellIndex.indexByString('A$rowIndex'), CellIndex.indexByString('D$rowIndex'), customValue: TextCellValue(opcion));
           // Combinar celdas de la E a la F y preparar espacio para el costo
-          sheet.merge(CellIndex.indexByString('E$rowIndex'), CellIndex.indexByString('F$rowIndex'), customValue: const TextCellValue("(placeholder)"));
+          double costo = costosPorOpcion[opcion] ?? 0;
+          totalFinal += costo;
+          sheet.merge(CellIndex.indexByString('E$rowIndex'), CellIndex.indexByString('F$rowIndex'), customValue: TextCellValue(costo.toStringAsFixed(2)));
           rowIndex++;  // Incrementar para la siguiente fila
         }
       });
 
       sheet.merge(CellIndex.indexByString('A$rowIndex'), CellIndex.indexByString('D$rowIndex'), customValue: const TextCellValue("TOTAL:"));
-      sheet.merge(CellIndex.indexByString('E$rowIndex'), CellIndex.indexByString('F$rowIndex'), customValue: const TextCellValue("(placeholder)"));
+      sheet.merge(CellIndex.indexByString('E$rowIndex'), CellIndex.indexByString('F$rowIndex'), customValue: TextCellValue(totalFinal.toStringAsFixed(2)));
 
       String fileName = '${detalle.nombre}_Proyecto.xlsx';
       String filePath = '$selectedDirectory/$fileName';
@@ -328,8 +344,59 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
   }
 }
 
+
+double calcularCostoTotalAjustado(double costoBase, List<double> porcentajesAdicionales) {
+  double ajuste = porcentajesAdicionales.fold(0, (sum, porcentaje) => sum + costoBase * porcentaje / 100);
+  return costoBase + ajuste;
+}
+double calcularCostoDirecto(double costoTotalAjustado, double metros) {
+  double fc = 1.14;
+  return costoTotalAjustado * metros * fc;
+}
+double calcularFactorSuperficie(double metros) {
+  return 15 - (2.5 * math.log(metros) / math.ln10);
+}
+double calcularHonorarios(double co, double fs, double fr) {
+  return (co * fs * fr) / 100;
+}
+double calcularHonorariosTotales(double costoBase, double metros, List<double> porcentajesAdicionales, double fr) {
+  double costoTotalAjustado = calcularCostoTotalAjustado(costoBase, porcentajesAdicionales) / metros;
+  double co = calcularCostoDirecto(costoTotalAjustado, metros);
+  double fs = calcularFactorSuperficie(metros);
+  double honorarios = calcularHonorarios(co, fs, fr);
+  print('Costo total Ajustado: $costoTotalAjustado');
+  print('Costo por m2: $co');
+  print('Factor superficie: $fs');
+  
+  
+  return honorarios;
+}
+Map<String, double> calcularCostosPorOpcion(double honorarios, Map<String, List<String>> selectedOptions) {
+  Map<String, double> costosPorOpcion = {};
+
+  for (var ponderacion in ponderaciones) {
+    if (selectedOptions.containsKey(ponderacion.categoria)) {
+      List<String> opcionesSeleccionadas = selectedOptions[ponderacion.categoria]!;
+      for (var subPonderacion in ponderacion.subPonderaciones) {
+        if (opcionesSeleccionadas.contains(subPonderacion.nombre)) {
+          double costo = honorarios * ponderacion.porcentaje * subPonderacion.porcentaje;
+          costosPorOpcion[subPonderacion.nombre] = costo;
+        }
+      }
+    }
+  }
+
+  return costosPorOpcion;
+}
+
+
 PresupuestoDetalle cargarPresupuesto(String nombre) {
   var box = Hive.box<PresupuestoDetalle>('presupuestos');
+  return box.get(nombre)!;
+}
+
+ConstruccionDetalle cargarConstruccion(String nombre) {
+  var box = Hive.box<ConstruccionDetalle>('construcciones');
   return box.get(nombre)!;
 }
 
