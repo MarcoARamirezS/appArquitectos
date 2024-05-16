@@ -1,3 +1,4 @@
+import 'package:apparq/splash.dart';
 import 'package:flutter/material.dart';
 import 'region_selection_page.dart';
 import 'proyecto/proyecto.dart';
@@ -7,34 +8,36 @@ import 'presupuesto/presupuesto.dart';
 import 'dashboard.dart';
 
 class MenuPage extends StatefulWidget {
+  // ignore: library_private_types_in_public_api
   static final GlobalKey<_MenuPageState> menuPageKey = GlobalKey<_MenuPageState>();
 
   MenuPage({Key? key}) : super(key: menuPageKey);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MenuPageState createState() => _MenuPageState();
 }
 class _MenuPageState extends State<MenuPage> {
-  String appBarTitle = "Dashboard";
-  Widget currentPage = DashboardPage();
+  String appBarTitle = "Inicio";
+  Widget currentPage = const DashboardPage();
   List<NavigationState> navigationHistory = [];
   
   final List<Widget> _pages = [
-    DashboardPage(),
-    PresupuestoPage(),
-    ConstruccionPage(),
-    ProyectoPage(),
-    TramitePage(),
-    RegionSelectionPage(),
+    const DashboardPage(),
+    const RegionSelectionPage(),
+    const PresupuestoPage(),
+    const ConstruccionPage(),
+    const ProyectoPage(),
+    const TramitePage(),
   ];
 
   final List<String> _titles = [
-    "Dashboard",
+    "Inicio",
+    "Cambiar región",
     "Presupuesto",
     "Construcción",
     "Proyecto",
     "Trámite",
-    "Cambiar región",
   ];
 
   void setPage(Widget page, String title) {
@@ -79,66 +82,60 @@ class _MenuPageState extends State<MenuPage> {
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
-            const UserAccountsDrawerHeader(
-              // Aquí podrías poner información del usuario si es necesario
-              accountName: Text("Nombre del Usuario"),
-              accountEmail: Text("usuario@ejemplo.com"),
-            ),
-            ListTile(
-              leading: Icon(Icons.dashboard),
-              title: Text('Dashboard'),
-              onTap: () {
-                _onSelectItem(0);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text('Presupuesto'),
-              onTap: () {
-                _onSelectItem(1);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.build),
-              title: Text('Construcción'),
-              onTap: () {
-                _onSelectItem(2);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.account_tree),
-              title: Text('Proyecto'),
-              onTap: () {
-                _onSelectItem(3);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.content_paste),
-              title: Text('Trámite'),
-              onTap: () {
-                //_onSelectItem(4);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.map),
-              title: Text('Cambiar región'),
-              onTap: () {
-                _onSelectItem(5);
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Cerrar sesión'),
-              onTap: () {
-                // Aquí podrías manejar el cierre de sesión
-              },
-            ),
-          ],
+              const UserAccountsDrawerHeader(
+                accountName: Text("Nombre del Usuario"),
+                accountEmail: Text("usuario@ejemplo.com"),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.dashboard),
+                title: const Text('Inicio'),
+                onTap: () {
+                  _onSelectItem(0);
+                },
+              ),
+              _buildMenuItem('Cambiar región', 'assets/icon_region.png', 1),
+              ListTile(
+                leading: const Icon(Icons.attach_money),
+                title: const Text('Presupuesto'),
+                onTap: () {
+                  _onSelectItem(2);
+                },
+              ),
+              _buildMenuItem('Construcción', 'assets/icon_construction.png', 3),
+              _buildMenuItem('Proyecto', 'assets/icon_project.png', 4),
+              ListTile(
+                leading: const Icon(Icons.content_paste),
+                title: const Text('Trámite'),
+                onTap: () {
+                  //_onSelectItem(5);
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text('Cerrar sesión'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SplashPage()),
+                  );
+                },
+              ),
+            ],
           ),
         ),
         body: currentPage,
       ),
+    );
+  }
+  ListTile _buildMenuItem(String title, String iconPath, int index) {
+    return ListTile(
+      leading: Image.asset(iconPath, width: 24, height: 24),
+      title: Text(title),
+      onTap: () => _onSelectItem(index),
     );
   }
 }

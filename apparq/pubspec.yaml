@@ -99,6 +99,13 @@ flutter:
     - assets/guanajuato.svg
     - assets/logo.png
     - assets/INICIO.mp4
+    - assets/FondoLogin.png
+    - assets/FondoRegistro.png
+    - assets/splash1.png
+    - assets/splash2.png
+    - assets/icon_construction.png
+    - assets/icon_project.png
+    - assets/icon_region.png
     - assets/csv/REGION/1/1.csv
     - assets/csv/REGION/2/2.csv
     - assets/csv/REGION/3/3.csv
