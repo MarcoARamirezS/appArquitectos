@@ -223,22 +223,36 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                       ),
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: TextFormField(
-                                          keyboardType: TextInputType.number,
-                                          decoration: const InputDecoration(
-                                            border: InputBorder.none, 
-                                            contentPadding: EdgeInsets.all(3.0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: TextFormField(
+                                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              contentPadding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
+                                            ),
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                                            ],
+                                            textAlign: TextAlign.center,
+                                            controller: producto.controller,
+                                            onTap: () {
+                                              producto.controller.selection = TextSelection(
+                                                baseOffset: 0,
+                                                extentOffset: producto.controller.text.length,
+                                              );
+                                            },
+                                            onChanged: (String valor) {
+                                              if (valor == ".") {
+                                                valor = "0.";
+                                              }
+                                              setState(() {
+                                                producto.cantidad = double.tryParse(valor) ?? 0;
+                                                producto.controller.text = valor;
+                                                producto.controller.selection = TextSelection.fromPosition(TextPosition(offset: producto.controller.text.length));
+                                              });
+                                            },
                                           ),
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
-                                          ],
-                                          textAlign: TextAlign.center,
-                                          initialValue: producto.cantidad.toString(),
-                                          onChanged: (String valor) {
-                                            setState(() {
-                                              producto.cantidad = double.tryParse(valor) ?? 0;
-                                            });
-                                          },
                                         ),
                                       ),
                                       TableCell(
@@ -279,8 +293,9 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                     return AlertDialog(
                       title: const Text('Resumen del Presupuesto'),
                       content: SingleChildScrollView(
-                        child: RichText(
-                          text: generarResumenTicket(),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: buildResumenPresupuesto(),
                         ),
                       ),
                       actions: [
@@ -461,47 +476,65 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     );
   }
 
-  TextSpan generarResumenTicket() {
-    List<TextSpan> children = [
-      const TextSpan(text: 'Resumen del Presupuesto\n\n', style: TextStyle(fontWeight: FontWeight.bold)),
-    ];
-
+  Column buildResumenPresupuesto() {
     double totalGeneral = 0.0;
+    List<Widget> children = [];
     List<Categoria?> categoriasConProductos = obtenerCategoriasConProductos();
 
     for (var categoria in categoriasConProductos) {
-      children.add(
-        TextSpan(text: 'Categoría: ${categoria?.nombre}\n', style: const TextStyle(fontWeight: FontWeight.bold))
-      );
-
+      double totalCategoria = 0.0;
       for (var subcategoria in categoria!.subcategorias) {
-        children.add(TextSpan(text: '  - ${subcategoria.nombre}\n'));
-
         for (var producto in subcategoria.productos) {
           double precioTotalProducto = producto.cantidad * producto.precio;
-          totalGeneral += precioTotalProducto;
-          children.add(TextSpan(text: '    * ${producto.nombre} (${producto.cantidad} ${producto.unidad}) - \$${precioTotalProducto.toStringAsFixed(2)}\n'));
+          totalCategoria += precioTotalProducto;
         }
       }
-
-      children.add(const TextSpan(text: '\n'));
+      final formattedCategoria = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(totalCategoria);
+      children.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('${categoria.nombre}: ', style: const TextStyle(fontWeight: FontWeight.bold), ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Text(formattedCategoria, style: const TextStyle(color: Colors.black), textAlign: TextAlign.right, ),
+              ),
+            ],
+          ),
+        ),
+      );
+      totalGeneral += totalCategoria;
     }
 
     final formattedTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(totalGeneral);
-    print('Total General: $totalGeneral');
-
-    children.add(TextSpan(
-      text: 'Total General: $formattedTotal',
-      style: const TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
+    children.add(
+      Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Total General: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black), ),
+            Text(formattedTotal, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
 
-    return TextSpan(style: const TextStyle(fontSize: 16, color: Colors.black), children: children);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
+    );
   }
-
 
 
   List<Categoria?> obtenerCategoriasConProductos() {
@@ -567,6 +600,7 @@ class Producto {
   final String unidad;
   double cantidad;
   final double precio;
+  TextEditingController controller;
 
   Producto({
     required this.clave,
@@ -574,5 +608,5 @@ class Producto {
     required this.unidad,
     required this.precio,
     required this.cantidad,
-  });
+  }) : controller = TextEditingController(text: cantidad.toStringAsFixed(2));
 }
