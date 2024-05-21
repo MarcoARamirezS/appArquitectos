@@ -7,7 +7,6 @@ class PresupuestoPage extends StatefulWidget {
   const PresupuestoPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _PresupuestoPageState createState() => _PresupuestoPageState();
 }
 
@@ -16,7 +15,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
   final List<String> options = ['Todos los Tipos de Obra', 'Pública', 'Privada'];
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         children: [
@@ -29,10 +28,6 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                 fillColor: Colors.grey[200],
                 contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -55,25 +50,52 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
           ),
           if (selectedOption == 'Pública' || selectedOption == 'Todos los Tipos de Obra')
             ExpansionTile(
-              title: Text('Pública'),
+              iconColor: const Color(0xFF044C70),
+              collapsedIconColor: const Color(0xFF044C70),
+              title: const Text('Pública', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               children: categorias.map((categoria) {
                 return ExpansionTile(
-                  title: Text(categoria.titulo),
+                  iconColor: const Color(0xFF044C70),
+                  collapsedIconColor: const Color(0xFF044C70),
+                  backgroundColor: const Color.fromARGB(255, 179, 180, 181),
+                  collapsedBackgroundColor: const Color.fromARGB(255, 179, 180, 181),
+                  title: Text(categoria.titulo, style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0))),
                   children: categoria.subcategorias.map((subcategoria) {
                     return ExpansionTile(
-                      title: Text(subcategoria.titulo),
+                      iconColor: const Color(0xFF044C70),
+                      collapsedIconColor: const Color(0xFF044C70),
+                      backgroundColor: const Color(0xEEEEEEEE),
+                      collapsedBackgroundColor: const Color(0xEEEEEEEE),
+                      title: Padding(
+                        padding: const EdgeInsets.only(left: 16.0),
+                        child: Text(subcategoria.titulo, style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+                      ),
                       children: subcategoria.opciones.map((opcion) {
-                        return ListTile(
-                          title: Text(opcion),
-                          onTap: () {
-                            if (MenuPage.menuPageKey.currentState != null) {
-                              MenuPage.menuPageKey.currentState!.setPage(PresSubcatPage(
-                                        categoriaSeleccionada: categoria.titulo,
-                                        subcategoriaSeleccionada: subcategoria.titulo,
-                                        opcion: opcion,
-                                        ), opcion);
-                            } 
-                          },
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border(
+                              bottom: BorderSide(color: Colors.grey[300]!)
+                            )
+                          ),
+                          child: ListTile(
+                            title: Padding(
+                              padding: const EdgeInsets.only(left: 32.0),
+                              child: Text(opcion),
+                            ),
+                            onTap: () {
+                              if (MenuPage.menuPageKey.currentState != null) {
+                                MenuPage.menuPageKey.currentState!.setPage(
+                                  PresSubcatPage(
+                                    categoriaSeleccionada: categoria.titulo,
+                                    subcategoriaSeleccionada: subcategoria.titulo,
+                                    opcion: opcion,
+                                  ),
+                                  opcion
+                                );
+                              }
+                            },
+                          ),
                         );
                       }).toList(),
                     );
@@ -83,12 +105,11 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
             ),
           if (selectedOption == 'Privada' || selectedOption == 'Todos los Tipos de Obra')
             const ExpansionTile(
-              title: Text('Privada'),
+              title: Text('Privada', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
               children: <Widget>[
                 // Inserta aquí tus subopciones para 'Privada'
               ],
             ),
-          // Añade aquí más widgets si necesitas
         ],
       ),
     );

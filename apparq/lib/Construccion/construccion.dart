@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:apparq/models/presupuesto_detalle.dart';
-import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:apparq/models/presupuesto_detalle.dart';
+import 'package:excel/excel.dart' hide Border;
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 //import 'package:path_provider/path_provider.dart';
@@ -21,6 +21,14 @@ class ConstruccionPage extends StatefulWidget {
 
 class _ConstruccionPage extends State<ConstruccionPage> {
   List<PresupuestoDetalle> presupuestos = [];
+  List<String> descripciones = [
+    'Indirectos de oficina',
+    'Indirectos de campo',
+    'Financiamiento',
+    'Utilidad',
+    'Cargos adicionales',
+    'Otro porcentaje',
+  ];
   final List<TextEditingController> percentageControllers = List.generate(6, (index) => TextEditingController(text: '0'));
   @override
   void initState() {
@@ -37,11 +45,20 @@ class _ConstruccionPage extends State<ConstruccionPage> {
           itemCount: presupuestos.length,
           itemBuilder: (context, index) {
             final presupuesto = presupuestos[index];
-            return ListTile(
-              title: Text(presupuesto.nombre),
-              onTap: () {
-                mostrarPopupPresupuesto(presupuesto);
-              },
+            return Container(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+              ),
+              child: ListTile(
+                title: Text(presupuesto.nombre),
+                onTap: () {
+                  mostrarPopupPresupuesto(presupuesto);
+                },
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () => _mostrarDialogoDeConfirmacion(presupuesto.nombre),
+                ),
+              ),
             );
           },
         ),
@@ -49,16 +66,49 @@ class _ConstruccionPage extends State<ConstruccionPage> {
     );
   }
 
+  Future<void> _mostrarDialogoDeConfirmacion(String nombre) async {
+    bool confirm = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmar eliminación'),
+          content: Text('¿Estás seguro de que deseas eliminar la construcción y los presupuestos asociados para "$nombre"?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Eliminar'),
+            ),
+          ],
+        );
+      },
+    ) ?? false;
+
+    if (confirm) {
+      _borrarConstruccion(nombre);
+    }
+  }
+
+  void _borrarConstruccion(String nombre) {
+    var boxConstrucciones = Hive.box<ConstruccionDetalle>('construcciones');
+    var boxPresupuestos = Hive.box<PresupuestoDetalle>('presupuestos');
+    boxConstrucciones.delete(nombre);
+    boxPresupuestos.delete(nombre); // Asume que los nombres son las claves en ambas cajas
+
+    setState(() {
+      presupuestos = obtenerPresupuestos(); // Actualizar la lista tras borrar los datos
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Construcción y presupuestos asociados eliminados')),
+    );
+  }
+
   void mostrarPopupPresupuesto(PresupuestoDetalle presupuesto) {
     final formattedTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(presupuesto.total);
-    List<String> descripciones = [
-      'Indirectos de oficina',
-      'Indirectos de campo',
-      'Financiamiento',
-      'Utilidad',
-      'Cargos adicionales',
-      'Otro porcentaje',
-    ];
     var detalle = obtenerDetalleConstruccion(presupuesto.nombre);
     if (detalle != null) {
       for (int i = 0; i < percentageControllers.length; i++) {
@@ -150,8 +200,8 @@ class _ConstruccionPage extends State<ConstruccionPage> {
             ),
             TextButton(
               onPressed: () {
-                guardarExcel(presupuesto);
                 Navigator.of(context).pop();
+                mostrarDialogoDeConfirmacion(presupuesto);
               },
               child: const Text('Guardar Cambios'),
             ),
@@ -160,6 +210,99 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       },
     );
   }
+
+  Future<void> mostrarDialogoDeConfirmacion(PresupuestoDetalle presupuesto) async {
+    List<double> porcentajes = [];
+    double sumTotal = 0.0;
+    
+    for (int i = 0; i < percentageControllers.length; i++) {
+      var percentageValue = double.tryParse(percentageControllers[i].text) ?? 0;
+      porcentajes.add(percentageValue);
+      var costo = presupuesto.total * percentageValue / 100;
+      sumTotal += costo;
+    }
+    // Mostrar diálogo de confirmación con los valores calculados
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmación de Cambios'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Total original: ',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                    Text(
+                      NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(presupuesto.total),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                  ],
+                ),
+                ...List.generate(porcentajes.length, (index) {
+                  double costo = presupuesto.total * porcentajes[index] / 100;
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${descripciones[index]}: ',
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black), // Descripción en negritas
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costo),
+                              style: const TextStyle(color: Colors.black), // Valor normal
+                            ),
+                            TextSpan(
+                              text: ' (${porcentajes[index]}%)',
+                              style: const TextStyle(color: Colors.black), // Porcentaje normal
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  );
+                }),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Nuevo total: ',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                    Text(
+                      NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(presupuesto.total + sumTotal),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                guardarExcel(presupuesto);
+              },
+              child: const Text('Confirmar y Guardar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   Future<void> guardarExcel(PresupuestoDetalle presupuesto) async {
     var status = await Permission.manageExternalStorage.request();

@@ -150,18 +150,26 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                   return ExpansionTile(
                     iconColor: const Color(0xFF044C70),
                     collapsedIconColor: const Color(0xFF044C70),
-                    backgroundColor: const Color(0xFF6C6F72),
+                    backgroundColor:  const Color.fromARGB(255, 179, 180, 181),
+                    collapsedBackgroundColor: const Color.fromARGB(255, 179, 180, 181),
                     title: Text(categoria.nombre),
                     children: [
                       ...categoria.subcategorias.map(
-                        (subcategoria) => Container(
-                          color: const Color(0xEEEEEEEE),
-                          child: ExpansionTile(
-                            iconColor: const Color(0xFF044C70),
-                            collapsedIconColor: const Color(0xFF044C70),
-                            title: Text(subcategoria.nombre),
-                            children: [
-                              Table(
+                        (subcategoria) => ExpansionTile(
+                          iconColor: const Color(0xFF044C70),
+                          collapsedIconColor: const Color(0xFF044C70),
+                          backgroundColor: const Color(0xEEEEEEEE),
+                          collapsedBackgroundColor: const Color(0xEEEEEEEE),
+                          title: Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Text(subcategoria.nombre),
+                          ),
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Table(
                                 border: TableBorder.all(),
                                 columnWidths: const {
                                   0: FlexColumnWidth(2.6), // Columna del nombre
@@ -251,8 +259,8 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                   )),
                                 ],
                               )
-                            ],
-                          ),
+                            )
+                          ],
                         )
                       ),
                     ],

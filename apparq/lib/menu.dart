@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:apparq/splash.dart';
 import 'package:flutter/material.dart';
 import 'region_selection_page.dart';
@@ -6,6 +8,9 @@ import 'tramite/tramite.dart';
 import 'Construccion/construccion.dart';
 import 'presupuesto/presupuesto.dart';
 import 'dashboard.dart';
+import 'package:hive/hive.dart';
+import 'models/presupuesto_detalle.dart';
+import 'models/construccion_detalle.dart';
 
 class MenuPage extends StatefulWidget {
   // ignore: library_private_types_in_public_api
@@ -21,6 +26,14 @@ class _MenuPageState extends State<MenuPage> {
   String appBarTitle = "Inicio";
   Widget currentPage = const DashboardPage();
   List<NavigationState> navigationHistory = [];
+  bool hasPresupuesto = false;
+  bool hasConstruccion = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAvailableData();
+  }
   
   final List<Widget> _pages = [
     const DashboardPage(),
@@ -73,6 +86,7 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -104,8 +118,16 @@ class _MenuPageState extends State<MenuPage> {
                   _onSelectItem(2);
                 },
               ),
-              _buildMenuItem('Construcción', 'assets/icon_construction.png', 3),
-              _buildMenuItem('Proyecto', 'assets/icon_project.png', 4),
+              ListTile(
+                leading: Image.asset('assets/icon_construction.png', width: 24, height: 24),
+                title: const Text('Construcción'),
+                onTap: hasPresupuesto ? () => _onSelectItem(3) : null,
+              ),
+              ListTile(
+                leading: Image.asset('assets/icon_project.png', width: 24, height: 24),
+                title: const Text('Proyecto'),
+                onTap: hasConstruccion ? () => _onSelectItem(4) : null,
+              ),
               ListTile(
                 leading: const Icon(Icons.content_paste),
                 title: const Text('Trámite'),
@@ -127,6 +149,11 @@ class _MenuPageState extends State<MenuPage> {
             ],
           ),
         ),
+        onDrawerChanged: (isOpen) {
+          if (isOpen) {
+            _checkAvailableData();  // Se llama cuando el drawer se abre
+          }
+        },
         body: currentPage,
       ),
     );
@@ -137,6 +164,16 @@ class _MenuPageState extends State<MenuPage> {
       title: Text(title),
       onTap: () => _onSelectItem(index),
     );
+  }
+
+    Future<void> _checkAvailableData() async {
+    final presupuestoBox = Hive.box<PresupuestoDetalle>('presupuestos');
+    final construccionBox = Hive.box<ConstruccionDetalle>('construcciones');
+
+    setState(() {
+      hasPresupuesto = presupuestoBox.isNotEmpty;
+      hasConstruccion = construccionBox.isNotEmpty && hasPresupuesto;
+    });
   }
 }
 
