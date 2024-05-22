@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
@@ -7,6 +9,7 @@ import 'package:hive/hive.dart';
 import 'package:apparq/models/presupuesto_detalle.dart';
 import 'package:apparq/models/construccion_detalle.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 import 'aspecto_proyecto.dart';
 import 'ponderaciones.dart';
 import 'dart:math' as math;
@@ -331,9 +334,8 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
       File file = File(filePath);
       await file.writeAsBytes(excel.encode()!, flush: true);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Archivo Excel generado en $filePath')),
-      );
+      _shareFile(filePath);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Archivo Excel generado y listo para compartir')));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -342,6 +344,10 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
       );
     }
   }
+}
+
+void _shareFile(String filePath) {
+  Share.shareXFiles([XFile(filePath)], text: 'Aquí tienes el archivo de presupuesto.');
 }
 
 

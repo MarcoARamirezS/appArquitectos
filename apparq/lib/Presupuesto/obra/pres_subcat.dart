@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:apparq/models/presupuesto_detalle.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
@@ -11,6 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:io';
+import 'package:share_plus/share_plus.dart';
 
 bool _isLoading = true;
 class PresSubcatPage extends StatefulWidget {
@@ -363,91 +366,24 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                             );
 
                             if (formSubmitted == true) {
-                              var status = await Permission.manageExternalStorage.request();
-                              status = await Permission.manageExternalStorage.status;
-                              if (!status.isGranted) {
-                                openAppSettings();
-                              }
-
-                              status = await Permission.manageExternalStorage.status;
-                              if (status.isGranted) {
-                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-                                final ByteData data = await rootBundle.load("assets/plantillas/PRESUPUESTO.xlsx");
-                                var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-                                var excel = Excel.decodeBytes(bytes);
-                                var sheet = excel['Hoja1'];
-
-                                var j = 0;
-                                double suma = 0;
-                                for (var categoria in categoriasList) {
-                                  for (var subcategoria in categoria.subcategorias) {
-                                    for (var producto in subcategoria.productos) {
-                                      suma = suma + (producto.precio*producto.cantidad);
-                                      sheet.updateCell(CellIndex.indexByString('A${16 + j}'), TextCellValue(producto.clave));
-                                      sheet.merge(CellIndex.indexByString('B${16 + j}'), CellIndex.indexByString('C${16 + j}'), customValue: TextCellValue(producto.nombre));
-                                      sheet.updateCell(CellIndex.indexByString('D${16 + j}'), DoubleCellValue(producto.cantidad));
-                                      sheet.updateCell(CellIndex.indexByString('E${16 + j}'), TextCellValue(producto.unidad));
-                                      sheet.updateCell(CellIndex.indexByString('F${16 + j}'), DoubleCellValue(producto.precio));
-                                      sheet.updateCell(CellIndex.indexByString('G${16 + j}'), DoubleCellValue(producto.precio*producto.cantidad));
-                                      j += 1;
-                                    }
-                                  }
-                                }
-                                sheet.updateCell(CellIndex.indexByString('G${16 + j}'), DoubleCellValue(suma));
-
-                                // Fecha de emisión y caducidad
-                                String fechaEmision = DateFormat('dd/MM/yyyy').format(DateTime.now());
-                                sheet.updateCell(CellIndex.indexByString('C2'), TextCellValue(fechaEmision));
-                                sheet.updateCell(CellIndex.indexByString('F2'), TextCellValue(caducidadController.text));
-
-                                // Otros datos
-                                sheet.updateCell(CellIndex.indexByString('C4'), TextCellValue(nombreEmpresaController.text));
-                                sheet.updateCell(CellIndex.indexByString('F4'), TextCellValue(telefonoController.text));
-                                sheet.updateCell(CellIndex.indexByString('C5'), TextCellValue(domicilioController.text));
-                                sheet.updateCell(CellIndex.indexByString('C6'), TextCellValue(correoController.text));
-                                sheet.updateCell(CellIndex.indexByString('C8'), TextCellValue(contratistaController.text));
-                                sheet.updateCell(CellIndex.indexByString('F8'), TextCellValue(telefonoContratistaController.text));
-                                sheet.updateCell(CellIndex.indexByString('C9'), TextCellValue(proyectoController.text));
-                                sheet.updateCell(CellIndex.indexByString('F9'), TextCellValue(giroProyectoController.text));
-                                sheet.updateCell(CellIndex.indexByString('C10'), TextCellValue(ubicacionProyectoController.text));
-                                sheet.updateCell(CellIndex.indexByString('C11'), TextCellValue(descripcionProyectoController.text));
-
-                                // Guardar el archivo
-                                String fileName = '${proyectoController.text}.xlsx';
-                                String filePath = '$selectedDirectory/$fileName';
-                                File file = File(filePath);
-                                await file.writeAsBytes(excel.encode()!, flush: true);
-
-                                // Guarda el nombre y el total en Hive
-                                double totalPresupuesto = categoriasList.fold(0, (total, cat) => total + cat.subcategorias.fold(0, (subTotal, sub) => subTotal + sub.productos.fold(0, (prodTotal, prod) => prodTotal + prod.precio * prod.cantidad)));
-                                var detalle = PresupuestoDetalle(nombre: proyectoController.text, 
-                                                                 total: totalPresupuesto, 
-                                                                 opcion: widget.opcion, 
-                                                                 fechaEmision: fechaEmision, 
-                                                                 fechaCaducidad: caducidadController.text, 
-                                                                 nombreEmpresa: nombreEmpresaController.text, 
-                                                                 telefono: telefonoController.text, 
-                                                                 domicilio: domicilioController.text,
-                                                                 correo: correoController.text, 
-                                                                 contratista: contratistaController.text, 
-                                                                 telefonoContratista: telefonoContratistaController.text, 
-                                                                 giroProyecto: giroProyectoController.text, 
-                                                                 ubicacionProyecto: ubicacionProyectoController.text, 
-                                                                 descripcionProyecto: descripcionProyectoController.text);
-                                guardarPresupuesto(detalle);
-                                print('Total Presupuesto: $totalPresupuesto');
-                                
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Archivo Excel generado en $filePath')),
-                                );
-                                
-                              } else {
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Permiso denegado. No se pudo guardar el archivo.')),
-                                );
-                              }
+                              var detalle = PresupuestoDetalle(
+                                nombre: proyectoController.text,
+                                total: categoriasList.fold(0, (total, cat) => total + cat.subcategorias.fold(0, (subTotal, sub) => subTotal + sub.productos.fold(0, (prodTotal, prod) => prodTotal + prod.precio * prod.cantidad))),
+                                opcion: widget.opcion,
+                                fechaEmision: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                                fechaCaducidad: caducidadController.text,
+                                nombreEmpresa: nombreEmpresaController.text,
+                                telefono: telefonoController.text,
+                                domicilio: domicilioController.text,
+                                correo: correoController.text,
+                                contratista: contratistaController.text,
+                                telefonoContratista: telefonoContratistaController.text,
+                                giroProyecto: giroProyectoController.text,
+                                ubicacionProyecto: ubicacionProyectoController.text,
+                                descripcionProyecto: descripcionProyectoController.text,
+                              );
+                              guardarPresupuesto(detalle);
+                              _handleSaveAndShare(context, detalle);
                             }
                           },
                           child: const Text('Descargar Excel'),
@@ -558,7 +494,92 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     }).whereType<Categoria>().toList();
   }
 
+  Future<bool> _checkAndRequestPermissions() async {
+    var status = await Permission.manageExternalStorage.request();
+    if (!status.isGranted) {
+      openAppSettings();
+    }
+    return status.isGranted;
+  }
+  Future<String?> _generateExcel(PresupuestoDetalle presupuesto, String selectedDirectory) async {
+    final ByteData data = await rootBundle.load("assets/plantillas/PRESUPUESTO.xlsx");
+    var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+    var excel = Excel.decodeBytes(bytes);
+    var sheet = excel['Hoja1'];
+
+    var j = 0;
+    double suma = 0;
+    for (var categoria in categoriasList) {
+      for (var subcategoria in categoria.subcategorias) {
+        for (var producto in subcategoria.productos) {
+          suma += producto.precio * producto.cantidad;
+          sheet.updateCell(CellIndex.indexByString('A${16 + j}'), TextCellValue(producto.clave));
+          sheet.merge(CellIndex.indexByString('B${16 + j}'), CellIndex.indexByString('C${16 + j}'), customValue: TextCellValue(producto.nombre));
+          sheet.updateCell(CellIndex.indexByString('D${16 + j}'), DoubleCellValue(producto.cantidad));
+          sheet.updateCell(CellIndex.indexByString('E${16 + j}'), TextCellValue(producto.unidad));
+          sheet.updateCell(CellIndex.indexByString('F${16 + j}'), DoubleCellValue(producto.precio));
+          sheet.updateCell(CellIndex.indexByString('G${16 + j}'), DoubleCellValue(producto.precio * producto.cantidad));
+          j += 1;
+        }
+      }
+    }
+    sheet.updateCell(CellIndex.indexByString('G${16 + j}'), DoubleCellValue(suma));
+
+    // Fecha de emisión y caducidad
+    String fechaEmision = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    sheet.updateCell(CellIndex.indexByString('C2'), TextCellValue(fechaEmision));
+    sheet.updateCell(CellIndex.indexByString('F2'), TextCellValue(presupuesto.fechaCaducidad));
+
+    // Otros datos
+    sheet.updateCell(CellIndex.indexByString('C4'), TextCellValue(presupuesto.nombreEmpresa));
+    sheet.updateCell(CellIndex.indexByString('F4'), TextCellValue(presupuesto.telefono));
+    sheet.updateCell(CellIndex.indexByString('C5'), TextCellValue(presupuesto.domicilio));
+    sheet.updateCell(CellIndex.indexByString('C6'), TextCellValue(presupuesto.correo));
+    sheet.updateCell(CellIndex.indexByString('C8'), TextCellValue(presupuesto.contratista));
+    sheet.updateCell(CellIndex.indexByString('F8'), TextCellValue(presupuesto.telefonoContratista));
+    sheet.updateCell(CellIndex.indexByString('C9'), TextCellValue(presupuesto.nombre));
+    sheet.updateCell(CellIndex.indexByString('F9'), TextCellValue(presupuesto.giroProyecto));
+    sheet.updateCell(CellIndex.indexByString('C10'), TextCellValue(presupuesto.ubicacionProyecto));
+    sheet.updateCell(CellIndex.indexByString('C11'), TextCellValue(presupuesto.descripcionProyecto));
+
+    // Guardar el archivo
+    String fileName = '${presupuesto.nombre}.xlsx';
+    String filePath = '$selectedDirectory/$fileName';
+    File file = File(filePath);
+    await file.writeAsBytes(excel.encode()!, flush: true);
+
+    return filePath;
+  }
+  void _shareFile(String filePath) {
+    Share.shareXFiles([XFile(filePath)], text: 'Aquí tienes el archivo de presupuesto.');
+  }
+
+  Future<void> _handleSaveAndShare(BuildContext context, PresupuestoDetalle presupuesto) async {
+    if (await _checkAndRequestPermissions()) {
+      String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+      if (selectedDirectory == null) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No se seleccionó un directorio.')));
+        return;
+      }
+
+      String? filePath = await _generateExcel(presupuesto, selectedDirectory);
+      
+      if (filePath != null) {
+        _shareFile(filePath);
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Archivo Excel generado y listo para compartir')));
+      } else {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error al generar el archivo.')));
+      }
+    } else {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Permiso denegado. No se pudo guardar el archivo.')));
+    }
+  }
 }
+
+
 
 Future<void> guardarPresupuesto(PresupuestoDetalle presupuesto) async {
   var box = Hive.box<PresupuestoDetalle>('presupuestos');

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:apparq/models/construccion_detalle.dart';
+import 'package:share_plus/share_plus.dart';
 
 
 class ConstruccionPage extends StatefulWidget {
@@ -292,8 +295,8 @@ class _ConstruccionPage extends State<ConstruccionPage> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
                 guardarExcel(presupuesto);
+                Navigator.of(context).pop();
               },
               child: const Text('Confirmar y Guardar'),
             ),
@@ -369,10 +372,9 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       // Guarda en Hive
       var detalle = ConstruccionDetalle(nombreArchivo: fileName, porcentajes: porcentajes);
       guardarDetalleConstruccion(presupuesto.nombre, detalle);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Archivo Excel generado en $filePath')),
-      );
+      
+      _shareFile(filePath);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Archivo Excel generado y listo para compartir')));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -381,6 +383,10 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       );
     }
   }
+}
+
+void _shareFile(String filePath) {
+  Share.shareXFiles([XFile(filePath)], text: 'Aquí tienes el archivo de presupuesto.');
 }
 
 Future<void> guardarDetalleConstruccion(String nombre, ConstruccionDetalle detalle) async {
