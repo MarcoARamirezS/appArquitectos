@@ -127,7 +127,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Detalle de ${presupuesto.nombre}'),
+          title: Text('Indirectos de ${presupuesto.nombre}'),
           content: SingleChildScrollView(
             child: Column(
               children: [
@@ -259,12 +259,12 @@ class _ConstruccionPage extends State<ConstruccionPage> {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costo),
-                              style: const TextStyle(color: Colors.black), // Valor normal
+                              text: '(${porcentajes[index]}%) ',
+                              style: const TextStyle(color: Colors.black), // Porcentaje normal
                             ),
                             TextSpan(
-                              text: ' (${porcentajes[index]}%)',
-                              style: const TextStyle(color: Colors.black), // Porcentaje normal
+                              text: NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costo),
+                              style: const TextStyle(color: Colors.black), // Valor normal
                             )
                           ],
                         ),

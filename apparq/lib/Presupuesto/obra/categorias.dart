@@ -33,8 +33,8 @@ List<Categoria> categorias = [
     Subcategoria('Edificios de procuración de justicia y Órganos auxiliares', []),
     Subcategoria('Edificios administrativos', []),
     Subcategoria('Edificios de infraestructura educativa de nivel superior medio superior y básica', [
-      'Aula asilada e 2.00 E.E. En estructura U-1C de 74.52 m2',
-      'Aula asilada de 6.00 x 8.00 mts en sistema tradicional',
+      'Aula aislada e 2.00 E.E. En estructura U-1C de 74.52 m2',
+      'Aula aislada de 6.00 x 8.00 mts en sistema tradicional',
       'Techado cancha de usos múltiples infraestructura educativa 800 m2',
     ]),
     Subcategoria('Centros de Atención Integral y Servicios Esenciales en Salud (CAISES)', []),

@@ -332,17 +332,208 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                       key: formKey,
                                       child: Column(
                                         children: <Widget>[
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Fecha de caducidad'), controller: caducidadController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Nombre de la empresa o responsable'), controller: nombreEmpresaController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Teléfono'), controller: telefonoController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Domicilio'), controller: domicilioController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Correo'), controller: correoController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Contratista'), controller: contratistaController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Teléfono del contratista'), controller: telefonoContratistaController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Proyecto'), controller: proyectoController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Giro del proyecto'), controller: giroProyectoController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Ubicación del proyecto'), controller: ubicacionProyectoController),
-                                          TextFormField(decoration: const InputDecoration(hintText: 'Breve descripción del proyecto'), controller: descripcionProyectoController),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              DateTime? pickedDate = await showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(2000),
+                                                lastDate: DateTime(2101),
+                                              );
+                                              if (pickedDate != null) {
+                                                String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
+                                                setState(() {
+                                                  caducidadController.text = formattedDate;
+                                                });
+                                              }
+                                            },
+                                            child: AbsorbPointer(
+                                              child: TextFormField(
+                                                controller: caducidadController,
+                                                decoration: const InputDecoration(
+                                                  labelText: 'Fecha de caducidad',
+                                                  hintText: 'Seleccione la fecha de caducidad',
+                                                ),
+                                                validator: (value) {
+                                                  if (value == null || value.isEmpty) {
+                                                    return 'Por favor ingrese la fecha de caducidad';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          TextFormField(
+                                            decoration: const InputDecoration(
+                                              labelText: 'Nombre de la empresa o responsable',
+                                              hintText: 'Ingrese el nombre de la empresa o responsable',
+                                            ),
+                                            controller: nombreEmpresaController,
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'Por favor ingrese el nombre de la empresa o responsable';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          TextFormField(
+                                            decoration: const InputDecoration(
+                                              labelText: 'Teléfono',
+                                              hintText: 'Ingrese el número de teléfono',
+                                            ),
+                                            controller: telefonoController,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                            ],
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'Por favor ingrese el número de teléfono';
+                                              }
+                                              if (value.length != 10) {
+                                                return 'El número de teléfono debe tener 10 dígitos';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              final domicilio = await mostrarDialogoDireccion(context, 'Ingresar Domicilio');
+                                              if (domicilio != null) {
+                                                setState(() {
+                                                  domicilioController.text = domicilio;
+                                                });
+                                              }
+                                            },
+                                            child: AbsorbPointer(
+                                              child: TextFormField(
+                                                controller: domicilioController,
+                                                decoration: const InputDecoration(
+                                                  labelText: 'Domicilio',
+                                                  hintText: 'Ingrese el domicilio',
+                                                ),
+                                                validator: (value) {
+                                                  if (value == null || value.isEmpty) {
+                                                    return 'Por favor ingrese el domicilio';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          TextFormField(
+                                            decoration: const InputDecoration(
+                                              labelText: 'Correo',
+                                              hintText: 'Ingrese el correo',
+                                            ),
+                                            controller: correoController,
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'Por favor ingrese el correo';
+                                              }
+                                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                                                return 'Por favor ingrese un correo válido';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          TextFormField(
+                                            decoration: const InputDecoration(
+                                              labelText: 'Contratista',
+                                              hintText: 'Ingrese el nombre del contratista',
+                                            ),
+                                            controller: contratistaController,
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'Por favor ingrese el nombre del contratista';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          TextFormField(
+                                            decoration: const InputDecoration(
+                                              labelText: 'Teléfono del contratista',
+                                              hintText: 'Ingrese el número de teléfono del contratista',
+                                            ),
+                                            controller: telefonoContratistaController,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                            ],
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'Por favor ingrese el número de teléfono del contratista';
+                                              }
+                                              if (value.length != 10) {
+                                                return 'El número de teléfono del contratista debe tener 10 dígitos';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          TextFormField(
+                                            decoration: const InputDecoration(
+                                              labelText: 'Proyecto',
+                                              hintText: 'Ingrese el nombre del proyecto',
+                                            ),
+                                            controller: proyectoController,
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'Por favor ingrese el nombre del proyecto';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          TextFormField(
+                                            decoration: const InputDecoration(
+                                              labelText: 'Giro del proyecto',
+                                              hintText: 'Ingrese el giro del proyecto',
+                                            ),
+                                            controller: giroProyectoController,
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'Por favor ingrese el giro del proyecto';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              final ubicacionProyecto = await mostrarDialogoDireccion(context, 'Ingresar Ubicación del Proyecto');
+                                              if (ubicacionProyecto != null) {
+                                                setState(() {
+                                                  ubicacionProyectoController.text = ubicacionProyecto;
+                                                });
+                                              }
+                                            },
+                                            child: AbsorbPointer(
+                                              child: TextFormField(
+                                                controller: ubicacionProyectoController,
+                                                decoration: const InputDecoration(
+                                                  labelText: 'Ubicación del proyecto',
+                                                  hintText: 'Ingrese la ubicación del proyecto',
+                                                ),
+                                                validator: (value) {
+                                                  if (value == null || value.isEmpty) {
+                                                    return 'Por favor ingrese la ubicación del proyecto';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          TextFormField(
+                                            decoration: const InputDecoration(
+                                              labelText: 'Breve descripción del proyecto',
+                                              hintText: 'Ingrese una breve descripción del proyecto',
+                                            ),
+                                            controller: descripcionProyectoController,
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'Por favor ingrese una breve descripción del proyecto';
+                                              }
+                                              return null;
+                                            },
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -411,6 +602,94 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
       ),
     );
   }
+
+  Future<String?> mostrarDialogoDireccion(BuildContext context, String titulo) async {
+    TextEditingController calleController = TextEditingController();
+    TextEditingController numeroController = TextEditingController();
+    TextEditingController coloniaController = TextEditingController();
+    TextEditingController codigoPostalController = TextEditingController();
+    TextEditingController ciudadController = TextEditingController();
+    TextEditingController estadoController = TextEditingController();
+
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(titulo),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Calle',
+                    hintText: 'Ingrese la calle',
+                  ),
+                  controller: calleController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Número',
+                    hintText: 'Ingrese el número',
+                  ),
+                  controller: numeroController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Colonia',
+                    hintText: 'Ingrese la colonia',
+                  ),
+                  controller: coloniaController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Código Postal',
+                    hintText: 'Ingrese el código postal',
+                  ),
+                  controller: codigoPostalController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Ciudad',
+                    hintText: 'Ingrese la ciudad',
+                  ),
+                  controller: ciudadController,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Estado',
+                    hintText: 'Ingrese el estado',
+                  ),
+                  controller: estadoController,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(null),
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                final direccion = '${calleController.text} #${numeroController.text}, ${coloniaController.text}, ${codigoPostalController.text}, ${ciudadController.text}, ${estadoController.text}';
+                Navigator.of(context).pop(direccion);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   Column buildResumenPresupuesto() {
     double totalGeneral = 0.0;
