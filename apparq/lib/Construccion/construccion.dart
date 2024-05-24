@@ -33,11 +33,33 @@ class _ConstruccionPage extends State<ConstruccionPage> {
     'Otro porcentaje',
   ];
   final List<TextEditingController> percentageControllers = List.generate(6, (index) => TextEditingController(text: '0'));
+  final ValueNotifier<double> totalPorcentajeNotifier = ValueNotifier<double>(0.0);
   @override
   void initState() {
     super.initState();
     // Obtener la lista de presupuestos al iniciar el widget
-    presupuestos = obtenerPresupuestos(); 
+    presupuestos = obtenerPresupuestos();
+    for (var controller in percentageControllers) {
+      controller.addListener(_updateTotalPorcentaje);
+    }
+  }
+  
+  @override
+  void dispose() {
+    for (var controller in percentageControllers) {
+      controller.removeListener(_updateTotalPorcentaje);
+      controller.dispose();
+    }
+    totalPorcentajeNotifier.dispose();
+    super.dispose();
+  }
+
+  void _updateTotalPorcentaje() {
+    double total = 0.0;
+    for (var controller in percentageControllers) {
+      total += double.tryParse(controller.text) ?? 0.0;
+    }
+    totalPorcentajeNotifier.value = total;
   }
 
   @override
@@ -115,12 +137,25 @@ class _ConstruccionPage extends State<ConstruccionPage> {
     var detalle = obtenerDetalleConstruccion(presupuesto.nombre);
     if (detalle != null) {
       for (int i = 0; i < percentageControllers.length; i++) {
-        percentageControllers[i].text = detalle.porcentajes[i].toStringAsFixed(2);  // Formatea a dos decimales si es necesario
+        percentageControllers[i].text = detalle.porcentajes[i].toStringAsFixed(2);
       }
     } else {
       for (var controller in percentageControllers) {
-        controller.text = '0';
+        controller.text = '0.00';
       }
+    }
+
+    List<FocusNode> focusNodes = List.generate(6, (index) => FocusNode());
+
+    for (int i = 0; i < focusNodes.length; i++) {
+      focusNodes[i].addListener(() {
+        if (!focusNodes[i].hasFocus) {
+          setState(() {
+            percentageControllers[i].text = (double.tryParse(percentageControllers[i].text) ?? 0.00).toStringAsFixed(2);
+            _updateTotalPorcentaje();
+          });
+        }
+      });
     }
 
     showDialog(
@@ -128,71 +163,96 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Indirectos de ${presupuesto.nombre}'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                Text('Total: $formattedTotal'),
-                Table(
-                  columnWidths: const {
-                    0: FlexColumnWidth(2),
-                    1: FlexColumnWidth(1.7),
-                  },
-                  border: TableBorder.all(),
-                  children: [
-                    const TableRow(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text('DESCRIPCION'),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text('PORCENTAJE'),
-                        ),
-                      ],
-                    ),
-                    ...List.generate(6, (index) => TableRow(
-                      children: [
-                        TableCell(
-                          verticalAlignment: TableCellVerticalAlignment.middle,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(descripciones[index]),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          verticalAlignment: TableCellVerticalAlignment.middle,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextField(
-                              controller: percentageControllers[index],
-                              decoration: const InputDecoration(
-                                hintText: '%',
-                                border: OutlineInputBorder(),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Total: $formattedTotal'),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Table(
+                        columnWidths: const {
+                          0: FlexColumnWidth(2),
+                          1: FlexColumnWidth(1.7),
+                        },
+                        border: TableBorder.all(),
+                        children: [
+                          const TableRow(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('DESCRIPCION'),
                               ),
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                              ],
-                              onTap: () {
-                                // Selecciona todo el texto al enfocar el campo
-                                percentageControllers[index].selection = TextSelection(
-                                  baseOffset: 0,
-                                  extentOffset: percentageControllers[index].text.length,
-                                );
-                              },
-                            ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text('PORCENTAJE'),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    )),
-                  ],
+                          ...List.generate(6, (index) => TableRow(
+                            children: [
+                              TableCell(
+                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(descripciones[index]),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextField(
+                                    controller: percentageControllers[index],
+                                    focusNode: focusNodes[index],
+                                    decoration: const InputDecoration(
+                                      hintText: '%',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                                    ],
+                                    onTap: () {
+                                      percentageControllers[index].selection = TextSelection(
+                                        baseOffset: 0,
+                                        extentOffset: percentageControllers[index].text.length,
+                                      );
+                                    },
+                                    onEditingComplete: () {
+                                      setState(() {
+                                        percentageControllers[index].text = (double.tryParse(percentageControllers[index].text) ?? 0.00).toStringAsFixed(2);
+                                        _updateTotalPorcentaje();
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+              ValueListenableBuilder<double>(
+                valueListenable: totalPorcentajeNotifier,
+                builder: (context, total, child) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Text(
+                      'Total de porcentajes: ${total.toStringAsFixed(2)}%',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
           actions: [
             TextButton(
@@ -213,6 +273,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       },
     );
   }
+
 
   Future<void> mostrarDialogoDeConfirmacion(PresupuestoDetalle presupuesto) async {
     List<double> porcentajes = [];

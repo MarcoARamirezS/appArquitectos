@@ -339,6 +339,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                                 initialDate: DateTime.now(),
                                                 firstDate: DateTime(2000),
                                                 lastDate: DateTime(2101),
+                                                locale: const Locale('es', 'ES'),
                                               );
                                               if (pickedDate != null) {
                                                 String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
@@ -398,7 +399,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                           ),
                                           GestureDetector(
                                             onTap: () async {
-                                              final domicilio = await mostrarDialogoDireccion(context, 'Ingresar Domicilio');
+                                              final domicilio = await mostrarDialogoDireccion(context, 'Ingresar Domicilio', valorInicial: domicilioController.text);
                                               if (domicilio != null) {
                                                 setState(() {
                                                   domicilioController.text = domicilio;
@@ -498,7 +499,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                                           ),
                                           GestureDetector(
                                             onTap: () async {
-                                              final ubicacionProyecto = await mostrarDialogoDireccion(context, 'Ingresar Ubicación del Proyecto');
+                                              final ubicacionProyecto = await mostrarDialogoDireccion(context, 'Ingresar Ubicación del Proyecto', valorInicial: ubicacionProyectoController.text);
                                               if (ubicacionProyecto != null) {
                                                 setState(() {
                                                   ubicacionProyectoController.text = ubicacionProyecto;
@@ -603,13 +604,27 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     );
   }
 
-  Future<String?> mostrarDialogoDireccion(BuildContext context, String titulo) async {
+  Future<String?> mostrarDialogoDireccion(BuildContext context, String titulo, {String? valorInicial}) async {
     TextEditingController calleController = TextEditingController();
     TextEditingController numeroController = TextEditingController();
     TextEditingController coloniaController = TextEditingController();
-    TextEditingController codigoPostalController = TextEditingController();
+    TextEditingController cpController = TextEditingController();
     TextEditingController ciudadController = TextEditingController();
     TextEditingController estadoController = TextEditingController();
+
+    if (valorInicial != null) {
+      List<String> partes = valorInicial.split(', ');
+      if (partes.length == 5) {
+        calleController.text = partes[0].split(' #')[0];
+        numeroController.text = partes[0].split(' #')[1];
+        coloniaController.text = partes[1];
+        cpController.text = partes[2];
+        ciudadController.text = partes[3];
+        estadoController.text = partes[4];
+      }
+    }
+
+    final formKey = GlobalKey<FormState>();
 
     return showDialog<String>(
       context: context,
@@ -617,70 +632,91 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
         return AlertDialog(
           title: Text(titulo),
           content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Calle',
-                    hintText: 'Ingrese la calle',
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: calleController,
+                    decoration: const InputDecoration(labelText: 'Calle'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese la calle';
+                      }
+                      return null;
+                    },
                   ),
-                  controller: calleController,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Número',
-                    hintText: 'Ingrese el número',
+                  TextFormField(
+                    controller: numeroController,
+                    decoration: const InputDecoration(labelText: 'Número'),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese el número';
+                      }
+                      return null;
+                    },
                   ),
-                  controller: numeroController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Colonia',
-                    hintText: 'Ingrese la colonia',
+                  TextFormField(
+                    controller: coloniaController,
+                    decoration: const InputDecoration(labelText: 'Colonia'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese la colonia';
+                      }
+                      return null;
+                    },
                   ),
-                  controller: coloniaController,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Código Postal',
-                    hintText: 'Ingrese el código postal',
+                  TextFormField(
+                    controller: cpController,
+                    decoration: const InputDecoration(labelText: 'CP'),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese el código postal';
+                      }
+                      if (value.length != 5) {
+                        return 'El código postal debe tener 5 dígitos';
+                      }
+                      return null;
+                    },
                   ),
-                  controller: codigoPostalController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Ciudad',
-                    hintText: 'Ingrese la ciudad',
+                  TextFormField(
+                    controller: ciudadController,
+                    decoration: const InputDecoration(labelText: 'Ciudad'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese la ciudad';
+                      }
+                      return null;
+                    },
                   ),
-                  controller: ciudadController,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Estado',
-                    hintText: 'Ingrese el estado',
+                  TextFormField(
+                    controller: estadoController,
+                    decoration: const InputDecoration(labelText: 'Estado'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese el estado';
+                      }
+                      return null;
+                    },
                   ),
-                  controller: estadoController,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          actions: <Widget>[
+          actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(null),
+              onPressed: () => Navigator.of(context).pop(),
               child: const Text('Cancelar'),
             ),
             TextButton(
               onPressed: () {
-                final direccion = '${calleController.text} #${numeroController.text}, ${coloniaController.text}, ${codigoPostalController.text}, ${ciudadController.text}, ${estadoController.text}';
-                Navigator.of(context).pop(direccion);
+                if (formKey.currentState!.validate()) {
+                  String direccionCompleta =
+                      '${calleController.text} #${numeroController.text}, ${coloniaController.text}, ${cpController.text}, ${ciudadController.text}, ${estadoController.text}';
+                  Navigator.of(context).pop(direccionCompleta);
+                }
               },
               child: const Text('OK'),
             ),
@@ -689,6 +725,8 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
       },
     );
   }
+
+
 
 
   Column buildResumenPresupuesto() {

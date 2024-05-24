@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'models/presupuesto_detalle.dart';
 import 'models/construccion_detalle.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'splash.dart';
 
 void main() async {
@@ -11,6 +13,10 @@ void main() async {
   Hive.registerAdapter(ConstruccionDetalleAdapter());
   await Hive.openBox<PresupuestoDetalle>('presupuestos');
   await Hive.openBox<ConstruccionDetalle>('construcciones');
+
+  // Inicializa la configuración de fecha en español
+  await initializeDateFormatting('es', null);
+
   runApp(const MyApp());
 }
 
@@ -24,7 +30,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SplashPage(), 
+      supportedLocales: const [
+        Locale('es', 'ES'), // Añade el soporte para español
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      home: const SplashPage(),
     );
   }
 }
