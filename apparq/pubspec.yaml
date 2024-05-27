@@ -99,7 +99,15 @@ flutter:
     - assets/csv/E/TRABAJOS Y OBRA DE EDIFICACION BASICA/BARDA PERIMETRAL – CIMENTACION DE MAMPOSTERIA MODULO DE 18.20 M/archivo.csv
     - assets/csv/F/DUCTOS SUBTERRANEOS PARA SERVICIOS/LINEA DE CONDUCCION 14.49 M/archivo.csv
     - assets/csv/F/DUCTOS SUBTERRANEOS PARA SERVICIOS/LINEA DE DISTRIBUCION 7.95 M/archivo.csv
-    - assets/guanajuato.svg
+    - assets/mapa/GUANAJUATO.png
+    - assets/mapa/REGION 1.png
+    - assets/mapa/REGION 2.png
+    - assets/mapa/REGION 3.png
+    - assets/mapa/REGION 4.png
+    - assets/mapa/REGION 5.png
+    - assets/mapa/REGION 6.png
+    - assets/mapa/REGION 7.png
+    - assets/mapa/REGION 8.png
     - assets/logo.png
     - assets/INICIO.mp4
     - assets/FondoLogin.png

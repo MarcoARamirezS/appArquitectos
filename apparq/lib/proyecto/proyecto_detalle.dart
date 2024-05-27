@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'dart:io';
 import 'package:excel/excel.dart';
@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:apparq/models/presupuesto_detalle.dart';
 import 'package:apparq/models/construccion_detalle.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'aspecto_proyecto.dart';
@@ -218,7 +219,7 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
                   child: SingleChildScrollView(
                     child: RichText(
                       text: TextSpan(
-                        children: _generateSummaryText(),
+                        children: _generateSummaryText(metros),
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black
@@ -253,8 +254,27 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
     );
   }
 
-  List<TextSpan> _generateSummaryText() {
+  double _calcularTotalFinal(double metros) {
+    double factorRegional = 0.75;
+    double honorarios = calcularHonorariosTotales(detalle.total, metros, detalleConstruccion.porcentajes, factorRegional);
+    Map<String, double> costosPorOpcion = calcularCostosPorOpcion(honorarios, selectedOptions);
+    double totalFinal = 0.0;
+
+    selectedOptions.forEach((titulo, opciones) {
+      for (var opcion in opciones) {
+        double costo = costosPorOpcion[opcion] ?? 0;
+        totalFinal += costo;
+      }
+    });
+
+    return totalFinal;
+  }
+
+  List<TextSpan> _generateSummaryText(metros) {
     List<TextSpan> summaryText = [];
+    var totalFinal = _calcularTotalFinal(metros);
+    var formattedTotalFinal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(totalFinal);
+    summaryText.add(TextSpan(text: "Total Alcances: $formattedTotalFinal\n", style: const TextStyle(fontWeight: FontWeight.bold)));
     selectedOptions.forEach((key, value) {
       if (value.isNotEmpty) {
         summaryText.add(TextSpan(text: "$key:\n", style: const TextStyle(fontWeight: FontWeight.bold)));
@@ -321,13 +341,15 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
           // Combinar celdas de la E a la F y preparar espacio para el costo
           double costo = costosPorOpcion[opcion] ?? 0;
           totalFinal += costo;
-          sheet.merge(CellIndex.indexByString('E$rowIndex'), CellIndex.indexByString('F$rowIndex'), customValue: TextCellValue(costo.toStringAsFixed(2)));
+          var formattedCosto = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costo);
+          sheet.merge(CellIndex.indexByString('E$rowIndex'), CellIndex.indexByString('F$rowIndex'), customValue: TextCellValue(formattedCosto));
           rowIndex++;  // Incrementar para la siguiente fila
         }
       });
 
       sheet.merge(CellIndex.indexByString('A$rowIndex'), CellIndex.indexByString('D$rowIndex'), customValue: const TextCellValue("TOTAL:"));
-      sheet.merge(CellIndex.indexByString('E$rowIndex'), CellIndex.indexByString('F$rowIndex'), customValue: TextCellValue(totalFinal.toStringAsFixed(2)));
+      var formattedFinal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(totalFinal);
+      sheet.merge(CellIndex.indexByString('E$rowIndex'), CellIndex.indexByString('F$rowIndex'), customValue: TextCellValue(formattedFinal));
 
       String fileName = '${detalle.nombre}_Proyecto.xlsx';
       String filePath = '$selectedDirectory/$fileName';
