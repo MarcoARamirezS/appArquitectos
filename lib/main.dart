@@ -13,6 +13,8 @@ void main() async {
   Hive.registerAdapter(ConstruccionDetalleAdapter());
   await Hive.openBox<PresupuestoDetalle>('presupuestos');
   await Hive.openBox<ConstruccionDetalle>('construcciones');
+  await Hive.openBox<PresupuestoDetalle>('presupuestosPrivados');
+  await Hive.openBox<ConstruccionDetalle>('construccionesPrivadas');
 
   // Inicializa la configuración de fecha en español
   await initializeDateFormatting('es', null);
