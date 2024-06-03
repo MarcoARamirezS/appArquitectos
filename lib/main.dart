@@ -16,7 +16,6 @@ void main() async {
   await Hive.openBox<PresupuestoDetalle>('presupuestosPrivados');
   await Hive.openBox<ConstruccionDetalle>('construccionesPrivadas');
 
-  // Inicializa la configuración de fecha en español
   await initializeDateFormatting('es', null);
 
   runApp(const MyApp());
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       supportedLocales: const [
-        Locale('es', 'ES'), // Añade el soporte para español
+        Locale('es', 'ES'),
       ],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
