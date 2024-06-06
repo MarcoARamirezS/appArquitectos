@@ -146,6 +146,11 @@ flutter:
     - assets/privada/turismo.png
     - assets/privada/ab.png
     - assets/privada/varios.png
+    - assets/proyectoPrivada/nivel_5.png
+    - assets/proyectoPrivada/nivel_4.png
+    - assets/proyectoPrivada/nivel_3.png
+    - assets/proyectoPrivada/nivel_2.png
+    - assets/proyectoPrivada/nivel_1.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

@@ -1,16 +1,18 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'menu.dart';
 //import 'dashboard.dart';
 
-Color region1 = const Color.fromRGBO(255, 127, 191, 1.0);
-Color region2 = const Color.fromRGBO(145, 81, 165, 1.0);
-Color region3 = const Color.fromRGBO(83, 165, 84, 1.0);
-Color region4 = const Color.fromRGBO(254, 255, 128, 1.0);
-Color region5 = const Color.fromRGBO(83, 144, 165, 1.0);
-Color region6 = const Color.fromRGBO(164, 83, 82, 1.0);
-Color region7 = const Color.fromRGBO(255, 191, 128, 1.0);
-Color region8 = const Color.fromRGBO(190, 255, 128, 1.0);
+Color region1 = const Color.fromRGBO(128, 128, 128, 1.0);
+Color region2 = const Color.fromRGBO(13, 36, 50, 1.0);
+Color region3 = const Color.fromRGBO(99, 100, 102, 1.0);
+Color region4 = const Color.fromRGBO(40, 53, 62, 1.0);
+Color region5 = const Color.fromRGBO(128, 128, 128, 1.0);
+Color region6 = const Color.fromRGBO(33, 40, 59, 1.0);
+Color region7 = const Color.fromRGBO(100, 101, 103, 1.0);
+Color region8 = const Color.fromRGBO(13, 36, 50, 1.0);
 
 class RegionSelectionPage extends StatefulWidget {
   const RegionSelectionPage({super.key});
@@ -143,7 +145,7 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
                           ),
                           child: Text(
                             'REGIÓN $regionNumber',
-                            style: const TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         );
                       },
@@ -164,7 +166,7 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
                     ),
                     child: const Text(
                       'Seleccionar Región',
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
           ],

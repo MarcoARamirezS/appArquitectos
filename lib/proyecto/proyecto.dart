@@ -4,6 +4,7 @@ import 'package:apparq/models/construccion_detalle.dart';
 import 'package:apparq/models/presupuesto_detalle.dart';
 import 'package:apparq/menu.dart';
 import 'proyecto_detalle.dart';
+import 'proyecto_detalle_privado.dart'; // Página que se debe crear para detalles de proyectos privados
 
 class ProyectoPage extends StatefulWidget {
   const ProyectoPage({super.key});
@@ -13,58 +14,80 @@ class ProyectoPage extends StatefulWidget {
 }
 
 class _ProyectoPageState extends State<ProyectoPage> {
-  List<PresupuestoDetalle> presupuestos = [];
+  List<PresupuestoDetalle> presupuestosPublicos = [];
+  List<PresupuestoDetalle> presupuestosPrivados = [];
 
   @override
   void initState() {
     super.initState();
-    presupuestos = obtenerPresupuestosFiltrados();
+    presupuestosPublicos = obtenerPresupuestosFiltrados('presupuestos', 'construcciones');
+    presupuestosPrivados = obtenerPresupuestosFiltrados('presupuestosPrivados', 'construccionesPrivadas');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ListView.builder(
-          itemCount: presupuestos.length,
-          itemBuilder: (context, index) {
-            final presupuesto = presupuestos[index];
-            return Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.grey[300]!)
-                )
-              ),
-              child: ListTile(
-                title: Text(presupuesto.nombre),
-                onTap: () {
-                  if (MenuPage.menuPageKey.currentState != null) {
-                    MenuPage.menuPageKey.currentState!.setPage(
-                      ProyectoDetallePage(nombre: presupuesto.nombre),
-                      presupuesto.nombre
-                    );
-                  }
-                },
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () => _borrarConstruccion(presupuesto.nombre),
-                ),
-              ),
-            );
-          },
+        child: ListView(
+          children: [
+            ExpansionTile(
+              title: const Text('Proyectos Públicos'),
+              children: presupuestosPublicos.map((presupuesto) {
+                return ListTile(
+                  title: Text(presupuesto.nombre),
+                  onTap: () {
+                    if (MenuPage.menuPageKey.currentState != null) {
+                      MenuPage.menuPageKey.currentState!.setPage(
+                        ProyectoDetallePage(nombre: presupuesto.nombre),
+                        presupuesto.nombre
+                      );
+                    }
+                  },
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => _borrarConstruccion(presupuesto.nombre, false),
+                  ),
+                );
+              }).toList(),
+            ),
+            ExpansionTile(
+              title: const Text('Proyectos Privados'),
+              children: presupuestosPrivados.map((presupuesto) {
+                return ListTile(
+                  title: Text(presupuesto.nombre),
+                  onTap: () {
+                    if (MenuPage.menuPageKey.currentState != null) {
+                      MenuPage.menuPageKey.currentState!.setPage(
+                        ProyectoDetallePrivadoPage(nombre: presupuesto.nombre), // Página específica para privados
+                        presupuesto.nombre
+                      );
+                    }
+                  },
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => _borrarConstruccion(presupuesto.nombre, true),
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  void _borrarConstruccion(String nombre) async {
+  void _borrarConstruccion(String nombre, bool esPrivado) async {
     bool confirm = await _mostrarDialogoDeConfirmacion(context, nombre);
     if (confirm) {
-      var boxConstrucciones = Hive.box<ConstruccionDetalle>('construcciones');
+      var boxConstrucciones = Hive.box<ConstruccionDetalle>(esPrivado ? 'construccionesPrivadas' : 'construcciones');
       boxConstrucciones.delete(nombre);
       // Actualiza la UI tras borrar el elemento
       setState(() {
-        presupuestos = obtenerPresupuestosFiltrados();
+        if (esPrivado) {
+          presupuestosPrivados = obtenerPresupuestosFiltrados('presupuestosPrivados', 'construccionesPrivadas');
+        } else {
+          presupuestosPublicos = obtenerPresupuestosFiltrados('presupuestos', 'construcciones');
+        }
       });
     }
   }
@@ -75,7 +98,7 @@ class _ProyectoPageState extends State<ProyectoPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirmar eliminación'),
-          content: Text('¿Estás seguro de que deseas eliminar los datos de la construccion: "$nombre"?'),
+          content: Text('¿Estás seguro de que deseas eliminar los datos de la construcción: "$nombre"?'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
@@ -92,9 +115,9 @@ class _ProyectoPageState extends State<ProyectoPage> {
   }
 }
 
-List<PresupuestoDetalle> obtenerPresupuestosFiltrados() {
-    var boxPresupuestos = Hive.box<PresupuestoDetalle>('presupuestos');
-    var boxConstrucciones = Hive.box<ConstruccionDetalle>('construcciones');
+List<PresupuestoDetalle> obtenerPresupuestosFiltrados(String boxPresupuestosName, String boxConstruccionesName) {
+    var boxPresupuestos = Hive.box<PresupuestoDetalle>(boxPresupuestosName);
+    var boxConstrucciones = Hive.box<ConstruccionDetalle>(boxConstruccionesName);
     return boxPresupuestos.values.where((presupuesto) {
       return boxConstrucciones.containsKey(presupuesto.nombre);
     }).toList();
