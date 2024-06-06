@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,23 +5,21 @@ import 'package:apparq/models/presupuesto_detalle.dart';
 import 'package:excel/excel.dart' hide Border;
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-//import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:apparq/models/construccion_detalle.dart';
 import 'package:share_plus/share_plus.dart';
 
-
 class ConstruccionPage extends StatefulWidget {
   const ConstruccionPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _ConstruccionPage createState() => _ConstruccionPage();
 }
 
 class _ConstruccionPage extends State<ConstruccionPage> {
-  List<PresupuestoDetalle> presupuestos = [];
+  List<PresupuestoDetalle> presupuestosPublicos = [];
+  List<PresupuestoDetalle> presupuestosPrivados = [];
   List<String> descripciones = [
     'Indirectos de oficina',
     'Indirectos de campo',
@@ -34,11 +30,13 @@ class _ConstruccionPage extends State<ConstruccionPage> {
   ];
   final List<TextEditingController> percentageControllers = List.generate(6, (index) => TextEditingController(text: '0'));
   final ValueNotifier<double> totalPorcentajeNotifier = ValueNotifier<double>(0.0);
+
   @override
   void initState() {
     super.initState();
     // Obtener la lista de presupuestos al iniciar el widget
-    presupuestos = obtenerPresupuestos();
+    presupuestosPublicos = obtenerPresupuestos('presupuestos');
+    presupuestosPrivados = obtenerPresupuestos('presupuestosPrivados');
     for (var controller in percentageControllers) {
       controller.addListener(_updateTotalPorcentaje);
     }
@@ -66,32 +64,45 @@ class _ConstruccionPage extends State<ConstruccionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ListView.builder(
-          itemCount: presupuestos.length,
-          itemBuilder: (context, index) {
-            final presupuesto = presupuestos[index];
-            return Container(
-              decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
-              ),
-              child: ListTile(
-                title: Text(presupuesto.nombre),
-                onTap: () {
-                  mostrarPopupPresupuesto(presupuesto);
-                },
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () => _mostrarDialogoDeConfirmacion(presupuesto.nombre),
-                ),
-              ),
-            );
-          },
+        child: ListView(
+          children: [
+            ExpansionTile(
+              title: const Text('Presupuestos Públicos'),
+              children: presupuestosPublicos.map((presupuesto) {
+                return ListTile(
+                  title: Text(presupuesto.nombre),
+                  onTap: () {
+                    mostrarPopupPresupuesto(presupuesto, false);
+                  },
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => _mostrarDialogoDeConfirmacion(presupuesto.nombre, false),
+                  ),
+                );
+              }).toList(),
+            ),
+            ExpansionTile(
+              title: const Text('Presupuestos Privados'),
+              children: presupuestosPrivados.map((presupuesto) {
+                return ListTile(
+                  title: Text(presupuesto.nombre),
+                  onTap: () {
+                    mostrarPopupPresupuesto(presupuesto, true);
+                  },
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => _mostrarDialogoDeConfirmacion(presupuesto.nombre, true),
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Future<void> _mostrarDialogoDeConfirmacion(String nombre) async {
+  Future<void> _mostrarDialogoDeConfirmacion(String nombre, bool esPrivado) async {
     bool confirm = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -113,18 +124,22 @@ class _ConstruccionPage extends State<ConstruccionPage> {
     ) ?? false;
 
     if (confirm) {
-      _borrarConstruccion(nombre);
+      _borrarConstruccion(nombre, esPrivado);
     }
   }
 
-  void _borrarConstruccion(String nombre) {
-    var boxConstrucciones = Hive.box<ConstruccionDetalle>('construcciones');
-    var boxPresupuestos = Hive.box<PresupuestoDetalle>('presupuestos');
+  void _borrarConstruccion(String nombre, bool esPrivado) {
+    var boxConstrucciones = Hive.box<ConstruccionDetalle>(esPrivado ? 'construccionesPrivadas' : 'construcciones');
+    var boxPresupuestos = Hive.box<PresupuestoDetalle>(esPrivado ? 'presupuestosPrivados' : 'presupuestos');
     boxConstrucciones.delete(nombre);
-    boxPresupuestos.delete(nombre); // Asume que los nombres son las claves en ambas cajas
+    boxPresupuestos.delete(nombre);
 
     setState(() {
-      presupuestos = obtenerPresupuestos(); // Actualizar la lista tras borrar los datos
+      if (esPrivado) {
+        presupuestosPrivados = obtenerPresupuestos('presupuestosPrivados');
+      } else {
+        presupuestosPublicos = obtenerPresupuestos('presupuestos');
+      }
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -132,9 +147,9 @@ class _ConstruccionPage extends State<ConstruccionPage> {
     );
   }
 
-  void mostrarPopupPresupuesto(PresupuestoDetalle presupuesto) {
+  void mostrarPopupPresupuesto(PresupuestoDetalle presupuesto, bool esPrivado) {
     final formattedTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(presupuesto.total);
-    var detalle = obtenerDetalleConstruccion(presupuesto.nombre);
+    var detalle = obtenerDetalleConstruccion(presupuesto.nombre, esPrivado);
     if (detalle != null) {
       for (int i = 0; i < percentageControllers.length; i++) {
         percentageControllers[i].text = detalle.porcentajes[i].toStringAsFixed(2);
@@ -264,7 +279,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                mostrarDialogoDeConfirmacion(presupuesto);
+                mostrarDialogoDeConfirmacion(presupuesto, esPrivado);
               },
               child: const Text('Guardar Cambios'),
             ),
@@ -274,8 +289,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
     );
   }
 
-
-  Future<void> mostrarDialogoDeConfirmacion(PresupuestoDetalle presupuesto) async {
+  Future<void> mostrarDialogoDeConfirmacion(PresupuestoDetalle presupuesto, bool esPrivado) async {
     List<double> porcentajes = [];
     double sumTotal = 0.0;
     
@@ -356,7 +370,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
             ),
             TextButton(
               onPressed: () {
-                guardarExcel(presupuesto);
+                guardarExcel(presupuesto, esPrivado);
                 Navigator.of(context).pop();
               },
               child: const Text('Confirmar y Guardar'),
@@ -367,8 +381,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
     );
   }
 
-
-  Future<void> guardarExcel(PresupuestoDetalle presupuesto) async {
+  Future<void> guardarExcel(PresupuestoDetalle presupuesto, bool esPrivado) async {
     var status = await Permission.manageExternalStorage.request();
     status = await Permission.manageExternalStorage.status;
     if (!status.isGranted) {
@@ -425,14 +438,19 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       var formattedFinal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(presupuesto.total + sumTotal);
       sheet.updateCell(CellIndex.indexByString('E26'), TextCellValue(formattedFinal));
 
-      String fileName = '${presupuesto.nombre}_Construccion.xlsx';
+      String fileName = "";
+      if(esPrivado){
+        fileName = '${presupuesto.nombre}_ConstruccionPrivada.xlsx';
+      } else {
+        fileName = '${presupuesto.nombre}_Construccion.xlsx';
+      }
       String filePath = '$selectedDirectory/$fileName';
       File file = File(filePath);
       await file.writeAsBytes(excel.encode()!, flush: true);
 
       // Guarda en Hive
       var detalle = ConstruccionDetalle(nombreArchivo: fileName, porcentajes: porcentajes);
-      guardarDetalleConstruccion(presupuesto.nombre, detalle);
+      guardarDetalleConstruccion(presupuesto.nombre, detalle, esPrivado);
       
       _shareFile(filePath);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Archivo Excel generado y listo para compartir')));
@@ -450,17 +468,17 @@ void _shareFile(String filePath) {
   Share.shareXFiles([XFile(filePath)], text: 'Aquí tienes el archivo de presupuesto.');
 }
 
-Future<void> guardarDetalleConstruccion(String nombre, ConstruccionDetalle detalle) async {
-  var box = Hive.box<ConstruccionDetalle>('construcciones');
+Future<void> guardarDetalleConstruccion(String nombre, ConstruccionDetalle detalle, bool esPrivado) async {
+  var box = Hive.box<ConstruccionDetalle>(esPrivado ? 'construccionesPrivadas' : 'construcciones');
   await box.put(nombre, detalle);
 }
 
-List<PresupuestoDetalle> obtenerPresupuestos() {
-  var box = Hive.box<PresupuestoDetalle>('presupuestos');
+List<PresupuestoDetalle> obtenerPresupuestos(String boxName) {
+  var box = Hive.box<PresupuestoDetalle>(boxName);
   return box.values.toList();
 }
 
-ConstruccionDetalle? obtenerDetalleConstruccion(String nombrePresupuesto) {
-  var box = Hive.box<ConstruccionDetalle>('construcciones');
+ConstruccionDetalle? obtenerDetalleConstruccion(String nombrePresupuesto, bool esPrivado) {
+  var box = Hive.box<ConstruccionDetalle>(esPrivado ? 'construccionesPrivadas' : 'construcciones');
   return box.get(nombrePresupuesto);
 }
