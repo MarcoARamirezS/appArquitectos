@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+// ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -63,7 +63,6 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
     return selectedAlcances.contains(true) && selectedImage != null;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,29 +96,105 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
               'Nivel de desarrollo a trabajar',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            Wrap(
-              spacing: 10.0,
-              runSpacing: 10.0,
-              children: List.generate(5, (index) {
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+              ),
+              itemCount: 4,
+              itemBuilder: (context, index) {
                 String image = 'assets/proyectoPrivada/nivel_${index + 1}.png';
+                String title = '';
+                switch (index) {
+                  case 0:
+                    title = 'LOD 50';
+                    break;
+                  case 1:
+                    title = 'LOD 100';
+                    break;
+                  case 2:
+                    title = 'LOD 200';
+                    break;
+                  case 3:
+                    title = 'LOD 250';
+                    break;
+                }
                 return GestureDetector(
                   onTap: () {
                     setState(() {
                       selectedImage = image;
                     });
                   },
-                  child: Image.asset(
-                    image,
-                    width: 100,
-                    height: 100,
-                    color: selectedImage == image ? Colors.blue.withOpacity(0.5) : null,
-                    colorBlendMode: BlendMode.color,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: selectedImage == image ? Colors.blue : Colors.transparent,
+                              width: 3,
+                            ),
+                          ),
+                          child: Image.asset(
+                            image,
+                            width: double.infinity,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 );
-              }),
+              },
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedImage = 'assets/proyectoPrivada/nivel_5.png';
+                  });
+                },
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: selectedImage == 'assets/proyectoPrivada/nivel_5.png' ? Colors.blue : Colors.transparent,
+                          width: 3,
+                        ),
+                      ),
+                      child: Image.asset(
+                        'assets/proyectoPrivada/nivel_5.png',
+                        width: 200,
+                        height: 200,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'LOD 300',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white, backgroundColor: const Color(0xFF044C70),
+              ),
               onPressed: isGuardarEnabled ? _calcularCostos : null,
               child: const Text('Confirmar'),
             ),
@@ -155,12 +230,12 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
       costoTotal += costoConstruccion * (porcentaje / 100);
     }
     costoTotal += costoConstruccion;
-    costoServicios = costoTotal * porcentajeServicios;
+    costoServicios = costoTotal * porcentajeServicios * nivelValor;
 
     selectedAlcances.asMap().forEach((index, isSelected) {
       if (isSelected) {
         double porcentaje = porcentajes[alcances[index]] ?? 0.0;
-        double alcanceCosto = costoServicios * porcentaje * nivelValor;
+        double alcanceCosto = costoServicios * porcentaje;
         alcancesCostos[alcances[index]] = alcanceCosto;
         costoTotal += alcanceCosto;
       }
@@ -205,7 +280,7 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(
+                                                child: Text(
                           entry.key,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
@@ -321,3 +396,4 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
     Share.shareXFiles([XFile(filePath)], text: 'Aquí tienes el archivo del proyecto privado.');
   }
 }
+

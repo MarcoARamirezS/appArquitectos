@@ -27,9 +27,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'AppARQ',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: const Color(0xFF044C70),
+        hintColor: const Color(0xFF090A0C),
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF044C70),
+          secondary: Color(0xFF090A0C),
+          background: Color(0xFFFFFFFF),
+          surface: Color(0xFFEEEEEE),
+        ),
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(color: Color(0xFF044C70), fontWeight: FontWeight.bold),
+          displayMedium: TextStyle(color: Color(0xFF6C6F72), fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(color: Color(0xFF090A0C)),
+          bodyMedium: TextStyle(color: Color(0xFF090A0C)),
+        ),
       ),
       supportedLocales: const [
         Locale('es', 'ES'),

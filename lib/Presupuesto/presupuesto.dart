@@ -29,7 +29,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
   String? selectedCostoBase;
   String? selectedMes;
   List<TextEditingController> _controllers = [];
-  int _numReferences = 3;
+  int _numReferences = 2;
   final TextEditingController _inflationController = TextEditingController();
   final TextEditingController _costBaseController = TextEditingController();
   final TextEditingController _m2Controller = TextEditingController();
@@ -41,7 +41,15 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
   }
 
   void _initializeControllers(int num) {
-    _controllers = List.generate(num, (_) => TextEditingController());
+    _controllers = List.generate(num, (index) {
+      if (index == 0) {
+        return TextEditingController(text: '9152.94');
+      } else if (index == 1) {
+        return TextEditingController(text: '9219.00');
+      } else {
+        return TextEditingController();
+      }
+    });
   }
 
   String? validateNumber(String? value) {
@@ -84,11 +92,13 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                               controller: _controllers[i],
                               decoration: InputDecoration(
                                 prefixText: '\$',
+                                filled: true,
+                                fillColor: Colors.grey[200],
+                                contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                                 border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(50),
                                 ),
-                                filled: true,
-                                fillColor: const Color.fromARGB(255, 255, 255, 255),
                               ),
                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
                               inputFormatters: [
@@ -104,6 +114,9 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                       ),
                     if (_numReferences < 6)
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white, backgroundColor: const Color(0xFF044C70),
+                        ),
                         onPressed: () {
                           setState(() {
                             _numReferences++;
@@ -122,11 +135,13 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                             controller: _inflationController,
                             decoration: InputDecoration(
                               suffixText: '%',
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                               border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(50),
                               ),
-                              filled: true,
-                              fillColor: const Color.fromARGB(255, 255, 255, 255),
                             ),
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
                             inputFormatters: [
@@ -145,12 +160,18 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
               ),
               actions: <Widget>[
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: const Color(0xFF044C70),
+                  ),
                   child: const Text('Cancelar'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: const Color(0xFF044C70),
+                  ),
                   child: const Text('Guardar'),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -180,7 +201,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                 contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(50),
                 ),
               ),
               value: selectedOption,
@@ -318,7 +339,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                           contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(50),
                           ),
                         ),
                         hint: Text(selectedCategoria != null ? 'Seleccione el tipo de edificación' : 'Selecciona una categoría primero'),
@@ -386,7 +407,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                           contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(50),
                           ),
                         ),
                         hint: const Text('Seleccione la referencia de su costo base'),
@@ -446,7 +467,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                                   contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(50),
                                   ),
                                 ),
                                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -465,6 +486,9 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                           Column(
                             children: [
                               ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white, backgroundColor: const Color(0xFF044C70),
+                                ),
                                 onPressed: () {
                                   _showEditReferenceDialog();
                                 },
@@ -485,7 +509,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                                     contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(50),
                                     ),
                                   ),
                                   hint: const Text('Seleccione el mes'),
@@ -566,7 +590,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                             contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(50),
                             ),
                           ),
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -582,6 +606,9 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                     ),
                   const SizedBox(height: 20.0),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: const Color(0xFF044C70),
+                    ),
                     onPressed: selectedSubcategoria != null &&
                         selectedCostoBase != null &&
                         (selectedCostoBase == 'Costo base calculado' &&
@@ -721,12 +748,18 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                             ),
                             actions: <Widget>[
                               ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white, backgroundColor: const Color(0xFF044C70),
+                                ),
                                 child: const Text('Regresar'),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white, backgroundColor: const Color(0xFF044C70),
+                                ),
                                 child: const Text('Siguiente'),
                                 onPressed: () async {
                                   var formKey = GlobalKey<FormState>();
