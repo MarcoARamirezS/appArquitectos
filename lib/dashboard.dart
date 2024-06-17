@@ -1,3 +1,4 @@
+//import 'package:apparq/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -51,6 +52,22 @@ class _DashboardPage extends State<DashboardPage> {
                   "OFRECEMOS",
                   "• Cálculo de presupuesto\n    ○ Obra pública\n    ○ Obra privada\n• Cálculo de construcción\n• Cálculo de proyecto",
                 ),
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    // Desplegar el menú
+                    Scaffold.of(context).openDrawer();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+                    shape: const StadiumBorder(),
+                  ),
+                  child: const Text(
+                    'Iniciar',
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                ),
               ],
             ),
           ),
@@ -60,7 +77,7 @@ class _DashboardPage extends State<DashboardPage> {
   }
 
   Widget _buildTextContainer(String title, String content) {
-    double width = MediaQuery.of(context).size.width * 1; // 80% de la anchura de la pantalla
+    double width = MediaQuery.of(context).size.width * 1; // 100% de la anchura de la pantalla
     return ConstrainedBox(
       constraints: BoxConstraints(
         minWidth: width,

@@ -33,6 +33,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
   final TextEditingController _inflationController = TextEditingController();
   final TextEditingController _costBaseController = TextEditingController();
   final TextEditingController _m2Controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -42,14 +43,93 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
 
   void _initializeControllers(int num) {
     _controllers = List.generate(num, (index) {
-      if (index == 0) {
-        return TextEditingController(text: '9152.94');
-      } else if (index == 1) {
-        return TextEditingController(text: '9219.00');
+      if (index < _costOptions.length) {
+        return TextEditingController(text: _costOptions[index]);
       } else {
         return TextEditingController();
       }
     });
+  }
+
+  final List<String> _costOptions = [
+    '2024 - \$9454',
+    '2023 - \$9219',
+    '2022 - \$7969',
+    '2021 - \$7013',
+    '2020 - \$6300',
+    '2019 - \$8502',
+    '2018 - \$7604',
+    '2017 - \$7089',
+    '2016 - \$6589',
+    '2015 - \$6240',
+    '2014 - \$6092',
+  ];
+
+  final List<String> _inflationOptions = [
+    '2024 - 5.17%',
+    '2023 - 4.66%',
+    '2022 - 7.82%',
+    '2021 - 7.36%',
+    '2020 - 3.15%',
+    '2019 - 2.83%',
+    '2018 - 4.83%',
+    '2017 - 6.77%',
+    '2016 - 3.36%',
+    '2015 - 2.13%',
+    '2014 - 4.08%',
+  ];
+
+  void _showUserGuideDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Guía de usuario:'),
+          content: const SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '1. Costo base calculado:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Elija esta opción si lo que desea es ingresar su propio costo base por metro cuadrado',
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '2. Costo base anual:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Elija esta opción si lo que desea es tomar los costos por metro cuadrado de referencia a nivel estatal o ingresar sus propios costos de referencia',
+                ),
+                SizedBox(height: 10),
+                Text(
+                  '3. Costo base actualizado al mes:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Elija esta opción si lo que desea es tomar los costos por metro cuadrado de referencia a nivel estatal o ingresar sus propios costos de referencia y actualizarlo a un mes en específico',
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: const Color(0xFF044C70),
+              ),
+              child: const Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   String? validateNumber(String? value) {
@@ -81,34 +161,58 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                     for (int i = 0; i < _numReferences; i++)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Row(
                           children: [
-                            Text(
-                              'Referencia ${i + 1}: Costo por m²',
-                              textAlign: TextAlign.center,
-                            ),
-                            TextFormField(
-                              controller: _controllers[i],
-                              decoration: InputDecoration(
-                                prefixText: '\$',
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Referencia ${i + 1}: Costo por m²',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  DropdownButtonFormField<String>(
+                                    value: _controllers[i].text.isNotEmpty ? _controllers[i].text : null,
+                                    items: _costOptions.map((option) {
+                                      return DropdownMenuItem<String>(
+                                        value: option,
+                                        child: Text(option),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _controllers[i].text = value!;
+                                      });
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.grey[200],
+                                      contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Por favor seleccione un valor';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ],
                               ),
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                              ],
-                              validator: validateNumber,
-                              onChanged: (value) {
-                                setState(() {}); // Update dialog state
-                              },
                             ),
+                            if (i >= 2)
+                              IconButton(
+                                icon: const Icon(Icons.delete, color: Colors.red),
+                                onPressed: () {
+                                  setState(() {
+                                    _numReferences--;
+                                    _controllers.removeAt(i);
+                                  });
+                                },
+                              ),
                           ],
                         ),
                       ),
@@ -131,10 +235,20 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Text('Porcentaje de inflación anual', textAlign: TextAlign.center),
-                          TextFormField(
-                            controller: _inflationController,
+                          DropdownButtonFormField<String>(
+                            value: _inflationController.text.isNotEmpty ? _inflationController.text : null,
+                            items: _inflationOptions.map((option) {
+                              return DropdownMenuItem<String>(
+                                value: option.split(' - ')[1],
+                                child: Text(option),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _inflationController.text = value!;
+                              });
+                            },
                             decoration: InputDecoration(
-                              suffixText: '%',
                               filled: true,
                               fillColor: Colors.grey[200],
                               contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
@@ -143,13 +257,11 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                             ),
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                            ],
-                            validator: validateNumber,
-                            onChanged: (value) {
-                              setState(() {}); // Update dialog state
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Por favor seleccione un valor';
+                              }
+                              return null;
                             },
                           ),
                         ],
@@ -186,10 +298,23 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
     );
   }
 
+  void _scrollToEdificationType() {
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
+        controller: _scrollController,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.125, vertical: 20.0),
@@ -294,6 +419,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                             selectedCategoria = categoria.titulo;
                             selectedSubcategoria = null;
                           });
+                          _scrollToEdificationType();
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -394,10 +520,20 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                   const SizedBox(height: 20.0),
                   Column(
                     children: [
-                      const Text(
-                        'Costo Base de Referencia:',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              'Costo Base de Referencia:',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.help_outline),
+                            onPressed: _showUserGuideDialog,
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 10.0),
                       DropdownButtonFormField<String>(
@@ -633,12 +769,15 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                         costoBase = double.parse(_costBaseController.text);
                         costoTotal = costoBase * metrosCuadrados * factor;
                       } else {
-                        double porcentajeInflacion = double.parse(_inflationController.text) / 100;
+                        double porcentajeInflacion = double.parse(_inflationController.text.replaceAll('%', '')) / 100;
+                        porcentajeInflacion = double.parse((porcentajeInflacion).toStringAsFixed(4));
                         double sumaReferencias = 0;
                         int numReferenciasUsadas = 0;
                         for (int i = 0; i < _numReferences; i++) {
                           if (_controllers[i].text.isNotEmpty) {
-                            sumaReferencias += double.parse(_controllers[i].text);
+                            sumaReferencias += double.parse(
+                              _controllers[i].text.split(' - ')[1].replaceAll(RegExp(r'[^\d.]'), '')
+                            );
                             numReferenciasUsadas++;
                           }
                         }

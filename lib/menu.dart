@@ -23,11 +23,16 @@ class MenuPage extends StatefulWidget {
   _MenuPageState createState() => _MenuPageState();
 }
 class _MenuPageState extends State<MenuPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   String appBarTitle = "Inicio";
   Widget currentPage = const DashboardPage();
   List<NavigationState> navigationHistory = [];
   bool hasPresupuesto = false;
   bool hasConstruccion = false;
+  final GlobalKey _regionTileKey = GlobalKey();
+  //bool _isFlashing = false;
 
   @override
   void initState() {
@@ -84,12 +89,28 @@ class _MenuPageState extends State<MenuPage> {
     return true; // Permite cerrar la app si la historia está vacía
   }
 
+  void _flashRegionTile() {
+    // Método para hacer parpadear el ListTile
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (_regionTileKey.currentState != null) {
+        setState(() {
+          // Cambiar el estado del ListTile para que parpadee
+        });
+      }
+    });
+  }
+
+  void openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: Text(appBarTitle),
         ),
@@ -110,7 +131,7 @@ class _MenuPageState extends State<MenuPage> {
                   _onSelectItem(0);
                 },
               ),
-              _buildMenuItem('Cambiar región', 'assets/icon_region.png', 1),
+              _buildMenuItem('Cambiar región', 'assets/icon_region.png', 1, key: _regionTileKey), // Usar el GlobalKey
               ListTile(
                 leading: const Icon(Icons.attach_money),
                 title: const Text('Presupuesto'),
@@ -151,28 +172,32 @@ class _MenuPageState extends State<MenuPage> {
         ),
         onDrawerChanged: (isOpen) {
           if (isOpen) {
-            _checkAvailableData();  // Se llama cuando el drawer se abre
+            _checkAvailableData(); // Se llama cuando el drawer se abre
+            _flashRegionTile(); // Hacer parpadear el ListTile de "Cambiar región" cuando el drawer se abre
           }
         },
         body: currentPage,
       ),
     );
   }
-  ListTile _buildMenuItem(String title, String iconPath, int index) {
+  ListTile _buildMenuItem(String title, String iconPath, int index, {Key? key}) {
     return ListTile(
+      key: key,
       leading: Image.asset(iconPath, width: 24, height: 24),
       title: Text(title),
       onTap: () => _onSelectItem(index),
     );
   }
 
-    Future<void> _checkAvailableData() async {
+  Future<void> _checkAvailableData() async {
     final presupuestoBox = Hive.box<PresupuestoDetalle>('presupuestos');
     final construccionBox = Hive.box<ConstruccionDetalle>('construcciones');
+    final presupuestoPrivadoBox = Hive.box<PresupuestoDetalle>('presupuestosPrivados');
+    final construccionPrivadasBox = Hive.box<ConstruccionDetalle>('construccionesPrivadas');
 
     setState(() {
-      hasPresupuesto = presupuestoBox.isNotEmpty;
-      hasConstruccion = construccionBox.isNotEmpty && hasPresupuesto;
+      hasPresupuesto = presupuestoBox.isNotEmpty || presupuestoPrivadoBox.isNotEmpty;
+      hasConstruccion = (construccionBox.isNotEmpty || construccionPrivadasBox.isNotEmpty) && hasPresupuesto;
     });
   }
 }

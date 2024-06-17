@@ -1,18 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'menu.dart';
-//import 'dashboard.dart';
-
-Color region1 = const Color.fromRGBO(128, 128, 128, 1.0);
-Color region2 = const Color.fromRGBO(13, 36, 50, 1.0);
-Color region3 = const Color.fromRGBO(99, 100, 102, 1.0);
-Color region4 = const Color.fromRGBO(40, 53, 62, 1.0);
-Color region5 = const Color.fromRGBO(128, 128, 128, 1.0);
-Color region6 = const Color.fromRGBO(33, 40, 59, 1.0);
-Color region7 = const Color.fromRGBO(100, 101, 103, 1.0);
-Color region8 = const Color.fromRGBO(13, 36, 50, 1.0);
+import 'menu.dart';
 
 class RegionSelectionPage extends StatefulWidget {
   const RegionSelectionPage({super.key});
@@ -46,29 +34,6 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
       setState(() {
         selectedRegion = region;
       });
-    }
-  }
-
-  Color getRegionColor(int regionNumber) {
-    switch (regionNumber) {
-      case 1:
-        return region1;
-      case 2:
-        return region2;
-      case 3:
-        return region3;
-      case 4:
-        return region4;
-      case 5:
-        return region5;
-      case 6:
-        return region6;
-      case 7:
-        return region7;
-      case 8:
-        return region8;
-      default:
-        return Colors.white;
     }
   }
 
@@ -130,10 +95,14 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        childAspectRatio: 3, 
+                        childAspectRatio: 3,
                       ),
                       itemBuilder: (context, index) {
                         int regionNumber = index + 1;
+                        bool isSelected = selectedRegion == '$regionNumber';
+                        Color buttonColor = isSelected ? const Color(0xFF044C70) : const Color(0xFFEEEEEE);
+                        Color textColor = isSelected ? Colors.white : Colors.black;
+
                         return ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -141,11 +110,11 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: getRegionColor(regionNumber),
+                            backgroundColor: buttonColor,
                           ),
                           child: Text(
                             'REGIÓN $regionNumber',
-                            style: const TextStyle(color: Colors.white),
+                            style: TextStyle(color: textColor),
                           ),
                         );
                       },
@@ -156,13 +125,10 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
                       setState(() {
                         selectedRegion = displayedRegion;
                       });
-                      _saveRegion();
-                      /*if (MenuPage.menuPageKey.currentState != null) {
-                        MenuPage.menuPageKey.currentState!.setPage(const DashboardPage(), 'Dashboard');
-                      }*/
+                      _showSelectionDialog();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: getRegionColor(int.parse(displayedRegion!)),
+                      backgroundColor: const Color(0xFF044C70),
                     ),
                     child: const Text(
                       'Seleccionar Región',
@@ -172,6 +138,33 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showSelectionDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Región $selectedRegion Seleccionada'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cambiar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await _saveRegion();
+                Navigator.of(context).pop();
+                MenuPage.menuPageKey.currentState?.openDrawer();
+              },
+              child: const Text('Continuar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
