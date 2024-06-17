@@ -35,6 +35,9 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
   final TextEditingController _m2Controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
+  bool highlightEdificationTypeDropdown = false;
+  bool highlightCostReferenceDropdown = false;
+
   @override
   void initState() {
     super.initState();
@@ -305,7 +308,11 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
           _scrollController.position.maxScrollExtent,
           duration: const Duration(seconds: 1),
           curve: Curves.easeInOut,
-        );
+        ).then((_) {
+          setState(() {
+            highlightEdificationTypeDropdown = true;
+          });
+        });
       }
     });
   }
@@ -418,6 +425,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                           setState(() {
                             selectedCategoria = categoria.titulo;
                             selectedSubcategoria = null;
+                            highlightEdificationTypeDropdown = true;
                           });
                           _scrollToEdificationType();
                         },
@@ -461,7 +469,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                       DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.grey[200],
+                          fillColor: highlightEdificationTypeDropdown ? Color.fromARGB(255, 210, 234, 253) : Colors.grey[200],
                           contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -494,7 +502,8 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                         onChanged: selectedCategoria == null ? null : (String? newValue) {
                           setState(() {
                             selectedSubcategoria = newValue;
-                            print(newValue);
+                            highlightEdificationTypeDropdown = false;
+                            highlightCostReferenceDropdown = true;
                           });
                         },
                         selectedItemBuilder: (BuildContext context) {
@@ -539,7 +548,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                       DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.grey[200],
+                          fillColor: highlightCostReferenceDropdown && selectedCostoBase == null ? const Color.fromARGB(255, 210, 234, 253) : Colors.grey[200],
                           contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -565,6 +574,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedCostoBase = newValue;
+                            highlightCostReferenceDropdown = false;
                           });
                         },
                         selectedItemBuilder: (BuildContext context) {
@@ -1122,7 +1132,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                                                   controller: descripcionProyectoController,
                                                   validator: (value) {
                                                     if (value == null || value.isEmpty) {
-                                                      return 'Por favor ingrese una breve descripción del proyecto';
+                                                                                                          return 'Por favor ingrese una breve descripción del proyecto';
                                                     }
                                                     return null;
                                                   },
@@ -1171,7 +1181,6 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                                   }
                                 },
                               ),
-
                             ],
                           );
                         },
@@ -1180,8 +1189,6 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                         : null,
                     child: const Text('Continuar'),
                   ),
-
-
                   const SizedBox(height: 20.0),
                 ],
               ),
@@ -1198,6 +1205,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
     }
     return status.isGranted;
   }
+
   void _shareFile(String filePath) {
     Share.shareXFiles([XFile(filePath)], text: 'Aquí tienes el archivo de presupuesto de obra privada.');
   }
@@ -1211,7 +1219,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
       }
 
       String? filePath = await _generateExcel(presupuesto, selectedDirectory);
-      
+
       if (filePath != null) {
         _shareFile(filePath);
         Navigator.pop(context);
@@ -1385,12 +1393,14 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
         );
       },
     );
-  }
+  } 
 
   Future<void> guardarPresupuestoPrivado(PresupuestoDetalle presupuesto) async {
     var box = Hive.box<PresupuestoDetalle>('presupuestosPrivados');
     await box.put(presupuesto.nombre, presupuesto);
   }
+
+
 
   final Map<String, int> mesValor = {
     'Enero': 1,
