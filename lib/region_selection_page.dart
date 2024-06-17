@@ -47,7 +47,7 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: displayedRegion == null ? 10 : 50),
-            SizedBox(
+                        SizedBox(
               width: screenSize.width,
               height: screenSize.height * 0.5,
               child: displayedRegion == null
@@ -158,7 +158,7 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
               onPressed: () async {
                 await _saveRegion();
                 Navigator.of(context).pop();
-                MenuPage.menuPageKey.currentState?.openDrawer();
+                MenuPage.menuPageKey.currentState?.openDrawerAndHighlightPresupuesto();
               },
               child: const Text('Continuar'),
             ),
@@ -168,3 +168,4 @@ class _RegionSelectionPageState extends State<RegionSelectionPage> {
     );
   }
 }
+

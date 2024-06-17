@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: library_private_types_in_public_api, avoid_print
 
 import 'package:apparq/splash.dart';
 import 'package:flutter/material.dart';
@@ -13,18 +13,16 @@ import 'models/presupuesto_detalle.dart';
 import 'models/construccion_detalle.dart';
 
 class MenuPage extends StatefulWidget {
-  // ignore: library_private_types_in_public_api
   static final GlobalKey<_MenuPageState> menuPageKey = GlobalKey<_MenuPageState>();
 
   MenuPage({Key? key}) : super(key: menuPageKey);
 
   @override
-  // ignore: library_private_types_in_public_api
   _MenuPageState createState() => _MenuPageState();
 }
+
 class _MenuPageState extends State<MenuPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
 
   String appBarTitle = "Inicio";
   Widget currentPage = const DashboardPage();
@@ -32,14 +30,16 @@ class _MenuPageState extends State<MenuPage> {
   bool hasPresupuesto = false;
   bool hasConstruccion = false;
   final GlobalKey _regionTileKey = GlobalKey();
-  //bool _isFlashing = false;
+  final GlobalKey _presupuestoTileKey = GlobalKey();
+  bool _isRegionTileHighlighted = false;
+  bool _highlightPresupuestoTile = false;
 
   @override
   void initState() {
     super.initState();
     _checkAvailableData();
   }
-  
+
   final List<Widget> _pages = [
     const DashboardPage(),
     const RegionSelectionPage(),
@@ -90,13 +90,24 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   void _flashRegionTile() {
-    // Método para hacer parpadear el ListTile
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (_regionTileKey.currentState != null) {
+      setState(() {
+        _isRegionTileHighlighted = true;
+      });
+      Future.delayed(const Duration(seconds: 5), () {
         setState(() {
-          // Cambiar el estado del ListTile para que parpadee
+          _isRegionTileHighlighted = false;
         });
-      }
+      });
+  }
+
+  void _flashPresupuestoTile() {
+    setState(() {
+      _highlightPresupuestoTile = true;
+    });
+    Future.delayed(const Duration(seconds: 5), () {
+      setState(() {
+        _highlightPresupuestoTile = false;
+      });
     });
   }
 
@@ -104,15 +115,30 @@ class _MenuPageState extends State<MenuPage> {
     _scaffoldKey.currentState?.openDrawer();
   }
 
+  void openDrawerAndHighlightRegion() {
+    openDrawer();
+    _flashRegionTile();
+  }
+
+  void openDrawerAndHighlightPresupuesto() {
+    openDrawer();
+    _flashPresupuestoTile();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text(appBarTitle),
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              _scaffoldKey.currentState?.openDrawer();
+            },
+          ),
         ),
         drawer: Drawer(
           child: ListView(
@@ -131,10 +157,12 @@ class _MenuPageState extends State<MenuPage> {
                   _onSelectItem(0);
                 },
               ),
-              _buildMenuItem('Cambiar región', 'assets/icon_region.png', 1, key: _regionTileKey), // Usar el GlobalKey
+              _buildMenuItem('Cambiar región', 'assets/icon_region.png', 1, key: _regionTileKey, isHighlighted: _isRegionTileHighlighted),
               ListTile(
                 leading: const Icon(Icons.attach_money),
                 title: const Text('Presupuesto'),
+                key: _presupuestoTileKey,
+                tileColor: _highlightPresupuestoTile ? Colors.blue.withOpacity(0.3) : null,
                 onTap: () {
                   _onSelectItem(2);
                 },
@@ -172,19 +200,20 @@ class _MenuPageState extends State<MenuPage> {
         ),
         onDrawerChanged: (isOpen) {
           if (isOpen) {
-            _checkAvailableData(); // Se llama cuando el drawer se abre
-            _flashRegionTile(); // Hacer parpadear el ListTile de "Cambiar región" cuando el drawer se abre
+            _checkAvailableData();
           }
         },
         body: currentPage,
       ),
     );
   }
-  ListTile _buildMenuItem(String title, String iconPath, int index, {Key? key}) {
+
+  ListTile _buildMenuItem(String title, String iconPath, int index, {Key? key, bool isHighlighted = false}) {
     return ListTile(
       key: key,
       leading: Image.asset(iconPath, width: 24, height: 24),
       title: Text(title),
+      tileColor: isHighlighted ? Colors.blue.withOpacity(0.3) : null,
       onTap: () => _onSelectItem(index),
     );
   }

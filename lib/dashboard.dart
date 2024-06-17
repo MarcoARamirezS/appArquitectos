@@ -1,4 +1,5 @@
 //import 'package:apparq/menu.dart';
+import 'package:apparq/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -56,7 +57,7 @@ class _DashboardPage extends State<DashboardPage> {
                 ElevatedButton(
                   onPressed: () {
                     // Desplegar el menú
-                    Scaffold.of(context).openDrawer();
+                    MenuPage.menuPageKey.currentState?.openDrawerAndHighlightRegion();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(0, 76, 112, 1),
