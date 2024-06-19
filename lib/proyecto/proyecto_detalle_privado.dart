@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -59,9 +59,17 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
     'assets/proyectoPrivada/nivel_5.png': 1.00,
   };
 
+  Map<String, double> descuentos = {};
+  Map<String, double> alcancesCostos = {};
+  Map<String, double> totalCostos = {};
+
   bool get isGuardarEnabled {
     return selectedAlcances.contains(true) && selectedImage != null;
   }
+
+  bool incluirSupervision = false;
+  bool incluirDisenoUrbano = false;
+  bool incluirFirmaPerito = false;
 
   @override
   Widget build(BuildContext context) {
@@ -191,6 +199,38 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
               ),
             ),
             const SizedBox(height: 16),
+            const Text(
+              '¿Incluir servicios adicionales?',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            CheckboxListTile(
+              title: const Text('Supervisión (2% del costo de construcción)'),
+              value: incluirSupervision,
+              onChanged: (bool? value) {
+                setState(() {
+                  incluirSupervision = value ?? false;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text('Diseño Urbano (4% del costo de construcción)'),
+              value: incluirDisenoUrbano,
+              onChanged: (bool? value) {
+                setState(() {
+                  incluirDisenoUrbano = value ?? false;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: const Text('Firma de Perito de Obra (0.8% del costo de construcción)'),
+              value: incluirFirmaPerito,
+              onChanged: (bool? value) {
+                setState(() {
+                  incluirFirmaPerito = value ?? false;
+                });
+              },
+            ),
+            const SizedBox(height: 16),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white, backgroundColor: const Color(0xFF044C70),
@@ -224,78 +264,107 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
     double costoServicios = 0.0;
     double nivelValor = nivelValores[selectedImage ?? 'assets/proyectoPrivada/nivel_1.png'] ?? 1.00;
 
-    Map<String, double> alcancesCostos = {};
+    alcancesCostos = {};
+    totalCostos = {};
+    descuentos = {};
 
     for (var porcentaje in construccion.porcentajes) {
       costoTotal += costoConstruccion * (porcentaje / 100);
     }
     costoTotal += costoConstruccion;
+    double costoTotalConstruccion = costoTotal;
     costoServicios = costoTotal * porcentajeServicios * nivelValor;
+    costoTotal=0;
 
     selectedAlcances.asMap().forEach((index, isSelected) {
       if (isSelected) {
         double porcentaje = porcentajes[alcances[index]] ?? 0.0;
         double alcanceCosto = costoServicios * porcentaje;
         alcancesCostos[alcances[index]] = alcanceCosto;
+        totalCostos[alcances[index]] = alcanceCosto;
         costoTotal += alcanceCosto;
       }
     });
 
-    String formattedCostoTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costoServicios);
+    if (incluirSupervision) {
+      double supervisionCosto = costoTotalConstruccion * 0.02;
+      alcancesCostos['Supervisión'] = supervisionCosto;
+      totalCostos['Supervisión'] = supervisionCosto;
+      costoTotal += supervisionCosto;
+    }
+    if (incluirDisenoUrbano) {
+      double disenoUrbanoCosto = costoTotalConstruccion * 0.04;
+      alcancesCostos['Diseño Urbano'] = disenoUrbanoCosto;
+      totalCostos['Diseño Urbano'] = disenoUrbanoCosto;
+      costoTotal += disenoUrbanoCosto;
+    }
+    if (incluirFirmaPerito) {
+      double firmaPeritoCosto = costoTotalConstruccion * 0.008;
+      alcancesCostos['Firma de Perito de Obra'] = firmaPeritoCosto;
+      totalCostos['Firma de Perito de Obra'] = firmaPeritoCosto;
+      costoTotal += firmaPeritoCosto;
+    }
+
+    _mostrarResumenProyecto(presupuesto, alcancesCostos, totalCostos, costoTotal, costoTotalConstruccion);
+  }
+
+  void _mostrarResumenProyecto(PresupuestoDetalle presupuesto, Map<String, double> alcancesCostos, Map<String, double> totalCostos, double costoTotal, double costoTotalConstruccion) {
+    String formattedCostoTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costoTotal+costoTotalConstruccion);
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Resumen del Proyecto'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RichText(
-                text: TextSpan(
-                  style: DefaultTextStyle.of(context).style,
-                  children: [
-                    const TextSpan(
-                      text: 'Costo Servicios: ',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    ),
-                    TextSpan(
-                      text: formattedCostoTotal,
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Desglose de costos:',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              const SizedBox(height: 16),
-              ...alcancesCostos.entries.map((entry) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
                     children: [
-                      Expanded(
-                                                child: Text(
-                          entry.key,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
-                        ),
+                      const TextSpan(
+                        text: 'Costo Total: ',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                      const SizedBox(width: 10),
-                      Text(
-                        NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(entry.value),
-                        textAlign: TextAlign.right,
+                      TextSpan(
+                        text: formattedCostoTotal,
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ],
                   ),
-                );
-              }),
-            ],
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Desglose de costos:',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                const SizedBox(height: 16),
+                ...alcancesCostos.entries.map((entry) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            entry.key,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(entry.value),
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -303,6 +372,13 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
                 Navigator.of(context).pop();
               },
               child: const Text('Cerrar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _navigateToEditarCostos(context, presupuesto, alcancesCostos, totalCostos, costoTotalConstruccion);
+              },
+              child: const Text('Editar Costos'),
             ),
             TextButton(
               onPressed: () {
@@ -315,6 +391,30 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
       },
     );
   }
+
+
+  Future<void> _navigateToEditarCostos(BuildContext context, PresupuestoDetalle presupuesto, Map<String, double> alcancesCostos, Map<String, double> totalCostos, double costoTotalConstruccion) async {
+    final result = await Navigator.push<Map<String, Map<String, double>>>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditarCostosPage(
+          presupuesto: presupuesto,
+          alcancesCostos: alcancesCostos,
+          totalCostos: totalCostos,
+          descuentos: descuentos, // Pasar los descuentos actuales
+        ),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        alcancesCostos.addAll(result['nuevosCostos']!);
+        descuentos = result['descuentos']!; // Actualizar los descuentos
+        _mostrarResumenProyecto(presupuesto, alcancesCostos, totalCostos, alcancesCostos.values.fold(0.0, (sum, value) => sum + value), costoTotalConstruccion);
+      });
+    }
+  }
+
 
   Future<void> _handleSaveAndShare(PresupuestoDetalle presupuesto, Map<String, double> alcancesCostos) async {
     if (await _checkAndRequestPermissions()) {
@@ -397,3 +497,159 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
   }
 }
 
+class EditarCostosPage extends StatefulWidget {
+  final PresupuestoDetalle presupuesto;
+  final Map<String, double> alcancesCostos;
+  final Map<String, double> totalCostos;
+  final Map<String, double> descuentos;
+
+  const EditarCostosPage({
+    super.key,
+    required this.presupuesto,
+    required this.alcancesCostos,
+    required this.totalCostos,
+    required this.descuentos,
+  });
+
+  @override
+  _EditarCostosPageState createState() => _EditarCostosPageState();
+}
+
+class _EditarCostosPageState extends State<EditarCostosPage> {
+  final Map<String, TextEditingController> _controllers = {};
+  final Map<String, ValueNotifier<double>> _notifiers = {};
+
+  @override
+  void initState() {
+    super.initState();
+    widget.alcancesCostos.forEach((key, value) {
+      double descuento = widget.descuentos[key] ?? 0;
+      _controllers[key] = TextEditingController(text: descuento.toString());
+      _notifiers[key] = ValueNotifier<double>(widget.totalCostos[key]! * (1 - descuento / 100));
+    });
+  }
+
+  @override
+  void dispose() {
+    _controllers.values.forEach((controller) => controller.dispose());
+    _notifiers.values.forEach((notifier) => notifier.dispose());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Editar Costos'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            const Text(
+              'Ingrese los porcentajes de descuento para cada aspecto del proyecto:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: ListView(
+                children: widget.alcancesCostos.keys.map((key) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                key,
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              width: 100,
+                              child: TextFormField(
+                                controller: _controllers[key],
+                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                decoration: const InputDecoration(
+                                  labelText: 'Descuento %',
+                                  border: OutlineInputBorder(),
+                                ),
+                                onChanged: (value) {
+                                  double descuento = double.tryParse(value) ?? 0;
+                                  double nuevoValor = widget.totalCostos[key]! * (1 - descuento / 100);
+                                  _notifiers[key]?.value = nuevoValor;
+                                  setState(() {});
+                                },
+                                onTap: () {
+                                  _controllers[key]?.selection = TextSelection(
+                                    baseOffset: 0,
+                                    extentOffset: _controllers[key]!.text.length,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        ValueListenableBuilder<double>(
+                          valueListenable: _notifiers[key]!,
+                          builder: (context, value, child) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Total: ${NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(value)}',
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            ValueListenableBuilder<Map<String, ValueNotifier<double>>>(
+              valueListenable: ValueNotifier(_notifiers),
+              builder: (context, notifiers, child) {
+                double total = notifiers.values.fold(0.0, (sum, notifier) => sum + notifier.value);
+                return Text(
+                  'Costo total de servicios después de aplicar descuentos: ${NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(total)}',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _guardarCostos,
+              child: const Text('Guardar'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _guardarCostos() {
+    Map<String, double> nuevosCostos = {};
+    Map<String, double> descuentos = {};
+    widget.alcancesCostos.forEach((key, value) {
+      double descuento = double.tryParse(_controllers[key]?.text ?? '0') ?? 0;
+      nuevosCostos[key] = widget.totalCostos[key]! * (1 - descuento / 100);
+      descuentos[key] = descuento;
+    });
+
+    Navigator.pop(context, {
+      'nuevosCostos': nuevosCostos,
+      'descuentos': descuentos,
+    });
+  }
+
+}
