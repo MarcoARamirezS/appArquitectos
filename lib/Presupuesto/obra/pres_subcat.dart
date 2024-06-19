@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show ByteData, FilteringTextInputFormatter, rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart'; 
+import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:excel/excel.dart';
 //import 'package:path_provider/path_provider.dart';
@@ -17,6 +17,7 @@ import 'dart:io';
 import 'package:share_plus/share_plus.dart';
 
 bool _isLoading = true;
+
 class PresSubcatPage extends StatefulWidget {
   final String categoriaSeleccionada;
   final String subcategoriaSeleccionada;
@@ -26,7 +27,7 @@ class PresSubcatPage extends StatefulWidget {
     super.key,
     required this.categoriaSeleccionada,
     required this.subcategoriaSeleccionada,
-    required this.opcion, 
+    required this.opcion,
   });
 
   @override
@@ -45,10 +46,9 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     loadCSV();
   }
 
-
   Future<void> loadCSV() async {
     setState(() {
-      _isLoading = true;  // Comienza la carga
+      _isLoading = true; // Comienza la carga
     });
     final prefs = await SharedPreferences.getInstance();
     String? region = prefs.getString('selected_region');
@@ -57,7 +57,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
         selectedRegion = region;
       });
     }
-    
+
     final subcategoriaMayusculas = removeAccents(widget.subcategoriaSeleccionada.toUpperCase());
     final opcionMayusculas = removeAccents(widget.opcion.toUpperCase());
     String ruta = '${widget.categoriaSeleccionada}/$subcategoriaMayusculas/$opcionMayusculas/archivo.csv';
@@ -88,14 +88,23 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
           } else if (codigo.length == 5 && categoriaActual != null) {
             subcategoriaActual = Subcat(nombre: row[1], productos: []);
             categoriaActual.subcategorias.add(subcategoriaActual);
-          } else if (codigo.length > 0 && subcategoriaActual != null && row[1].length > 0) {
+          } else if (codigo.length > 0 &&
+              subcategoriaActual != null &&
+              row[1].length > 0) {
             final nombre = row.isNotEmpty ? row[1] : '';
             final unidad = row.isNotEmpty ? row[2] : '';
-            final matchingRow = parsedCSVRegion.firstWhere((row) => row.isNotEmpty && row[0] == codigo, orElse: () => []);
-            final precioString = matchingRow.isNotEmpty ? matchingRow[4].toString().replaceAll('\$', '').replaceAll(',', '') : '0';
+            final matchingRow = parsedCSVRegion.firstWhere(
+                (row) => row.isNotEmpty && row[0] == codigo,
+                orElse: () => []);
+            final precioString = matchingRow.isNotEmpty
+                ? matchingRow[4]
+                    .toString()
+                    .replaceAll('\$', '')
+                    .replaceAll(',', '')
+                : '0';
             //print('codigo: $codigo');
             final precio = double.tryParse(precioString) ?? 0;
-            
+
             final cantidadString = row.isNotEmpty ? row[3].toString().replaceAll(',', '') : '0';
             //print('CantidadString: $cantidadString');
             final cantidad = double.tryParse(cantidadString) ?? 0;
@@ -120,11 +129,10 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     } catch (e) {
       print('Error al cargar el archivo CSV: $e');
       setState(() {
-        _isLoading = false;  // Termina la carga incluso si hay un error
+        _isLoading = false; // Termina la carga incluso si hay un error
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -132,476 +140,615 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
       body: _isLoading
         ? Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                CircularProgressIndicator(
-                  strokeWidth: 24,
-                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              CircularProgressIndicator(
+                strokeWidth: 24,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Theme.of(context).primaryColor
                 ),
-                const SizedBox(height: 20), // Espacio entre el indicador y el texto
-                const Text('Cargando datos, por favor espera...', style: TextStyle(fontSize: 16)),
-              ],
-            ),
-          )
-        : Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: ListView.builder(
-                itemCount: categoriasList.length,
-                itemBuilder: (context, index) {
-                  final categoria = categoriasList[index];
-                  return ExpansionTile(
-                    iconColor: const Color(0xFF044C70),
-                    collapsedIconColor: const Color(0xFF044C70),
-                    backgroundColor:  const Color.fromARGB(255, 179, 180, 181),
-                    collapsedBackgroundColor: const Color.fromARGB(255, 179, 180, 181),
-                    title: Text(categoria.nombre),
-                    children: [
-                      ...categoria.subcategorias.map(
-                        (subcategoria) => ExpansionTile(
-                          iconColor: const Color(0xFF044C70),
-                          collapsedIconColor: const Color(0xFF044C70),
-                          backgroundColor: const Color(0xEEEEEEEE),
-                          collapsedBackgroundColor: const Color(0xEEEEEEEE),
-                          title: Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
-                            child: Text(subcategoria.nombre),
-                          ),
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: Table(
-                                border: TableBorder.all(),
-                                columnWidths: const {
-                                  0: FlexColumnWidth(2.6), // Columna del nombre
-                                  1: FlexColumnWidth(1.2), // Columna de la cantidad
-                                  2: FlexColumnWidth(1.0), // Columna de la unidad
-                                  3: FlexColumnWidth(1.2), // Columna del precio
-                                },
-                                children: [
-                                  // Fila de títulos
-                                  const TableRow(
-                                    children: [
-                                      TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Nombre', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                                        ),
-                                      ),
-                                      TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Cantidad', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                                        ),
-                                      ),
-                                      TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Unidad', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                                        ),
-                                      ),
-                                      TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Precio', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // Filas de datos para cada producto
-                                  ...subcategoria.productos.map((producto) => TableRow(
-                                    children: [
-                                      TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(producto.nombre),
-                                        ),
-                                      ),
-                                      TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: TextFormField(
-                                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                            decoration: const InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              contentPadding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
-                                            ),
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                                            ],
-                                            textAlign: TextAlign.center,
-                                            controller: producto.controller,
-                                            onTap: () {
-                                              producto.controller.selection = TextSelection(
-                                                baseOffset: 0,
-                                                extentOffset: producto.controller.text.length,
-                                              );
-                                            },
-                                            onChanged: (String valor) {
-                                              if (valor == ".") {
-                                                valor = "0.";
-                                              }
-                                              setState(() {
-                                                producto.cantidad = double.tryParse(valor) ?? 0;
-                                                producto.controller.text = valor;
-                                                producto.controller.selection = TextSelection.fromPosition(TextPosition(offset: producto.controller.text.length));
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Center(child: Text(producto.unidad, textAlign: TextAlign.center)),
-                                        ),
-                                      ),
-                                      TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Center(child: Text('\$${producto.precio}', textAlign: TextAlign.center)),
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                                ],
-                              )
-                            )
-                          ],
-                        )
-                      ),
-                    ],
-                  );
-                },
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Resumen del Presupuesto'),
-                      content: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: buildResumenPresupuesto(),
-                        ),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Cerrar'),
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            var formKey = GlobalKey<FormState>();
-                            TextEditingController caducidadController = TextEditingController();
-                            TextEditingController nombreEmpresaController = TextEditingController();
-                            TextEditingController telefonoController = TextEditingController();
-                            TextEditingController domicilioController = TextEditingController();
-                            TextEditingController correoController = TextEditingController();
-                            TextEditingController contratistaController = TextEditingController();
-                            TextEditingController telefonoContratistaController = TextEditingController();
-                            TextEditingController proyectoController = TextEditingController();
-                            TextEditingController giroProyectoController = TextEditingController();
-                            TextEditingController ubicacionProyectoController = TextEditingController();
-                            TextEditingController descripcionProyectoController = TextEditingController();
-
-                            // Solicita los datos mediante un diálogo
-                            bool? formSubmitted = await showDialog<bool>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Datos del Presupuesto'),
-                                  content: SingleChildScrollView(
-                                    child: Form(
-                                      key: formKey,
-                                      child: Column(
-                                        children: <Widget>[
-                                          GestureDetector(
-                                            onTap: () async {
-                                              DateTime? pickedDate = await showDatePicker(
-                                                context: context,
-                                                initialDate: DateTime.now(),
-                                                firstDate: DateTime(2000),
-                                                lastDate: DateTime(2101),
-                                                locale: const Locale('es', 'ES'),
-                                              );
-                                              if (pickedDate != null) {
-                                                String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
-                                                setState(() {
-                                                  caducidadController.text = formattedDate;
-                                                });
-                                              }
-                                            },
-                                            child: AbsorbPointer(
-                                              child: TextFormField(
-                                                controller: caducidadController,
-                                                decoration: const InputDecoration(
-                                                  labelText: 'Fecha de caducidad',
-                                                  hintText: 'Seleccione la fecha de caducidad',
+              const SizedBox(height: 20), // Espacio entre el indicador y el texto
+              const Text(
+                'Cargando datos, por favor espera...',
+                style: TextStyle(fontSize: 16)
+              ),
+            ],
+          ))
+        : Column(
+            children: [
+              Expanded(
+                child: Center(
+                  child: ListView.builder(
+                    itemCount: categoriasList.length,
+                    itemBuilder: (context, index) {
+                      final categoria = categoriasList[index];
+                      return ExpansionTile(
+                        iconColor: const Color(0xFF044C70),
+                        collapsedIconColor: const Color(0xFF044C70),
+                        backgroundColor: const Color.fromARGB(255, 179, 180, 181),
+                        collapsedBackgroundColor: const Color.fromARGB(255, 179, 180, 181),
+                        title: Text(categoria.nombre),
+                        children: [
+                          ...categoria.subcategorias.map(
+                            (subcategoria) => ExpansionTile(
+                              iconColor: const Color(0xFF044C70),
+                              collapsedIconColor: const Color(0xFF044C70),
+                              backgroundColor: const Color(0xEEEEEEEE),
+                              collapsedBackgroundColor: const Color(0xEEEEEEEE),
+                              title: Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: Text(subcategoria.nombre),
+                              ),
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: Table(
+                                    border: TableBorder.all(),
+                                    columnWidths: const {
+                                      0: FlexColumnWidth(2.6),
+                                      // Columna del nombre
+                                      1: FlexColumnWidth(1.2),
+                                      // Columna de la cantidad
+                                      2: FlexColumnWidth(1.0),
+                                      // Columna de la unidad
+                                      3: FlexColumnWidth(1.2),
+                                      // Columna del precio
+                                    },
+                                    children: [
+                                      // Fila de títulos
+                                      const TableRow(
+                                        children: [
+                                          TableCell(
+                                            verticalAlignment: TableCellVerticalAlignment.middle,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Text(
+                                                'Nombre',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold
                                                 ),
-                                                validator: (value) {
-                                                  if (value == null || value.isEmpty) {
-                                                    return 'Por favor ingrese la fecha de caducidad';
-                                                  }
-                                                  return null;
-                                                },
+                                                textAlign: TextAlign.center
                                               ),
                                             ),
                                           ),
-                                          TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Nombre de la empresa o responsable',
-                                              hintText: 'Ingrese el nombre de la empresa o responsable',
-                                            ),
-                                            controller: nombreEmpresaController,
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                return 'Por favor ingrese el nombre de la empresa o responsable';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                          TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Teléfono',
-                                              hintText: 'Ingrese el número de teléfono',
-                                            ),
-                                            controller: telefonoController,
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly,
-                                            ],
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                return 'Por favor ingrese el número de teléfono';
-                                              }
-                                              if (value.length != 10) {
-                                                return 'El número de teléfono debe tener 10 dígitos';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                          GestureDetector(
-                                            onTap: () async {
-                                              final domicilio = await mostrarDialogoDireccion(context, 'Ingresar Domicilio', valorInicial: domicilioController.text);
-                                              if (domicilio != null) {
-                                                setState(() {
-                                                  domicilioController.text = domicilio;
-                                                });
-                                              }
-                                            },
-                                            child: AbsorbPointer(
-                                              child: TextFormField(
-                                                controller: domicilioController,
-                                                decoration: const InputDecoration(
-                                                  labelText: 'Domicilio',
-                                                  hintText: 'Ingrese el domicilio',
+                                          TableCell(
+                                            verticalAlignment: TableCellVerticalAlignment.middle,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Text(
+                                                'Cantidad',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold
                                                 ),
-                                                validator: (value) {
-                                                  if (value == null || value.isEmpty) {
-                                                    return 'Por favor ingrese el domicilio';
-                                                  }
-                                                  return null;
-                                                },
+                                                textAlign: TextAlign.center
                                               ),
                                             ),
                                           ),
-                                          TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Correo',
-                                              hintText: 'Ingrese el correo',
-                                            ),
-                                            controller: correoController,
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                return 'Por favor ingrese el correo';
-                                              }
-                                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                                                return 'Por favor ingrese un correo válido';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                          TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Contratista',
-                                              hintText: 'Ingrese el nombre del contratista',
-                                            ),
-                                            controller: contratistaController,
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                return 'Por favor ingrese el nombre del contratista';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                          TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Teléfono del contratista',
-                                              hintText: 'Ingrese el número de teléfono del contratista',
-                                            ),
-                                            controller: telefonoContratistaController,
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.digitsOnly,
-                                            ],
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                return 'Por favor ingrese el número de teléfono del contratista';
-                                              }
-                                              if (value.length != 10) {
-                                                return 'El número de teléfono del contratista debe tener 10 dígitos';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                          TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Proyecto',
-                                              hintText: 'Ingrese el nombre del proyecto',
-                                            ),
-                                            controller: proyectoController,
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                return 'Por favor ingrese el nombre del proyecto';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                          TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Giro del proyecto',
-                                              hintText: 'Ingrese el giro del proyecto',
-                                            ),
-                                            controller: giroProyectoController,
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                return 'Por favor ingrese el giro del proyecto';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                          GestureDetector(
-                                            onTap: () async {
-                                              final ubicacionProyecto = await mostrarDialogoDireccion(context, 'Ingresar Ubicación del Proyecto', valorInicial: ubicacionProyectoController.text);
-                                              if (ubicacionProyecto != null) {
-                                                setState(() {
-                                                  ubicacionProyectoController.text = ubicacionProyecto;
-                                                });
-                                              }
-                                            },
-                                            child: AbsorbPointer(
-                                              child: TextFormField(
-                                                controller: ubicacionProyectoController,
-                                                decoration: const InputDecoration(
-                                                  labelText: 'Ubicación del proyecto',
-                                                  hintText: 'Ingrese la ubicación del proyecto',
+                                          TableCell(
+                                            verticalAlignment: TableCellVerticalAlignment.middle,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Text(
+                                                'Unidad',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold
                                                 ),
-                                                validator: (value) {
-                                                  if (value == null || value.isEmpty) {
-                                                    return 'Por favor ingrese la ubicación del proyecto';
-                                                  }
-                                                  return null;
-                                                },
+                                                textAlign: TextAlign.center
                                               ),
                                             ),
                                           ),
-                                          TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Breve descripción del proyecto',
-                                              hintText: 'Ingrese una breve descripción del proyecto',
+                                          TableCell(
+                                            verticalAlignment: TableCellVerticalAlignment.middle,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Text(
+                                                'Precio',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold
+                                                ),
+                                                textAlign: TextAlign.center
+                                              ),
                                             ),
-                                            controller: descripcionProyectoController,
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                return 'Por favor ingrese una breve descripción del proyecto';
-                                              }
-                                              return null;
-                                            },
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () => Navigator.of(context).pop(false),
-                                      child: const Text('Cancelar'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        if (formKey.currentState!.validate()) {
-                                          Navigator.of(context).pop(true);
-                                        }
-                                      },
-                                      child: const Text('Guardar'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-
-                            if (formSubmitted == true) {
-                              var detalle = PresupuestoDetalle(
-                                nombre: proyectoController.text,
-                                total: categoriasList.fold(0, (total, cat) => total + cat.subcategorias.fold(0, (subTotal, sub) => subTotal + sub.productos.fold(0, (prodTotal, prod) => prodTotal + prod.precio * prod.cantidad))),
-                                opcion: widget.opcion,
-                                fechaEmision: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-                                fechaCaducidad: caducidadController.text,
-                                nombreEmpresa: nombreEmpresaController.text,
-                                telefono: telefonoController.text,
-                                domicilio: domicilioController.text,
-                                correo: correoController.text,
-                                contratista: contratistaController.text,
-                                telefonoContratista: telefonoContratistaController.text,
-                                giroProyecto: giroProyectoController.text,
-                                ubicacionProyecto: ubicacionProyectoController.text,
-                                descripcionProyecto: descripcionProyectoController.text,
-                              );
-                              guardarPresupuesto(detalle);
-                              _handleSaveAndShare(context, detalle);
-                            }
-                          },
-                          child: const Text('Descargar Excel'),
-                        )
-                      ],
-                    );
-                  },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF044C70),
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-              ),
-              child: const Text(
-                'Calcular',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                                      // Filas de datos para cada producto
+                                      ...subcategoria.productos
+                                        .map((producto) => TableRow(
+                                          children: [
+                                            TableCell(
+                                              verticalAlignment: TableCellVerticalAlignment.middle,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(producto.nombre),
+                                              ),
+                                            ),
+                                            TableCell(
+                                              verticalAlignment:TableCellVerticalAlignment.middle,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(4.0),
+                                                child: TextFormField(
+                                                  keyboardType: const TextInputType.numberWithOptions(decimal:true),
+                                                  decoration: const InputDecoration(
+                                                    border: OutlineInputBorder(),
+                                                    contentPadding:EdgeInsets.symmetric(horizontal: 4.0,vertical: 8.0),
+                                                  ),
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                                                  ],
+                                                  textAlign: TextAlign.center,
+                                                  controller: producto.controller,
+                                                  onTap: () {
+                                                    producto.controller.selection = TextSelection(
+                                                      baseOffset: 0,
+                                                      extentOffset: producto
+                                                          .controller
+                                                          .text
+                                                          .length,
+                                                    );
+                                                  },
+                                                  onChanged:
+                                                    (String valor) {
+                                                      if (valor == ".") {
+                                                        valor = "0.";
+                                                      }
+                                                    setState(() {
+                                                      producto.cantidad = double.tryParse(valor) ?? 0;
+                                                      producto.controller.text = valor;
+                                                      producto.controller.selection = TextSelection.fromPosition(TextPosition(offset: producto.controller.text.length));
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            TableCell(
+                                              verticalAlignment: TableCellVerticalAlignment.middle,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Center(
+                                                  child: Text(
+                                                    producto.unidad,
+                                                    textAlign:TextAlign.center
+                                                  )
+                                                ),
+                                              ),
+                                            ),
+                                            TableCell(
+                                              verticalAlignment: TableCellVerticalAlignment.middle,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Center(
+                                                  child: Text(
+                                                    '\$${producto.precio}',
+                                                    textAlign:TextAlign.center
+                                                  )
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                    ],
+                                  )
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Resumen del Presupuesto'),
+                          content: SingleChildScrollView(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: buildResumenPresupuesto(),
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Cerrar'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                bool? fillDetails =
+                                    await showDialog<bool>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('¿Desea llenar los datos del formato de cotización?'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () => Navigator.of(context).pop(false),
+                                          child: const Text('Omitir'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.of(context).pop(true),
+                                          child: const Text('Sí'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+
+                                if (fillDetails == true) {
+                                  var formKey = GlobalKey<FormState>();
+                                  TextEditingController caducidadController = TextEditingController();
+                                  TextEditingController nombreEmpresaController = TextEditingController();
+                                  TextEditingController telefonoController = TextEditingController();
+                                  TextEditingController domicilioController = TextEditingController();
+                                  TextEditingController correoController = TextEditingController();
+                                  TextEditingController contratistaController = TextEditingController();
+                                  TextEditingController telefonoContratistaController = TextEditingController();
+                                  TextEditingController proyectoController = TextEditingController();
+                                  TextEditingController giroProyectoController = TextEditingController();
+                                  TextEditingController ubicacionProyectoController = TextEditingController();
+                                  TextEditingController descripcionProyectoController = TextEditingController();
+
+                                  bool? formSubmitted = await showDialog<bool>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Datos del Presupuesto'),
+                                        content: SingleChildScrollView(
+                                          child: Form(
+                                            key: formKey,
+                                            child: Column(
+                                              children: <Widget>[
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    DateTime? pickedDate = await showDatePicker(
+                                                      context: context,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime(2000),
+                                                      lastDate: DateTime(2101),
+                                                      locale: const Locale('es', 'ES'),
+                                                    );
+                                                    if (pickedDate != null) {
+                                                      String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
+                                                      setState(() {
+                                                        caducidadController.text = formattedDate;
+                                                      });
+                                                    }
+                                                  },
+                                                  child: AbsorbPointer(
+                                                    child: TextFormField(
+                                                      controller: caducidadController,
+                                                      decoration: const InputDecoration(
+                                                        labelText: 'Fecha de caducidad',
+                                                        hintText: 'Seleccione la fecha de caducidad',
+                                                      ),
+                                                      validator: (value) {
+                                                        if (value == null || value.isEmpty) {
+                                                          return 'Por favor ingrese la fecha de caducidad';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    labelText: 'Nombre de la empresa o responsable',
+                                                    hintText: 'Ingrese el nombre de la empresa o responsable',
+                                                  ),
+                                                  controller: nombreEmpresaController,
+                                                  validator: (value) {
+                                                    if (value == null || value.isEmpty) {
+                                                      return 'Por favor ingrese el nombre de la empresa o responsable';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    labelText: 'Teléfono',
+                                                    hintText: 'Ingrese el número de teléfono',
+                                                  ),
+                                                  controller: telefonoController,
+                                                  keyboardType: TextInputType.number,
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter.digitsOnly,
+                                                  ],
+                                                  validator: (value) {
+                                                    if (value == null || value.isEmpty) {
+                                                      return 'Por favor ingrese el número de teléfono';
+                                                    }
+                                                    if (value.length != 10) {
+                                                      return 'El número de teléfono debe tener 10 dígitos';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    final domicilio = await mostrarDialogoDireccion(context, 'Ingresar Domicilio', valorInicial: domicilioController.text);
+                                                    if (domicilio != null) {
+                                                      setState(() {
+                                                        domicilioController.text = domicilio;
+                                                      });
+                                                    }
+                                                  },
+                                                  child: AbsorbPointer(
+                                                    child: TextFormField(
+                                                      controller: domicilioController,
+                                                      decoration: const InputDecoration(
+                                                        labelText: 'Domicilio',
+                                                        hintText: 'Ingrese el domicilio',
+                                                      ),
+                                                      validator: (value) {
+                                                        if (value == null || value.isEmpty) {
+                                                          return 'Por favor ingrese el domicilio';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    labelText: 'Correo',
+                                                    hintText: 'Ingrese el correo',
+                                                  ),
+                                                  controller: correoController,
+                                                  validator: (value) {
+                                                    if (value == null || value.isEmpty) {
+                                                      return 'Por favor ingrese el correo';
+                                                    }
+                                                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                                                      return 'Por favor ingrese un correo válido';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    labelText: 'Contratista',
+                                                    hintText: 'Ingrese el nombre del contratista',
+                                                  ),
+                                                  controller: contratistaController,
+                                                  validator: (value) {
+                                                    if (value == null || value.isEmpty) {
+                                                      return 'Por favor ingrese el nombre del contratista';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    labelText: 'Teléfono del contratista',
+                                                    hintText: 'Ingrese el número de teléfono del contratista',
+                                                  ),
+                                                  controller: telefonoContratistaController,
+                                                  keyboardType: TextInputType.number,
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter.digitsOnly,
+                                                  ],
+                                                  validator: (value) {
+                                                    if (value == null || value.isEmpty) {
+                                                      return 'Por favor ingrese el número de teléfono del contratista';
+                                                    }
+                                                    if (value.length != 10) {
+                                                      return 'El número de teléfono del contratista debe tener 10 dígitos';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    labelText: 'Proyecto',
+                                                    hintText: 'Ingrese el nombre del proyecto',
+                                                  ),
+                                                  controller: proyectoController,
+                                                  validator: (value) {
+                                                    if (value == null || value.isEmpty) {
+                                                      return 'Por favor ingrese el nombre del proyecto';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    labelText: 'Giro del proyecto',
+                                                    hintText: 'Ingrese el giro del proyecto',
+                                                  ),
+                                                  controller: giroProyectoController,
+                                                  validator: (value) {
+                                                    if (value == null || value.isEmpty) {
+                                                      return 'Por favor ingrese el giro del proyecto';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    final ubicacionProyecto = await mostrarDialogoDireccion(context, 'Ingresar Ubicación del Proyecto', valorInicial: ubicacionProyectoController.text);
+                                                    if (ubicacionProyecto != null) {
+                                                      setState(() {
+                                                        ubicacionProyectoController.text = ubicacionProyecto;
+                                                      });
+                                                    }
+                                                  },
+                                                  child: AbsorbPointer(
+                                                    child: TextFormField(
+                                                      controller: ubicacionProyectoController,
+                                                      decoration: const InputDecoration(
+                                                        labelText: 'Ubicación del proyecto',
+                                                        hintText: 'Ingrese la ubicación del proyecto',
+                                                      ),
+                                                      validator: (value) {
+                                                        if (value == null || value.isEmpty) {
+                                                          return 'Por favor ingrese la ubicación del proyecto';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    labelText: 'Breve descripción del proyecto',
+                                                    hintText: 'Ingrese una breve descripción del proyecto',
+                                                  ),
+                                                  controller: descripcionProyectoController,
+                                                  validator: (value) {
+                                                    if (value == null || value.isEmpty) {
+                                                      return 'Por favor ingrese una breve descripción del proyecto';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () => Navigator.of(context).pop(false),
+                                            child: const Text('Cancelar'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              if (formKey.currentState!.validate()) {
+                                                Navigator.of(context).pop(true);
+                                              }
+                                            },
+                                            child: const Text('Guardar'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
+                                  if (formSubmitted == true) {
+                                    var detalle = PresupuestoDetalle(
+                                      nombre: proyectoController.text,
+                                      total: categoriasList.fold(0, (total, cat) => total + cat.subcategorias.fold(0, (subTotal, sub) => subTotal + sub.productos.fold(0, (prodTotal, prod) => prodTotal + prod.precio * prod.cantidad))),
+                                      opcion: widget.opcion,
+                                      fechaEmision: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                                      fechaCaducidad: caducidadController.text,
+                                      nombreEmpresa: nombreEmpresaController.text,
+                                      telefono: telefonoController.text,
+                                      domicilio: domicilioController.text,
+                                      correo: correoController.text,
+                                      contratista: contratistaController.text,
+                                      telefonoContratista: telefonoContratistaController.text,
+                                      giroProyecto: giroProyectoController.text,
+                                      ubicacionProyecto: ubicacionProyectoController.text,
+                                      descripcionProyecto: descripcionProyectoController.text,
+                                    );
+                                    guardarPresupuesto(detalle);
+                                    _handleSaveAndShare(context, detalle);
+                                  }
+                                } else {
+                                  TextEditingController proyectoController = TextEditingController();
+                                  final formKey = GlobalKey<FormState>(); // Asegúrate de definir formKey aquí
+
+                                  bool? nombreSubmitted = await showDialog<bool>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Nombre del Proyecto'),
+                                        content: SingleChildScrollView(
+                                          child: Form(
+                                            key: formKey,
+                                            child: Column(
+                                              children: <Widget>[
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    labelText: 'Nombre del Proyecto',
+                                                    hintText: 'Ingrese el nombre del proyecto',
+                                                  ),
+                                                  controller: proyectoController,
+                                                  validator: (value) {
+                                                    if (value == null || value.isEmpty) {
+                                                      return 'Por favor ingrese el nombre del proyecto';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () => Navigator.of(context).pop(false),
+                                            child: const Text('Cancelar'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              if (formKey.currentState!.validate()) {
+                                                Navigator.of(context).pop(true);
+                                              }
+                                            },
+                                            child: const Text('Guardar'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
+                                  if (nombreSubmitted == true) {
+                                    var detalle = PresupuestoDetalle(
+                                      nombre: proyectoController.text,
+                                      total: categoriasList.fold(0, (total, cat) => total + cat.subcategorias.fold(0, (subTotal, sub) => subTotal + sub.productos.fold(0, (prodTotal, prod) => prodTotal + prod.precio * prod.cantidad))),
+                                      opcion: widget.opcion,
+                                      fechaEmision: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                                      fechaCaducidad: '',
+                                      nombreEmpresa: '',
+                                      telefono: '',
+                                      domicilio: '',
+                                      correo: '',
+                                      contratista: '',
+                                      telefonoContratista: '',
+                                      giroProyecto: '',
+                                      ubicacionProyecto: '',
+                                      descripcionProyecto: '',
+                                    );
+                                    guardarPresupuesto(detalle);
+                                    _handleSaveAndShare(context, detalle);
+                                  }
+                                }
+                              },
+                              child: const Text('Siguiente'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF044C70),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 15.0),
+                  ),
+                  child: const Text(
+                    'Calcular',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -714,8 +861,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
             TextButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  String direccionCompleta =
-                      '${calleController.text} #${numeroController.text}, ${coloniaController.text}, ${cpController.text}, ${ciudadController.text}, ${estadoController.text}';
+                  String direccionCompleta = '${calleController.text} #${numeroController.text}, ${coloniaController.text}, ${cpController.text}, ${ciudadController.text}, ${estadoController.text}';
                   Navigator.of(context).pop(direccionCompleta);
                 }
               },
@@ -726,9 +872,6 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
       },
     );
   }
-
-
-
 
   Column buildResumenPresupuesto() {
     double totalGeneral = 0.0;
@@ -754,13 +897,20 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${categoria.nombre}: ', style: const TextStyle(fontWeight: FontWeight.bold), ),
+                    Text(
+                      '${categoria.nombre}: ',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
               ),
               Align(
                 alignment: Alignment.topRight,
-                child: Text(formattedCategoria, style: const TextStyle(color: Colors.black), textAlign: TextAlign.right, ),
+                child: Text(
+                  formattedCategoria,
+                  style: const TextStyle(color: Colors.black),
+                  textAlign: TextAlign.right,
+                ),
               ),
             ],
           ),
@@ -776,8 +926,21 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Total General: ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black), ),
-            Text(formattedTotal, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
+            const Text(
+              'Total General: ',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.black
+              ),
+            ),
+            Text(
+              formattedTotal,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.black
+              ),
             ),
           ],
         ),
@@ -790,22 +953,21 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     );
   }
 
-
   List<Categoria?> obtenerCategoriasConProductos() {
     return categoriasList.map((categoria) {
       // Filtrar subcategorias con productos con cantidad > 0
       List<Subcat> subcategoriasFiltradas = categoria.subcategorias
-          .where((subcat) => subcat.productos.any((producto) => producto.cantidad > 0))
+          .where((subcat) =>
+              subcat.productos.any((producto) => producto.cantidad > 0))
           .toList();
 
       // Crear nuevas subcategori­as con productos filtrados
       subcategoriasFiltradas = subcategoriasFiltradas.map((subcat) {
-        List<Producto> productosFiltrados =
-            subcat.productos.where((producto) => producto.cantidad > 0).toList();
+        List<Producto> productosFiltrados = subcat.productos.where((producto) => producto.cantidad > 0).toList();
         return Subcat(nombre: subcat.nombre, productos: productosFiltrados);
       }).toList();
 
-      if(subcategoriasFiltradas.isNotEmpty) {
+      if (subcategoriasFiltradas.isNotEmpty) {
         return Categoria(nombre: categoria.nombre, subcategorias: subcategoriasFiltradas);
       }
       return null;
@@ -819,6 +981,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     }
     return status.isGranted;
   }
+
   Future<String?> _generateExcel(PresupuestoDetalle presupuesto, String selectedDirectory) async {
     final ByteData data = await rootBundle.load("assets/plantillas/PRESUPUESTO.xlsx");
     var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
@@ -868,6 +1031,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
 
     return filePath;
   }
+
   void _shareFile(String filePath) {
     Share.shareXFiles([XFile(filePath)], text: 'Aquí tienes el archivo de presupuesto.');
   }
@@ -881,7 +1045,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
       }
 
       String? filePath = await _generateExcel(presupuesto, selectedDirectory);
-      
+
       if (filePath != null) {
         _shareFile(filePath);
         Navigator.pop(context);
@@ -897,8 +1061,6 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
     }
   }
 }
-
-
 
 Future<void> guardarPresupuesto(PresupuestoDetalle presupuesto) async {
   var box = Hive.box<PresupuestoDetalle>('presupuestos');
