@@ -1,9 +1,10 @@
 class CategoriaPrivada {
   final String titulo;
   final List<String> subcategorias;
+  final List<String> subcategoriasKeys;
   final String imagePath;
 
-  CategoriaPrivada({required this.titulo, required this.subcategorias, required this.imagePath});
+  CategoriaPrivada({required this.titulo, required this.subcategorias, required this.subcategoriasKeys, required this.imagePath});
 }
 
 final List<CategoriaPrivada> categoriasPrivadas = [
@@ -16,6 +17,14 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Centros de Protección',
       'Dormitorios Públicos',
       'Guarderías'
+    ],
+    subcategoriasKeys: [
+      'as-1',
+      'as-2',
+      'as-3',
+      'as-4',
+      'as-5',
+      'as-6'
     ],
     imagePath: 'assets/privada/as.png',
   ),
@@ -49,6 +58,34 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Centros de Abastos (Centros de Acopio o Distribución) (no incluye estacionamientos}',
       'Distribuidores de bebidas (no incluye estacionamientos ni patios de maniobras)'
     ],
+    subcategoriasKeys: [
+      'co-1',
+      'co-2',
+      'co-3',
+      'co-4',
+      'co-5',
+      'co-6',
+      'co-7',
+      'co-8',
+      'co-9',
+      'co-10',
+      'co-11',
+      'co-12',
+      'co-13',
+      'co-14',
+      'co-15',
+      'co-16',
+      'co-17',
+      'co-18',
+      'co-19',
+      'co-20',
+      'co-21',
+      'co-22',
+      'co-23',
+      'co-24',
+      'co-25',
+      'co-26'
+    ],
     imagePath: 'assets/privada/co.png',
   ),
   CategoriaPrivada(
@@ -74,6 +111,27 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Estudios de audio y video',
       'Salas de espera'
     ],
+    subcategoriasKeys: [
+      'mc-1',
+      'mc-2',
+      'mc-3',
+      'mc-4',
+      'mc-5',
+      'mc-6',
+      'mc-7',
+      'mc-8',
+      'mc-9',
+      'mc-10',
+      'mc-11',
+      'mc-12',
+      'mc-13',
+      'mc-14',
+      'mc-15',
+      'mc-16',
+      'mc-17',
+      'mc-18',
+      'mc-19'
+    ],
     imagePath: 'assets/privada/mc.png',
   ),
   CategoriaPrivada(
@@ -97,6 +155,26 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Paraderos de Autobuses',
       'Casetas de Peaje',
       'Paquetería y Envíos'
+    ],
+    subcategoriasKeys: [
+      't-1',
+      't-2',
+      't-3',
+      't-4',
+      't-5',
+      't-6',
+      't-7',
+      't-8',
+      't-9',
+      't-10',
+      't-11',
+      't-12',
+      't-13',
+      't-14',
+      't-15',
+      't-16',
+      't-17',
+      't-18'
     ],
     imagePath: 'assets/privada/mt.png',
   ),
@@ -122,6 +200,26 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Hemerotecas',
       'Salas de lectura'
     ],
+    subcategoriasKeys: [
+      'c-1',
+      'c-2',
+      'c-3',
+      'c-4',
+      'c-5',
+      'c-6',
+      'c-7',
+      'c-8',
+      'c-9',
+      'c-10',
+      'c-11',
+      'c-12',
+      'c-13',
+      'c-14',
+      'c-15',
+      'c-16',
+      'c-17',
+      'c-18'
+    ],
     imagePath: 'assets/privada/cultura.png',
   ),
   CategoriaPrivada(
@@ -138,6 +236,19 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Campo de Tiro',
       'Unidades Deportivas',
       'Boliche'
+    ],
+    subcategoriasKeys: [
+      'd-1',
+      'd-2',
+      'd-3',
+      'd-4',
+      'd-5',
+      'd-7',
+      'd-8',
+      'd-10',
+      'd-11',
+      'd-12',
+      'd-13'
     ],
     imagePath: 'assets/privada/deportivas.png',
   ),
@@ -167,6 +278,30 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Campus universitarios',
       'Escuelas de idiomas'
     ],
+    subcategoriasKeys: [
+      'ec-1',
+      'ec-2',
+      'ec-3',
+      'ec-4',
+      'ec-5',
+      'ec-6',
+      'ec-7',
+      'ec-8',
+      'ec-9',
+      'ec-10',
+      'ec-11',
+      'ec-12',
+      'ec-13',
+      'ec-14',
+      'ec-15',
+      'ec-16',
+      'ec-17',
+      'ec-18',
+      'ec-19',
+      'ec-20',
+      'ec-21',
+      'ec-23'
+    ],
     imagePath: 'assets/privada/ec.png',
   ),
   CategoriaPrivada(
@@ -178,6 +313,14 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Oficinas Centrales y Regionales',
       'Organizaciones Auxiliares',
       'Cajas populares'
+    ],
+    subcategoriasKeys: [
+      'fb-1',
+      'fb-2',
+      'fb-3',
+      'fb-4',
+      'fb-5',
+      'fb-6'
     ],
     imagePath: 'assets/privada/fb.png',
   ),
@@ -198,6 +341,22 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Agencias del Ministerio Público',
       'Bases aéreas',
       'Cuarteles'
+    ],
+    subcategoriasKeys: [
+      'g-1',
+      'g-3',
+      'g-4',
+      'g-5',
+      'g-6',
+      'g-7',
+      'g-8',
+      'g-9',
+      'g-10',
+      'g-11',
+      'g-12',
+      'g-13',
+      'g-14',
+      'g-15'
     ],
     imagePath: 'assets/privada/gubernamentales.png',
   ),
@@ -221,6 +380,25 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Edificio para Departamentos interés social más 4 de niveles',
       'Edificio para Departamentos medio residencial de más de 5 niveles',
       'Edificio para Departamentos residencial de lujo de más de 7 niveles'
+    ],
+    subcategoriasKeys: [
+      'h-1',
+      'h-2',
+      'h-3',
+      'h-4',
+      'h-5',
+      'h-6',
+      'h-7',
+      'h-8',
+      'h-9',
+      'h-10',
+      'h-11',
+      'h-12',
+      'h-13',
+      'h-14',
+      'h-15',
+      'h-16',
+      'h-17'
     ],
     imagePath: 'assets/privada/habitacionales.png',
   ),
@@ -264,6 +442,44 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Laboratorios Especializados',
       'SEMEFO\'s'
     ],
+    subcategoriasKeys: [
+      'p-1',
+      'p-2',
+      'p-3',
+      'p-4',
+      'p-5',
+      'p-6',
+      'p-7',
+      'p-8',
+      'p-9',
+      'p-10',
+      'p-11',
+      'p-12',
+      'p-13',
+      'p-14',
+      'p-15',
+      'p-16',
+      'p-17',
+      'p-18',
+      'p-19',
+      'p-20',
+      'p-21',
+      'p-22',
+      'p-23',
+      'p-24',
+      'p-25',
+      'p-27',
+      'p-28',
+      'p-30',
+      'p-31',
+      'p-32',
+      'p-34',
+      'p-35',
+      'p-37',
+      'p-38',
+      'p-39',
+      'p-40'
+    ],
     imagePath: 'assets/privada/industriales.png',
   ),
   CategoriaPrivada(
@@ -301,6 +517,39 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Oficinas administrativas',
       'Velatorios'
     ],
+    subcategoriasKeys: [
+      're-1',
+      're-2',
+      're-3',
+      're-4',
+      're-5',
+      're-6',
+      're-7',
+      're-8',
+      're-9',
+      're-10',
+      're-11',
+      're-12',
+      're-13',
+      're-14',
+      're-15',
+      're-16',
+      're-17',
+      're-18',
+      're-19',
+      're-20',
+      're-21',
+      're-22',
+      're-23',
+      're-24',
+      're-25',
+      're-26',
+      're-27',
+      're-28',
+      're-29',
+      're-30',
+      're-31'
+    ],
     imagePath: 'assets/privada/re.png',
   ),
   CategoriaPrivada(
@@ -312,6 +561,14 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Conventos y Monasterios',
       'Iglesias',
       'Sede Arzobispal'
+    ],
+    subcategoriasKeys: [
+      'rel-1',
+      'rel-2',
+      'rel-3',
+      'rel-4',
+      'rel-5',
+      'rel-6'
     ],
     imagePath: 'assets/privada/religion.png',
   ),
@@ -332,6 +589,21 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Baños públicos',
       'Consultorios'
     ],
+    subcategoriasKeys: [
+      's-1',
+      's-2',
+      's-5',
+      's-6',
+      's-7',
+      's-8',
+      's-9',
+      's-10',
+      's-11',
+      's-12',
+      's-13',
+      's-14',
+      's-15'
+    ],
     imagePath: 'assets/privada/salud.png',
   ),
   CategoriaPrivada(
@@ -350,6 +622,21 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Estaciones de policías',
       'Oficinas administrativas',
       'SEMEFO\'s'
+    ],
+    subcategoriasKeys: [
+      'SEG-1',
+      'SEG-2',
+      'SEG-3',
+      'SEG-4',
+      'SEG-5',
+      'SEG-6',
+      'SEG-7',
+      'SEG-8',
+      'SEG-9',
+      'SEG-10',
+      'SEG-11',
+      'SEG-12',
+      'SEG-13'
     ],
     imagePath: 'assets/privada/sop.png',
   ),
@@ -370,6 +657,21 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Trailer Park',
       'SPA\'s'
     ],
+    subcategoriasKeys: [
+      'tu-1',
+      'tu-3',
+      'tu-4',
+      'tu-5',
+      'tu-6',
+      'tu-7',
+      'tu-8',
+      'tu-9',
+      'tu-10',
+      'tu-11',
+      'tu-12',
+      'tu-13',
+      'tu-14'
+    ],
     imagePath: 'assets/privada/turismo.png',
   ),
   CategoriaPrivada(
@@ -381,6 +683,13 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Comedores',
       'Restaurantes'
     ],
+    subcategoriasKeys: [
+      'ab-1',
+      'ab-2',
+      'ab-3',
+      'ab-4',
+      'ab-5'
+    ],
     imagePath: 'assets/privada/ab.png',
   ),
   CategoriaPrivada(
@@ -390,6 +699,12 @@ final List<CategoriaPrivada> categoriasPrivadas = [
       'Estacionamientos Descubiertos',
       'Estacionamientos Cubiertos',
       'Gasolineras'
+    ],
+    subcategoriasKeys: [
+      'v-1',
+      'v-2',
+      'v-3',
+      'v-4'
     ],
     imagePath: 'assets/privada/varios.png',
   )

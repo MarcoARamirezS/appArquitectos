@@ -1,4 +1,7 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:io';
+import 'package:apparq/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:apparq/models/presupuesto_detalle.dart';
@@ -454,6 +457,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       
       _shareFile(filePath);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Archivo Excel generado y listo para compartir')));
+      MenuPage.menuPageKey.currentState?.openDrawerAndHighlightProyecto();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

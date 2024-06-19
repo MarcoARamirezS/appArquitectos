@@ -13,6 +13,8 @@ import '../menu.dart';
 import 'obra/pres_subcat.dart';
 import 'obra/categorias_privadas.dart';
 import 'package:flutter/services.dart';
+import 'package:apparq/Presupuesto/obra/factor_de_costo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PresupuestoPage extends StatefulWidget {
   const PresupuestoPage({super.key});
@@ -22,6 +24,7 @@ class PresupuestoPage extends StatefulWidget {
 }
 
 class _PresupuestoPageState extends State<PresupuestoPage> {
+  String? selectedRegion;
   String selectedOption = 'Pública';
   final List<String> options = ['Pública', 'Privada'];
   String? selectedCategoria;
@@ -41,6 +44,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
   @override
   void initState() {
     super.initState();
+    _loadRegion();
     _initializeControllers(_numReferences);
   }
 
@@ -52,6 +56,16 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
         return TextEditingController();
       }
     });
+  }
+
+  Future<void> _loadRegion() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? region = prefs.getString('selected_region');
+    if (region != null) {
+      setState(() {
+        selectedRegion = region;
+      });
+    }
   }
 
   final List<String> _costOptions = [
@@ -772,7 +786,14 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                         ? () {
                       double costoBase = 0.0;
                       double metrosCuadrados = double.parse(_m2Controller.text);
-                      double factor = factorDeCosto[selectedSubcategoria] ?? 1.0; // Obtener factor, si no existe, usar 1.0
+                      String? key = categoriasPrivadas
+                        .firstWhere((categoria) => categoria.titulo == selectedCategoria!)
+                        .subcategoriasKeys[categoriasPrivadas
+                          .firstWhere((categoria) => categoria.titulo == selectedCategoria!)
+                          .subcategorias
+                          .indexOf(selectedSubcategoria!)];
+                      double factor = factorDeCosto[key] ?? 1.0;
+                      factor*=0.95;
                       double costoTotal = 0.0;
 
                       if (selectedCostoBase == 'Costo base calculado') {
@@ -800,6 +821,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
                         }
                         costoTotal = costoBase * metrosCuadrados * factor;
                       }
+                      costoTotal *= factorPorRegion[selectedRegion] ?? 1.0;
                       var formattedCostoTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costoTotal);
 
                       showDialog(
@@ -1224,6 +1246,7 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
         _shareFile(filePath);
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Archivo Excel generado y listo para compartir')));
+        MenuPage.menuPageKey.currentState?.openDrawerAndHighlightConstruccion();
       } else {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error al generar el archivo.')));
@@ -1417,276 +1440,16 @@ class _PresupuestoPageState extends State<PresupuestoPage> {
     'Diciembre': 12,
   };
 
-  final Map<String, double> factorDeCosto = {
-    'Asilos, Orfelinatos': 1.39,
-    'Casas de Empeño': 1.06,
-    'Centros de Rehabilitación': 1.55,
-    'Centros de Protección': 1.24,
-    'Dormitorios Públicos': 1.20,
-    'Guarderías': 1.16,
-    'AGENCIA AUTOMOTRIZ. Clase 4. Área de exhibición, ventas, taller, área de refacciones. Estructura de acero': 1.45,
-    'Centros de Abastos': 1.04,
-    'Centros Comerciales': 2.12,
-    'Centros de Exposiciones': 1.86,
-    'Edificios Comerciales y Oficinas': 1.79,
-    'Farmacias y Drogerías': 1.89,
-    'Ferreterías y Tlapalerías': 1.89,
-    'Joyerías': 2.07,
-    'Librerías': 1.89,
-    'Mercados': 1.04,
-    'Supermercados y Autoservicios': 1.69,
-    'Interiorismo Comercial': 1.66,
-    'TIENDA DEPARTAMENTAL. Clase 5. Estructura mixta (Concreto y acero)': 1.94,
-    'Tiendas Especializadas': 2.07,
-    'Locales Comerciales': 1.37,
-    'Stands': 0.62,
-    'TIENDA DE CONVENIENCIA. Clase 4. Estructura de concreto y cubierta con estructura de acero y tiendas de Abarrotes': 1.10,
-    'TIENDA DE AUTOSERVICIO. Estructura Metálica, estacionamiento superficial descubierto (Tienda de equipo de cómputo y papelería) Centros comerciales': 1.69,
-    'Centros de exposiciones (Áreas de exposición)': 1.86,
-    'EDIFICIO PARA OFICINAS. Clase 2 baja 4 niveles. Estructura de concreto, muros de block, losa reticular sin estacionamiento, 2 fachadas Edificios comerciales y oficinas': 1.60,
-    'EDIFICIO PARA OFICINAS. Clase 4 media 8 niveles. Estructura mixta, 2 fachadas con elevador y estacionamiento en planta baja parte del edificio': 1.79,
-    'EDIFICIO PARA OFICINAS. Clase 4 media 6 niveles. Estructura de concreto, elevador y estacionamiento. En planta baja': 1.80,
-    'Mercados (no incluye áreas de estacionamiento)': 1.04,
-    'Supermercados y autoservicios': 1.69,
-    'Centros de Abastos (Centros de Acopio o Distribución) (no incluye estacionamientos)': 1.04,
-    'Distribuidores de bebidas (no incluye estacionamientos ni patios de maniobras)': 0.90,
-    'Agencia de Noticias': 1.45,
-    'Centrales Telefónicas': 1.55,
-    'Centros de Internet': 1.14,
-    'Edificios de Correos': 1.24,
-    'Edificios de Telégrafos': 1.24,
-    'Estudios de Audio y Video': 2.28,
-    'Estudios de Cine': 1.97,
-    'Estudios de TV': 2.17,
-    'Paquetería y Envíos': 1.14,
-    'Prensa': 1.24,
-    'Radiodifusoras': 1.59,
-    'Torres de Líneas de Alta Tensión 115-440 kva': 0.30,
-    'Torres de Aerogeneradores Eléctricos': 0.30,
-    'Paneles de Generación Solar Eléctricos': 0.30,
-    'Sub Estaciones Eléctricas': 0.30,
-    'Torres de control aéreo': 2.69,
-    'Editoriales (Editora de libros, revistas o periódicos)': 1.25,
-    'Estudios de audio y video': 1.30,
-    'Salas de espera': 1.04,
-    'Aeropuertos': 2.07,
-    'Terminales Aéreas': 2.07,
-    'Hangares': 1.27,
-    'Torres de Control': 2.69,
-    'Obra Exterior': 0.31,
-    'Casetas de Peaje': 1.24,
-    'Centrales de Autobuses': 1.35,
-    'Estaciones de Ferrocarril': 1.35,
-    'Estaciones de Transporte Colectivo': 1.76,
-    'Instalaciones Portuarias': 1.76,
-    'Paraderos de Autobuses': 1.04,
-    'Talleres de Mantenimiento': 0.58,
-    'Taquillas y Salas de Espera': 1.04,
-    'Centros de internet': 1.14,
-    //'Paraderos de Autobuses': 1.04,
-    //'Casetas de Peaje': 1.24,
-    //'Paquetería y Envíos': 1.14,
-    'Auditorios': 1.35,
-    'Bibliotecas': 1.45,
-    'Casas de Cultura': 1.24,
-    'Centros de Arte': 1.24,
-    'Editoriales': 1.35,
-    'Galerías de Arte': 1.55,
-    'Monumentos': 2.48,
-    'Museos': 1.55,
-    'Pabellones Internacionales y Nacionales': 2.07,
-    'Salas de Concierto': 2.17,
-    'Talleres de Arte': 1.24,
-    'Teatros': 2.07,
-    'Cinetecas': 1.20,
-    'Centros de difusión cultural': 0.90,
-    //'Galerías de Arte': 1.24,
-    'Hemerotecas': 1.24,
-    'Salas de lectura': 1.10,
-    'Albercas Recreativas': 3.01,
-    'Boliche': 1.45,
-    'Canchas Descubiertas': 0.21,
-    'Clubes Deportivos': 1.24,
-    'Gimnasios y Canchas Cubiertas': 0.83,
-    'Clubes deportivos': 1.24,
-    'Campo de Golf': 0.04,
-    'Casa Club': 1.24,
-    'Campo de Tiro': 0.04,
-    'Unidades Deportivas': 1.04,
-    'Academias': 1.08,
-    'Centros de Investigación': 1.45,
-    'Campus de Educación Superior': 1.35,
-    'Escuelas Preescolares': 1.15,
-    'Escuelas Primarias': 1.15,
-    'Escuelas Secundarias': 1.15,
-    'Escuelas Preparatorias': 1.39,
-    'Escuelas Vocacionales': 1.39,
-    'Escuelas Técnicas': 1.39,
-    'Escuelas de Educación Especial': 1.45,
-    'Escuelas de Educación Superior': 1.45,
-    'Internados': 1.24,
-    'Laboratorios': 1.45,
-    'Laboratorios de Enseñanza': 1.45,
-    'Normales': 1.39,
-    'Laboratorios de investigación': 1.45,
-    'Observatorios': 1.40,
-    'ESCUELA SUPERIOR. Calidad popular, estructura de concreto.': 1.35,
-    'ESCUELA SUPERIOR. Calidad privada': 1.40,
-    'Áreas deportivas': 1.08,
-    'Campus universitarios': 1.35,
-    'Escuelas de idiomas': 1.39,
-    'Bancos': 1.20,
-    'Casas de Bolsa': 1.28,
-    'Casas de Cambio': 1.28,
-    'Oficinas Centrales y Regionales': 1.22,
-    'Organizaciones Auxiliares': 1.20,
-    'Cajas populares': 1.25,
-    'Archivos': 1.14,
-    'Edificios': 1.35,
-    //'Obra Exterior': 0.06,
-    'Cuarteles Militares': 1.20,
-    'Oficinas Estatales': 1.38,
-    'Oficinas Federales': 1.38,
-    'Oficinas Municipales': 1.05,
-    'Palacios de Gobierno': 1.64,
-    'Sedes Judiciales': 1.59,
-    'Sedes Legislativas': 1.59,
-    'Juzgados': 1.59,
-    'Agencias del Ministerio Público': 1.59,
-    'Bases aéreas': 1.35,
-    'Cuarteles': 1.20,
-    'Vivienda de 60 a100 m²': 1.04,
-    'Pies de Casa (Vivienda Popular en 36 m²)': 0.85,
-    'Vivienda Unifamiliar Popular (Vivienda económica hasta 60 m²)': 0.9,
-    'Vivienda Unifamiliar Media (de 61 a 100 m²)': 1.1,
-    'Vivienda Unifamiliar Media (De 101 a 150 m²)': 1.2,
-    'Vivienda Unifamiliar Media (de 151 a 200 m²)': 1.25,
-    'Vivienda Unifamiliar Alta (De 201 a 300 m²)': 1.3,
-    'Residencias (Casas de Lujo 301 a 500 m²)': 1.5,
-    'Residencias (Casas de Lujo 501 m² en adelante)': 1.6,
-    'Edificio para Departamentos. Clase 2 baja 2 niveles interés social. Sala-comedor, cocina, un baño, 2 recamaras y patio de servicio': 0.95,
-    'Edificio para Departamentos. Clase 2 baja 4 niveles interés social. Sala-comedor, cocina, un baño, 2 recamaras, y patio de servicio': 1.04,
-    'Edificio para Departamentos. Clase 4 media 4 niveles, Sala-comedor, cocina, patio de servicio, 1 baño, y 2 recamaras. 4 fachadas, estructura de acero y muro de tabique': 1.35,
-    'Edificio para Departamentos Clase 5 media Alta 5 niveles en adelante. Sala-comedor, cocina, patio de servicio, 2 baños y 3 recamaras. Estacionamiento P.B. y elevador. estructura': 1.5,
-    'Edificio para Departamentos. Clase 5 media alta 7 niveles. 2 fachadas. Sala-comedor, cocina, patio de servicio, 2 baños y 3 recamaras. Estacionamiento 2 sótanos y elevador.': 1.7,
-    'Edificio para Departamentos interés social más 4 de niveles': 1.1,
-    'Edificio para Departamentos medio residencial de más de 5 niveles': 1.55,
-    'Edificio para Departamentos residencial de lujo de más de 7 niveles': 1.7,
-    'Áreas Exteriores': 0.06,
-    'Bodegas y Almacenes': 0.55,
-    //'Laboratorios': 1.22,
-    'Talleres': 0.57,
-    'Áreas de empleados (comedor, baños)': 0.8,
-    //'Laboratorios': 1.1,
-    'Plantas industriales completas (Maquiladoras) hasta 3,000 m²': 0.86,
-    'Plantas de artículos electrónicos hasta 3,000 m²': 0.86,
-    'Parques industriales hasta 5,000 m²': 0.55,
-    'Andenes': 0.4,
-    'Bodegas y almacenes hasta 1,600 m²': 0.6,
-    'Naves industriales Hasta 3,000 m²': 0.5,
-    'Talleres hasta 1.600 m²': 0.6,
-    'Industria ligera hasta 5,000 m²': 0.55,
-    'Industria mediana hasta 5,000 m²': 0.6,
-    'Industria pesada hasta 5,000 m²': 0.8,
-    'Industria ligera hasta 10,000 m²': 0.5,
-    'Industria mediana hasta 10,000 m²': 0.55,
-    'Industria pesada hasta 10,000 m²': 0.7,
-    'Industria ligera más 10,000 m²': 0.4,
-    'Industria mediana más 10,000 m²': 0.5,
-    'Industria pesada más 10,000 m²': 0.6,
-    'Oficinas': 1.18,
-    'Servicios del Personal': 1.14,
-    'Casetas de Seguridad Pública': 1.14,
-    'Centros de Readaptación Social': 1.18,
-    'Centros Tutelares': 1.18,
-    'Cuarteles de Seguridad Pública': 1.20,
-    'Estaciones de Bomberos': 1.18,
-    'Estaciones de Policía': 1.18,
-    'Laboratorios Especializados': 1.22,
-    'SEMEFO\'s': 1.30,
-    'Arenas Deportivas': 1.30,
-    'Autódromos': 1.86,
-    'Billares': 1.04,
-    'Centros Nocturnos': 1.30,
-    'Cines': 1.76,
-    'Estadios': 1.32,
-    'Hipódromo': 1.86,
-    'Jardines (zoológico, botánicos)': 0.04,
-    'Lienzos Charros': 1.45,
-    'Palenques': 1.30,
-    'Parques': 0.04,
-    'Planetarios': 1.86,
-    'Plazas Públicas': 0.05,
-    'Plazas de Toros': 1.41,
-    'Salones de Fiesta': 1.60,
-    //'Edificios': 1.55,
-    'Obra exterior': 0.06,
-    //'Teatros': 1.40,
-    //'Auditorios': 1.30,
-    'Bares': 1.30,
-    'Video centros': 1.10,
-    'Video juegos': 1.10,
-    'Balnearios': 1.10,
-    'Parques Tecnológicos': 2.05,
-    //'Salones de Fiesta': 1.4,
-    'Canchas Deportivas y áreas Lúdicas': 0.9,
-    'Casinos': 1.6,
-    'Altares': 1.10,
-    'Casas de retiro (espiritual)': 1.30,
-    'Oficinas administrativas': 1.10,
-    'Velatorios': 1.10,
-    'Basílicas y Catedrales': 1.86,
-    'Capillas': 1.97,
-    'Casas Pastorales': 1.30,
-    'Conventos y Monasterios': 1.20,
-    'Iglesias': 1.76,
-    'Sede Arzobispal': 1.55,
-    'Centros de Rehabilitación Física': 1.14,
-    'Centros de Salud': 1.08,
-    'Dispensarios': 1.04,
-    'Laboratorio de Análisis Clínicos': 1.24,
-    'Laboratorio de Rayos X': 1.24,
-    'Hospitales': 1.92,
-    //'Laboratorios Especializados': 1.22,
-    'Unidades de Servicio Médico': 1.04,
-    'Centros Antirrábicos': 1.04,
-    'Balnearios termales': 1.70,
-    'Clínicas': 1.07,
-    'Baños públicos': 0.80,
-    'Consultorios': 1.08,
-    'Casetas': 1.34,
-    //'Archivos': 1.10,
-    'Correccionales': 1.14,
-    'Laboratorios especializados': 1.22,
-    'Cárceles': 1.40,
-    'Centros de readaptación social': 1.18,
-    //'Cuarteles': 1.20,
-    'Delegaciones (Policía, Tránsito o Bomberos)': 1.18,
-    'Departamentos de Tránsito': 1.20,
-    'Estaciones de bomberos': 1.40,
-    'Estaciones de policías': 1.40,
-    //'Oficinas administrativas': 1.20,
-    //'SEMEFO\'s': 1.3,
-    'Agencias de Viaje': 1.14,
-    'Camping': 0.05,
-    'Centros de Convenciones': 2.01,
-    'Complejos Hoteleros': 3.39,
-    'Complejos y Hoteles (Obra Exterior)': 0.06,
-    'Hoteles de cinco estrellas': 2.82,
-    'Hoteles de cuatro estrellas': 1.94,
-    'Hoteles de tres estrellas o menos': 1.55,
-    'Moteles': 1.45,
-    'Trailer Park': 0.06,
-    'SPA\'s': 2.07,
-    'Bares y Cantinas': 1.86,
-    'Cafeterías': 1.45,
-    'Cocinas Rápidas': 1.24,
-    'Comedores': 1.18,
-    'Restaurantes': 1.76,
-    'Baños Públicos': 1.33,
-    'Estacionamientos Descubiertos': 1.00,
-    'Estacionamientos Cubiertos': 1.16,
-    'Gasolineras': 1.33
+  final Map<String, double> factorPorRegion = {
+    '1': 0.92,
+    '2': 0.96,
+    '3': 1.00,
+    '4': 0.97,
+    '5': 1.00,
+    '6': 0.98,
+    '7': 0.92,
+    '8': 0.95,
   };
+
 }
 

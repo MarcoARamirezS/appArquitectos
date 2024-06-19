@@ -31,8 +31,12 @@ class _MenuPageState extends State<MenuPage> {
   bool hasConstruccion = false;
   final GlobalKey _regionTileKey = GlobalKey();
   final GlobalKey _presupuestoTileKey = GlobalKey();
+  final GlobalKey _construccionTileKey = GlobalKey();
+  final GlobalKey _proyectoTileKey = GlobalKey();
   bool _isRegionTileHighlighted = false;
   bool _highlightPresupuestoTile = false;
+  bool _highlightConstruccionTile = false;
+  bool _highlightProyectoTile = false;
 
   @override
   void initState() {
@@ -111,6 +115,28 @@ class _MenuPageState extends State<MenuPage> {
     });
   }
 
+  void _flashConstruccionTile() {
+    setState(() {
+      _highlightConstruccionTile = true;
+    });
+    Future.delayed(const Duration(seconds: 10), () {
+      setState(() {
+        _highlightConstruccionTile = false;
+      });
+    });
+  }
+
+  void _flashProyectoTile() {
+    setState(() {
+      _highlightProyectoTile = true;
+    });
+    Future.delayed(const Duration(seconds: 10), () {
+      setState(() {
+        _highlightProyectoTile = false;
+      });
+    });
+  }
+
   void openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
@@ -123,6 +149,16 @@ class _MenuPageState extends State<MenuPage> {
   void openDrawerAndHighlightPresupuesto() {
     openDrawer();
     _flashPresupuestoTile();
+  }
+
+  void openDrawerAndHighlightConstruccion() {
+    openDrawer();
+    _flashConstruccionTile();
+  }
+
+  void openDrawerAndHighlightProyecto() {
+    openDrawer();
+    _flashProyectoTile();
   }
 
   @override
@@ -170,11 +206,15 @@ class _MenuPageState extends State<MenuPage> {
               ListTile(
                 leading: Image.asset('assets/icon_construction.png', width: 24, height: 24),
                 title: const Text('Construcción'),
+                key: _construccionTileKey,
+                tileColor: _highlightConstruccionTile ? Colors.blue.withOpacity(0.3) : null,
                 onTap: hasPresupuesto ? () => _onSelectItem(3) : null,
               ),
               ListTile(
                 leading: Image.asset('assets/icon_project.png', width: 24, height: 24),
                 title: const Text('Proyecto'),
+                key: _proyectoTileKey,
+                tileColor: _highlightProyectoTile ? Colors.blue.withOpacity(0.3) : null,
                 onTap: hasConstruccion ? () => _onSelectItem(4) : null,
               ),
               ListTile(

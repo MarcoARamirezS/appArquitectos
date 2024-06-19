@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:apparq/menu.dart';
 import 'package:apparq/models/presupuesto_detalle.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
@@ -885,6 +886,7 @@ class _PresSubcatPageState extends State<PresSubcatPage> {
         _shareFile(filePath);
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Archivo Excel generado y listo para compartir')));
+        MenuPage.menuPageKey.currentState?.openDrawerAndHighlightConstruccion();
       } else {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error al generar el archivo.')));
