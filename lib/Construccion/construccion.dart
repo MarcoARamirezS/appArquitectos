@@ -44,7 +44,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       controller.addListener(_updateTotalPorcentaje);
     }
   }
-  
+
   @override
   void dispose() {
     for (var controller in percentageControllers) {
@@ -158,8 +158,10 @@ class _ConstruccionPage extends State<ConstruccionPage> {
         percentageControllers[i].text = detalle.porcentajes[i].toStringAsFixed(2);
       }
     } else {
-      for (var controller in percentageControllers) {
-        controller.text = '0.00';
+      // Valores por defecto
+      List<double> valoresPorDefecto = [8, 5, 3, 7, 0, 0];
+      for (int i = 0; i < percentageControllers.length; i++) {
+        percentageControllers[i].text = valoresPorDefecto[i].toStringAsFixed(2);
       }
     }
 
@@ -294,15 +296,39 @@ class _ConstruccionPage extends State<ConstruccionPage> {
 
   Future<void> mostrarDialogoDeConfirmacion(PresupuestoDetalle presupuesto, bool esPrivado) async {
     List<double> porcentajes = [];
-    double sumTotal = 0.0;
     
-    for (int i = 0; i < percentageControllers.length; i++) {
-      var percentageValue = double.tryParse(percentageControllers[i].text) ?? 0;
-      porcentajes.add(percentageValue);
-      var costo = presupuesto.total * percentageValue / 100;
-      sumTotal += costo;
-    }
-    // Mostrar diálogo de confirmación con los valores calculados
+    double indirectosDeOficina = (presupuesto.total * (double.tryParse(percentageControllers[0].text) ?? 0) / 100);
+    indirectosDeOficina = double.parse(indirectosDeOficina.toStringAsFixed(2));
+    double indirectosDeCampo = (presupuesto.total * (double.tryParse(percentageControllers[1].text) ?? 0) / 100);
+    indirectosDeCampo = double.parse(indirectosDeCampo.toStringAsFixed(2));
+    double subtotal1 = indirectosDeOficina + indirectosDeCampo + presupuesto.total;
+
+    double financiamiento = (subtotal1 * (double.tryParse(percentageControllers[2].text) ?? 0) / 100);
+    financiamiento = double.parse(financiamiento.toStringAsFixed(2));
+    double subtotal2 = subtotal1 + financiamiento;
+
+    double utilidad = subtotal2 * (double.tryParse(percentageControllers[3].text) ?? 0) / 100;
+    utilidad = double.parse(utilidad.toStringAsFixed(2));
+    double subtotal3 = subtotal2 + utilidad;
+
+    double cargosAdicionales = subtotal3 * (double.tryParse(percentageControllers[4].text) ?? 0) / 100;
+    cargosAdicionales = double.parse(cargosAdicionales.toStringAsFixed(2));
+    double subtotal4 = subtotal3 + cargosAdicionales;
+
+    double otrosPorcentajes = subtotal4 * (double.tryParse(percentageControllers[5].text) ?? 0) / 100;
+    otrosPorcentajes = double.parse(otrosPorcentajes.toStringAsFixed(2));
+    double totalIndirectos = indirectosDeOficina + indirectosDeCampo + financiamiento + utilidad + cargosAdicionales + otrosPorcentajes;
+    totalIndirectos = double.parse(totalIndirectos.toStringAsFixed(2));
+
+    porcentajes = [
+      double.tryParse(percentageControllers[0].text) ?? 0,
+      double.tryParse(percentageControllers[1].text) ?? 0,
+      double.tryParse(percentageControllers[2].text) ?? 0,
+      double.tryParse(percentageControllers[3].text) ?? 0,
+      double.tryParse(percentageControllers[4].text) ?? 0,
+      double.tryParse(percentageControllers[5].text) ?? 0,
+    ];
+
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -325,12 +351,19 @@ class _ConstruccionPage extends State<ConstruccionPage> {
                   ],
                 ),
                 ...List.generate(porcentajes.length, (index) {
-                  double costo = presupuesto.total * porcentajes[index] / 100;
+                  double costo = 0;
+                  String descripcion = descripciones[index];
+                  if (index == 0) costo = indirectosDeOficina;
+                  if (index == 1) costo = indirectosDeCampo;
+                  if (index == 2) costo = financiamiento;
+                  if (index == 3) costo = utilidad;
+                  if (index == 4) costo = cargosAdicionales;
+                  if (index == 5) costo = otrosPorcentajes;
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${descripciones[index]}: ',
+                        '$descripcion: ',
                         style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black), // Descripción en negritas
                       ),
                       RichText(
@@ -350,6 +383,19 @@ class _ConstruccionPage extends State<ConstruccionPage> {
                     ],
                   );
                 }),
+                /*Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Total de indirectos: ',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                    Text(
+                      NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(totalIndirectos),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                  ],
+                ),*/
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -358,7 +404,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(
-                      NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(presupuesto.total + sumTotal),
+                      NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(presupuesto.total + totalIndirectos),
                       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                   ],
@@ -422,27 +468,88 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       sheet.updateCell(CellIndex.indexByString('C10'), TextCellValue(presupuesto.ubicacionProyecto));
       sheet.updateCell(CellIndex.indexByString('C11'), TextCellValue(presupuesto.descripcionProyecto));
 
+      double indirectosDeOficina = (presupuesto.total * (double.tryParse(percentageControllers[0].text) ?? 0) / 100);
+      indirectosDeOficina = double.parse(indirectosDeOficina.toStringAsFixed(2));
+      double indirectosDeCampo = (presupuesto.total * (double.tryParse(percentageControllers[1].text) ?? 0) / 100);
+      indirectosDeCampo = double.parse(indirectosDeCampo.toStringAsFixed(2));
+      double subtotal1 = indirectosDeOficina + indirectosDeCampo + presupuesto.total;
+
+      double financiamiento = (subtotal1 * (double.tryParse(percentageControllers[2].text) ?? 0) / 100);
+      financiamiento = double.parse(financiamiento.toStringAsFixed(2));
+      double subtotal2 = subtotal1 + financiamiento;
+
+      double utilidad = subtotal2 * (double.tryParse(percentageControllers[3].text) ?? 0) / 100;
+      utilidad = double.parse(utilidad.toStringAsFixed(2));
+      double subtotal3 = subtotal2 + utilidad;
+
+      double cargosAdicionales = subtotal3 * (double.tryParse(percentageControllers[4].text) ?? 0) / 100;
+      cargosAdicionales = double.parse(cargosAdicionales.toStringAsFixed(2));
+      double subtotal4 = subtotal3 + cargosAdicionales;
+
+      double otrosPorcentajes = subtotal4 * (double.tryParse(percentageControllers[5].text) ?? 0) / 100;
+      otrosPorcentajes = double.parse(otrosPorcentajes.toStringAsFixed(2));
+      double totalIndirectos = indirectosDeOficina + indirectosDeCampo + financiamiento + utilidad + cargosAdicionales + otrosPorcentajes;
+      totalIndirectos = double.parse(totalIndirectos.toStringAsFixed(2));
+
       var formattedTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(presupuesto.total);
       sheet.updateCell(CellIndex.indexByString('E13'), TextCellValue(formattedTotal));
-      var sumTotal = 0.0;
-      List<double> porcentajes = [];
-      for (int i = 0; i < percentageControllers.length; i++) {
-        var percentageValue = double.tryParse(percentageControllers[i].text) ?? 0;
-        porcentajes.add(percentageValue);
-        var costo = presupuesto.total * percentageValue / 100;
-        sheet.updateCell(CellIndex.indexByString('D${17 + i}'), TextCellValue('$percentageValue%'));
-        var formattedCosto = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costo);
-        sheet.updateCell(CellIndex.indexByString('E${17 + i}'), TextCellValue(formattedCosto));
-        sumTotal += costo;
-      }
 
-      var formattedSumTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(sumTotal);
-      sheet.updateCell(CellIndex.indexByString('E23'), TextCellValue(formattedSumTotal));
-      var formattedFinal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(presupuesto.total + sumTotal);
-      sheet.updateCell(CellIndex.indexByString('E26'), TextCellValue(formattedFinal));
+      List<double> porcentajes = [
+        double.tryParse(percentageControllers[0].text) ?? 0,
+        double.tryParse(percentageControllers[1].text) ?? 0,
+        double.tryParse(percentageControllers[2].text) ?? 0,
+        double.tryParse(percentageControllers[3].text) ?? 0,
+        double.tryParse(percentageControllers[4].text) ?? 0,
+        double.tryParse(percentageControllers[5].text) ?? 0,
+      ];
+
+      var formattedIndirectosDeOficina = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(indirectosDeOficina);
+      sheet.updateCell(CellIndex.indexByString('D17'), TextCellValue('${porcentajes[0]}%'));
+      sheet.updateCell(CellIndex.indexByString('E17'), TextCellValue(formattedIndirectosDeOficina));
+
+      var formattedIndirectosDeCampo = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(indirectosDeCampo);
+      sheet.updateCell(CellIndex.indexByString('D18'), TextCellValue('${porcentajes[1]}%'));
+      sheet.updateCell(CellIndex.indexByString('E18'), TextCellValue(formattedIndirectosDeCampo));
+
+      var formattedSubtotal1 = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(subtotal1);
+      sheet.updateCell(CellIndex.indexByString('E19'), TextCellValue(formattedSubtotal1));
+
+      var formattedFinanciamiento = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(financiamiento);
+      sheet.updateCell(CellIndex.indexByString('D20'), TextCellValue('${porcentajes[2]}%'));
+      sheet.updateCell(CellIndex.indexByString('E20'), TextCellValue(formattedFinanciamiento));
+
+      var formattedSubtotal2 = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(subtotal2);
+      sheet.updateCell(CellIndex.indexByString('E21'), TextCellValue(formattedSubtotal2));
+
+      var formattedUtilidad = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(utilidad);
+      sheet.updateCell(CellIndex.indexByString('D22'), TextCellValue('${porcentajes[3]}%'));
+      sheet.updateCell(CellIndex.indexByString('E22'), TextCellValue(formattedUtilidad));
+
+      var formattedSubtotal3 = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(subtotal3);
+      sheet.updateCell(CellIndex.indexByString('E23'), TextCellValue(formattedSubtotal3));
+
+      var formattedCargosAdicionales = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(cargosAdicionales);
+      sheet.updateCell(CellIndex.indexByString('D24'), TextCellValue('${porcentajes[4]}%'));
+      sheet.updateCell(CellIndex.indexByString('E24'), TextCellValue(formattedCargosAdicionales));
+
+      var formattedSubtotal4 = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(subtotal4);
+      sheet.updateCell(CellIndex.indexByString('E25'), TextCellValue(formattedSubtotal4));
+
+      var formattedOtrosPorcentajes = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(otrosPorcentajes);
+      sheet.updateCell(CellIndex.indexByString('D26'), TextCellValue('${porcentajes[5]}%'));
+      sheet.updateCell(CellIndex.indexByString('E26'), TextCellValue(formattedOtrosPorcentajes));
+
+      var formattedTotalIndirectos = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(totalIndirectos);
+      sheet.updateCell(CellIndex.indexByString('E27'), TextCellValue(formattedTotalIndirectos));
+
+      double roundedTotal = double.parse(presupuesto.total.toStringAsFixed(2));
+      double roundedTotalIndirectos = double.parse(totalIndirectos.toStringAsFixed(2));
+
+      var formattedFinal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(roundedTotal + roundedTotalIndirectos);
+      sheet.updateCell(CellIndex.indexByString('E30'), TextCellValue(formattedFinal));
 
       String fileName = "";
-      if(esPrivado){
+      if (esPrivado) {
         fileName = '${presupuesto.nombre}_ConstruccionPrivada.xlsx';
       } else {
         fileName = '${presupuesto.nombre}_Construccion.xlsx';
@@ -454,7 +561,7 @@ class _ConstruccionPage extends State<ConstruccionPage> {
       // Guarda en Hive
       var detalle = ConstruccionDetalle(nombreArchivo: fileName, porcentajes: porcentajes);
       guardarDetalleConstruccion(presupuesto.nombre, detalle, esPrivado);
-      
+
       _shareFile(filePath);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Archivo Excel generado y listo para compartir')));
       MenuPage.menuPageKey.currentState?.openDrawerAndHighlightProyecto();

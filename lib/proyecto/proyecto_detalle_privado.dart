@@ -204,7 +204,7 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             CheckboxListTile(
-              title: const Text('Supervisión (2% del costo de construcción)'),
+              title: const Text('Supervisión'),
               value: incluirSupervision,
               onChanged: (bool? value) {
                 setState(() {
@@ -213,7 +213,7 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
               },
             ),
             CheckboxListTile(
-              title: const Text('Diseño Urbano (4% del costo de construcción)'),
+              title: const Text('Diseño Urbano'),
               value: incluirDisenoUrbano,
               onChanged: (bool? value) {
                 setState(() {
@@ -222,7 +222,7 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
               },
             ),
             CheckboxListTile(
-              title: const Text('Firma de Perito de Obra (0.8% del costo de construcción)'),
+              title: const Text('Firma de Perito de Obra'),
               value: incluirFirmaPerito,
               onChanged: (bool? value) {
                 setState(() {
@@ -259,7 +259,7 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
     }
 
     double costoConstruccion = presupuesto.total;
-    double porcentajeServicios = 0.03;
+    double porcentajeServicios = 0.025;
     double costoTotal = 0.0;
     double costoServicios = 0.0;
     double nivelValor = nivelValores[selectedImage ?? 'assets/proyectoPrivada/nivel_1.png'] ?? 1.00;
@@ -268,13 +268,36 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
     totalCostos = {};
     descuentos = {};
 
-    for (var porcentaje in construccion.porcentajes) {
-      costoTotal += costoConstruccion * (porcentaje / 100);
-    }
-    costoTotal += costoConstruccion;
+    // Cálculo de indirectos con nueva lógica
+    double indirectosDeOficina = (costoConstruccion * (construccion.porcentajes[0] / 100));
+    indirectosDeOficina = double.parse(indirectosDeOficina.toStringAsFixed(2));
+    double indirectosDeCampo = (costoConstruccion * (construccion.porcentajes[1] / 100));
+    indirectosDeCampo = double.parse(indirectosDeCampo.toStringAsFixed(2));
+    double subtotal1 = indirectosDeOficina + indirectosDeCampo + costoConstruccion;
+
+    double financiamiento = (subtotal1 * (construccion.porcentajes[2] / 100));
+    financiamiento = double.parse(financiamiento.toStringAsFixed(2));
+    double subtotal2 = subtotal1 + financiamiento;
+
+    double utilidad = subtotal2 * (construccion.porcentajes[3] / 100);
+    utilidad = double.parse(utilidad.toStringAsFixed(2));
+    double subtotal3 = subtotal2 + utilidad;
+
+    double cargosAdicionales = subtotal3 * (construccion.porcentajes[4] / 100);
+    cargosAdicionales = double.parse(cargosAdicionales.toStringAsFixed(2));
+    double subtotal4 = subtotal3 + cargosAdicionales;
+
+    double otrosPorcentajes = subtotal4 * (construccion.porcentajes[5] / 100);
+    otrosPorcentajes = double.parse(otrosPorcentajes.toStringAsFixed(2));
+    double totalIndirectos = indirectosDeOficina + indirectosDeCampo + financiamiento + utilidad + cargosAdicionales + otrosPorcentajes;
+    totalIndirectos = double.parse(totalIndirectos.toStringAsFixed(2));
+
+    costoTotal = costoConstruccion + totalIndirectos;
+    costoTotal = double.parse(costoTotal.toStringAsFixed(2));
     double costoTotalConstruccion = costoTotal;
+
     costoServicios = costoTotal * porcentajeServicios * nivelValor;
-    costoTotal=0;
+    costoTotal = 0;
 
     selectedAlcances.asMap().forEach((index, isSelected) {
       if (isSelected) {
@@ -287,19 +310,19 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
     });
 
     if (incluirSupervision) {
-      double supervisionCosto = costoTotalConstruccion * 0.02;
+      double supervisionCosto = costoTotalConstruccion * 0.015;
       alcancesCostos['Supervisión'] = supervisionCosto;
       totalCostos['Supervisión'] = supervisionCosto;
       costoTotal += supervisionCosto;
     }
     if (incluirDisenoUrbano) {
-      double disenoUrbanoCosto = costoTotalConstruccion * 0.04;
+      double disenoUrbanoCosto = costoTotalConstruccion * 0.01;
       alcancesCostos['Diseño Urbano'] = disenoUrbanoCosto;
       totalCostos['Diseño Urbano'] = disenoUrbanoCosto;
       costoTotal += disenoUrbanoCosto;
     }
     if (incluirFirmaPerito) {
-      double firmaPeritoCosto = costoTotalConstruccion * 0.008;
+      double firmaPeritoCosto = costoTotalConstruccion * 0.007;
       alcancesCostos['Firma de Perito de Obra'] = firmaPeritoCosto;
       totalCostos['Firma de Perito de Obra'] = firmaPeritoCosto;
       costoTotal += firmaPeritoCosto;
@@ -309,7 +332,31 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
   }
 
   void _mostrarResumenProyecto(PresupuestoDetalle presupuesto, Map<String, double> alcancesCostos, Map<String, double> totalCostos, double costoTotal, double costoTotalConstruccion) {
-    String formattedCostoTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costoTotal+costoTotalConstruccion);
+    double costoProyecto = costoTotal;
+    double costoServiciosAdicionales = 0.0;
+    Map<String, double> serviciosAdicionalesCostos = {};
+
+    if (alcancesCostos.containsKey('Supervisión')) {
+      costoProyecto -= alcancesCostos['Supervisión']!;
+      costoServiciosAdicionales += alcancesCostos['Supervisión']!;
+      serviciosAdicionalesCostos['Supervisión'] = alcancesCostos['Supervisión']!;
+    }
+    if (alcancesCostos.containsKey('Diseño Urbano')) {
+      costoProyecto -= alcancesCostos['Diseño Urbano']!;
+      costoServiciosAdicionales += alcancesCostos['Diseño Urbano']!;
+      serviciosAdicionalesCostos['Diseño Urbano'] = alcancesCostos['Diseño Urbano']!;
+    }
+    if (alcancesCostos.containsKey('Firma de Perito de Obra')) {
+      costoProyecto -= alcancesCostos['Firma de Perito de Obra']!;
+      costoServiciosAdicionales += alcancesCostos['Firma de Perito de Obra']!;
+      serviciosAdicionalesCostos['Firma de Perito de Obra'] = alcancesCostos['Firma de Perito de Obra']!;
+    }
+
+    double costoTotalConServicios = costoProyecto + costoServiciosAdicionales;
+
+    String formattedCostoProyecto = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costoProyecto);
+    String formattedCostoServiciosAdicionales = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costoServiciosAdicionales);
+    String formattedCostoTotal = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costoTotalConServicios);
 
     showDialog(
       context: context,
@@ -325,23 +372,60 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
                     style: DefaultTextStyle.of(context).style,
                     children: [
                       const TextSpan(
-                        text: 'Costo Total: ',
+                        text: 'Costo de Proyecto: ',
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       TextSpan(
-                        text: formattedCostoTotal,
+                        text: formattedCostoProyecto,
                         style: const TextStyle(fontSize: 18),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Desglose de costos:',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ...alcancesCostos.entries.map((entry) {
+                  if (!serviciosAdicionalesCostos.containsKey(entry.key)) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              entry.key,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(entry.value),
+                            textAlign: TextAlign.right,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                }),
+                const SizedBox(height: 16),
+                RichText(
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: [
+                      const TextSpan(
+                        text: 'Costo de Servicios Adicionales: ',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      TextSpan(
+                        text: formattedCostoServiciosAdicionales,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16),
-                ...alcancesCostos.entries.map((entry) {
+                ...serviciosAdicionalesCostos.entries.map((entry) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Row(
@@ -363,6 +447,22 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
                     ),
                   );
                 }),
+                const SizedBox(height: 16),
+                RichText(
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: [
+                      const TextSpan(
+                        text: 'Costo Total: ',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      TextSpan(
+                        text: formattedCostoTotal,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -391,6 +491,8 @@ class _ProyectoDetallePrivadoPage extends State<ProyectoDetallePrivadoPage> {
       },
     );
   }
+
+
 
 
   Future<void> _navigateToEditarCostos(BuildContext context, PresupuestoDetalle presupuesto, Map<String, double> alcancesCostos, Map<String, double> totalCostos, double costoTotalConstruccion) async {

@@ -17,7 +17,7 @@ import 'dart:math' as math;
 
 class ProyectoDetallePage extends StatefulWidget {
   final String nombre;
-  
+
   const ProyectoDetallePage({super.key, required this.nombre});
 
   @override
@@ -30,6 +30,9 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
   Map<String, List<String>> selectedOptions = {};
   late PresupuestoDetalle detalle;
   late ConstruccionDetalle detalleConstruccion;
+
+  // Añadir la variable costosPorOpcion
+  Map<String, double> costosPorOpcion = {};
 
   @override
   void initState() {
@@ -220,10 +223,7 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
                     child: RichText(
                       text: TextSpan(
                         children: _generateSummaryText(metros),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black
-                        ),
+                        style: const TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                   ),
@@ -257,12 +257,12 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
   double _calcularTotalFinal(double metros) {
     double factorRegional = 0.75;
     double honorarios = calcularHonorariosTotales(detalle.total, metros, detalleConstruccion.porcentajes, factorRegional);
-    Map<String, double> costosPorOpcion = calcularCostosPorOpcion(honorarios, selectedOptions);
+    costosPorOpcion = calcularCostosPorOpcion(honorarios, selectedOptions);
     double totalFinal = 0.0;
 
     selectedOptions.forEach((titulo, opciones) {
       for (var opcion in opciones) {
-        double costo = costosPorOpcion[opcion] ?? 0;
+        double costo = costosPorOpcion['$titulo - $opcion'] ?? 0;
         totalFinal += costo;
       }
     });
@@ -279,7 +279,8 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
       if (value.isNotEmpty) {
         summaryText.add(TextSpan(text: "$key:\n", style: const TextStyle(fontWeight: FontWeight.bold)));
         for (var option in value) {
-          summaryText.add(TextSpan(text: '- $option\n'));
+          String fullKey = '$key - $option';
+          summaryText.add(TextSpan(text: '- $option: ${NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costosPorOpcion[fullKey])}\n'));
         }
       }
     });
@@ -308,7 +309,7 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
       final ByteData data = await rootBundle.load("assets/plantillas/PROYECTO.xlsx");
       var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
       var excel = Excel.decodeBytes(bytes);
-      var sheet = excel['Hoja1']; 
+      var sheet = excel['Hoja1'];
 
       sheet.updateCell(CellIndex.indexByString('C2'), TextCellValue(detalle.fechaEmision));
       sheet.updateCell(CellIndex.indexByString('F2'), TextCellValue(detalle.fechaCaducidad));
@@ -326,7 +327,7 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
       double factorRegional = 0.75;
       double honorarios = calcularHonorariosTotales(detalle.total, metros, detalleConstruccion.porcentajes, factorRegional);
       print(honorarios);
-      Map<String, double> costosPorOpcion = calcularCostosPorOpcion(honorarios, selectedOptions);
+      costosPorOpcion = calcularCostosPorOpcion(honorarios, selectedOptions);
       double totalFinal = 0.0;
 
       int rowIndex = 15;  // Comenzar a escribir desde la línea 15
@@ -339,7 +340,7 @@ class _ProyectoDetallePageState extends State<ProyectoDetallePage> {
           // Combinar celdas de la A a la D y añadir nombre de la opción
           sheet.merge(CellIndex.indexByString('A$rowIndex'), CellIndex.indexByString('D$rowIndex'), customValue: TextCellValue(opcion));
           // Combinar celdas de la E a la F y preparar espacio para el costo
-          double costo = costosPorOpcion[opcion] ?? 0;
+          double costo = costosPorOpcion['$titulo - $opcion'] ?? 0;
           totalFinal += costo;
           var formattedCosto = NumberFormat.currency(locale: 'es_MX', symbol: '\$').format(costo);
           sheet.merge(CellIndex.indexByString('E$rowIndex'), CellIndex.indexByString('F$rowIndex'), customValue: TextCellValue(formattedCosto));
@@ -372,51 +373,87 @@ void _shareFile(String filePath) {
   Share.shareXFiles([XFile(filePath)], text: 'Aquí tienes el archivo de presupuesto.');
 }
 
-
 double calcularCostoTotalAjustado(double costoBase, List<double> porcentajesAdicionales) {
-  double ajuste = porcentajesAdicionales.fold(0, (sum, porcentaje) => sum + costoBase * porcentaje / 100);
-  return costoBase + ajuste;
+  // Cálculo de indirectos con la nueva lógica
+  costoBase = double.parse(costoBase.toStringAsFixed(2));
+  double indirectosDeOficina = (costoBase * (porcentajesAdicionales[0] / 100));
+  indirectosDeOficina = double.parse(indirectosDeOficina.toStringAsFixed(2));
+  double indirectosDeCampo = (costoBase * (porcentajesAdicionales[1] / 100));
+  indirectosDeCampo = double.parse(indirectosDeCampo.toStringAsFixed(2));
+  double subtotal1 = indirectosDeOficina + indirectosDeCampo + costoBase;
+
+  double financiamiento = (subtotal1 * (porcentajesAdicionales[2] / 100));
+  financiamiento = double.parse(financiamiento.toStringAsFixed(2));
+  double subtotal2 = subtotal1 + financiamiento;
+
+  double utilidad = subtotal2 * (porcentajesAdicionales[3] / 100);
+  utilidad = double.parse(utilidad.toStringAsFixed(2));
+  double subtotal3 = subtotal2 + utilidad;
+
+  double cargosAdicionales = subtotal3 * (porcentajesAdicionales[4] / 100);
+  cargosAdicionales = double.parse(cargosAdicionales.toStringAsFixed(2));
+  double subtotal4 = subtotal3 + cargosAdicionales;
+
+  double otrosPorcentajes = subtotal4 * (porcentajesAdicionales[5] / 100);
+  otrosPorcentajes = double.parse(otrosPorcentajes.toStringAsFixed(2));
+  double totalIndirectos = indirectosDeOficina + indirectosDeCampo + financiamiento + utilidad + cargosAdicionales + otrosPorcentajes;
+  totalIndirectos = double.parse(totalIndirectos.toStringAsFixed(2));
+
+  double costoTotalAjustado = costoBase + totalIndirectos;
+  return double.parse(costoTotalAjustado.toStringAsFixed(2));
 }
+
 double calcularCostoDirecto(double costoTotalAjustado, double metros) {
   double fc = 1.14;
-  return costoTotalAjustado * metros * fc;
+  //print("CO: $costoTotalAjustado");
+  //print(metros);
+  return double.parse((costoTotalAjustado * metros * fc).toStringAsFixed(2));
 }
+
 double calcularFactorSuperficie(double metros) {
-  return 15 - (2.5 * math.log(metros) / math.ln10);
+  return double.parse((15 - (2.5 * math.log(metros) / math.ln10)).toStringAsFixed(2));
 }
+
 double calcularHonorarios(double co, double fs, double fr) {
-  return (co * fs * fr) / 100;
+  return double.parse(((co * fs * fr) / 100).toStringAsFixed(2));
 }
+
 double calcularHonorariosTotales(double costoBase, double metros, List<double> porcentajesAdicionales, double fr) {
   double costoTotalAjustado = calcularCostoTotalAjustado(costoBase, porcentajesAdicionales) / metros;
   double co = calcularCostoDirecto(costoTotalAjustado, metros);
   double fs = calcularFactorSuperficie(metros);
   double honorarios = calcularHonorarios(co, fs, fr);
-  print('Costo total Ajustado: $costoTotalAjustado');
-  print('Costo por m2: $co');
-  print('Factor superficie: $fs');
-  
-  
+  //print('Costo total Ajustado: $costoTotalAjustado');
+  //print('Costo por m2: $co');
+  //print('Factor superficie: $fs');
+
   return honorarios;
 }
+
 Map<String, double> calcularCostosPorOpcion(double honorarios, Map<String, List<String>> selectedOptions) {
   Map<String, double> costosPorOpcion = {};
 
   for (var ponderacion in ponderaciones) {
     if (selectedOptions.containsKey(ponderacion.categoria)) {
       List<String> opcionesSeleccionadas = selectedOptions[ponderacion.categoria]!;
+      //print('Categoría: ${ponderacion.categoria}, Porcentaje: ${ponderacion.porcentaje}');
       for (var subPonderacion in ponderacion.subPonderaciones) {
         if (opcionesSeleccionadas.contains(subPonderacion.nombre)) {
           double costo = honorarios * ponderacion.porcentaje * subPonderacion.porcentaje;
-          costosPorOpcion[subPonderacion.nombre] = costo;
+          String key = '${ponderacion.categoria} - ${subPonderacion.nombre}';
+          costosPorOpcion[key] = costo;
+         //print('  SubPonderación: ${subPonderacion.nombre}, Porcentaje: ${subPonderacion.porcentaje}');
+         // print('    Opción seleccionada: ${subPonderacion.nombre}, Costo calculado: $costo');
+        } else {
+         // print('  SubPonderación no seleccionada: ${subPonderacion.nombre}, Porcentaje: ${subPonderacion.porcentaje}');
         }
       }
     }
   }
 
+  //print('Costos por opción calculados: $costosPorOpcion');
   return costosPorOpcion;
 }
-
 
 PresupuestoDetalle cargarPresupuesto(String nombre) {
   var box = Hive.box<PresupuestoDetalle>('presupuestos');
